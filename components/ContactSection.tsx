@@ -132,9 +132,9 @@ const ContactSection = () => {
                 <div>
                   <h4 className="font-semibold text-primary mb-2">Office Address</h4>
                   <p className="text-muted-foreground">
-                    9, Gr. Floor, West side,, Vishwakarma Society<br />
+                    9, Gr. Floor, West side, Vishwakarma Society<br />
                     b/h Vishwakarma temple, Nr. ITC Building<br />
-                    Majura Gate, Surat - 395002 , India
+                    Majura Gate, Surat, Gujarat, India - 395002.
                   </p>
                   <p className="text-sm text-accent mt-2">Visitor parking available</p>
                 </div>
@@ -170,9 +170,17 @@ const ContactSection = () => {
             </div>
 
             {/* Map Placeholder */}
-            <div className="glass-card rounded-2xl p-4 h-64 flex items-center justify-center bg-muted/20">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3720.2642259473105!2d72.81732347526084!3d21.18166008050618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDEwJzU0LjAiTiA3MsKwNDknMTEuNiJF!5e0!3m2!1sen!2sin!4v1762702185037!5m2!1sen!2sin" width="600" height="250" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
-            </div>
+            <div className="glass-card rounded-2xl p-0 h-64 flex items-center justify-center bg-muted/20 border-2 border-accent/30">
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3720.2642259473105!2d72.81732347526084!3d21.18166008050618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDEwJzU0LjAiTiA3MsKwNDknMTEuNiJF!5e0!3m2!1sen!2sin!4v1762702185037!5m2!1sen!2sin" 
+    width="600" 
+    height="250" 
+    allowFullScreen 
+    loading="lazy" 
+    referrerPolicy="no-referrer-when-downgrade"
+    className="rounded-2xl"
+  />
+</div>
           </div>
         </div>
       </div>

@@ -137,29 +137,36 @@ const AboutSection = () => {
               { initials: 'SA', name: 'Seema Aslot', image: SeemaImage, delay: 0.7 },
               { initials: 'IA', name: 'Ishan Aslot', image: IshanImage, delay: 0.8 }
             ].map((member) => (
-              <motion.div
-                key={member.initials}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: member.delay }}
-                viewport={{ once: true }}
-                className="text-center space-y-5 group"
-              >
-                <div className="relative w-36 h-36 md:w-40 md:h-40 mx-auto">
-                  {/* Glow Effect */}
-                  <motion.div
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 rounded-full bg-gradient-to-br from-accent/30 to-yellow-600/30 blur-2xl group-hover:blur-3xl transition-all duration-500"
-                  />
-                  <img src={member.image.src} alt={member.name + ' Avatar'} className="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover" loading="lazy" width={200} height={200} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-xl md:text-2xl text-white mb-2 group-hover:text-accent transition-colors duration-300">
-                    {member.name}
-                  </h4>
-                </div>
-              </motion.div>
+             <motion.div
+  key={member.initials}
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: member.delay }}
+  viewport={{ once: true }}
+  className="text-center space-y-5 group"
+>
+  <div className="relative w-36 h-36 md:w-40 md:h-40 mx-auto">
+    {/* Glow Effect */}
+    <motion.div
+      animate={{ scale: [1, 1.1, 1] }}
+      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute inset-0 rounded-full bg-gradient-to-br from-accent/30 to-yellow-600/30 blur-2xl group-hover:blur-3xl transition-all duration-500"
+    />
+    <img 
+      src={member.image.src} 
+      alt={member.name + ' Avatar'} 
+      className="relative w-full h-full rounded-full object-contain" 
+      loading="lazy" 
+      width={200} 
+      height={200} 
+    />
+  </div>
+  <div>
+    <h4 className="font-bold text-xl md:text-2xl text-white mb-2 group-hover:text-accent transition-colors duration-300">
+      {member.name}
+    </h4>
+  </div>
+</motion.div>
             ))}
           </div>
 

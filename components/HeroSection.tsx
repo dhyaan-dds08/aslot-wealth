@@ -2,7 +2,8 @@ import { Button } from '@/components/ui/button';
 import { gsap } from 'gsap';
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+gsap.registerPlugin(ScrollToPlugin);
 // Define the Particle type
 interface Particle {
   x: number;
@@ -151,9 +152,9 @@ const HeroSection = () => {
 
   const scrollToContact = () => {
     gsap.to(window, {
-      duration: 1.5,
+      duration: 0.5,
       scrollTo: '#contact',
-      ease: 'power2.inOut'
+      ease: 'power3.inOut'
     });
   };
 

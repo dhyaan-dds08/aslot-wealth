@@ -30,6 +30,8 @@ const Footer = () => {
             <div className="flex space-x-4">
               <a
                 href="https://www.linkedin.com/in/ishan-aslot/"
+                  target="_blank"
+  rel="noopener noreferrer"
                 className="text-primary hover:text-accent transition-colors"
                 aria-label="LinkedIn"
               >
@@ -37,6 +39,8 @@ const Footer = () => {
               </a>
               <a
                 href="https://www.instagram.com/aslotwealth?igsh=NGxiMHA0ZXkxYzI5"
+                  target="_blank"
+  rel="noopener noreferrer"
                 className="text-primary hover:text-accent transition-colors"
                 aria-label="Twitter"
               >

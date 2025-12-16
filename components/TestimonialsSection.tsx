@@ -33,7 +33,7 @@ const TestimonialCard = ({ name, testimonial, position }: TestimonialCardProps) 
               <p className="text-xl md:text-2xl font-semibold text-white">{name}</p>
 
               <p className="text-accent text-base md:text-lg leading-relaxed max-w-3xl">
-                "{displayText}"
+                &quot;{displayText}&quot;
               </p>
 
               {shouldTruncate && (
@@ -54,7 +54,7 @@ const TestimonialCard = ({ name, testimonial, position }: TestimonialCardProps) 
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white/10 border border-white/20 backdrop-blur-md p-6 md:p-10 rounded-3xl shadow-lg max-w-xl w-[90%] animate-fadeIn">
             <p className="text-accent text-lg md:text-xl leading-relaxed">
-              "{testimonial}"
+              &quot;{testimonial}&quot;
             </p>
 
             <button

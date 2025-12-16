@@ -1,6 +1,5 @@
 "use client";
 import AboutSection from "@/components/AboutSection";
-import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";

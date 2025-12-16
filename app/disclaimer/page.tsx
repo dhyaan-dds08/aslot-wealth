@@ -53,7 +53,7 @@ const DisclaimerPage = () => {
                             <h2 className="text-2xl font-semibold mb-4 text-primary">Website Information</h2>
                             <div className="space-y-3 text-muted-foreground">
                                 <p className="leading-relaxed">
-                                    The information on this website is provided "as is" without any representations or warranties, express or implied. We make every effort to ensure that the information is accurate, complete, and up-to-date, but we make no warranties about the accuracy, reliability, completeness, or timeliness of the content.
+                                    The information on this website is provided &quot;as is&quot; without any representations or warranties, express or implied. We make every effort to ensure that the information is accurate, complete, and up-to-date, but we make no warranties about the accuracy, reliability, completeness, or timeliness of the content.
                                 </p>
                                 <p className="leading-relaxed">
                                     Market data, statistics, charts, and other information displayed on this website may be delayed or may not reflect real-time market conditions. We are not responsible for any errors, omissions, or delays in the information or for any actions taken based on this information.

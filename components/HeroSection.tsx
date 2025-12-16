@@ -3,13 +3,24 @@ import { gsap } from 'gsap';
 import { ArrowRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
+// Define the Particle type
+interface Particle {
+  x: number;
+  y: number;
+  radius: number;
+  vx: number;
+  vy: number;
+  opacity: number;
+  scale: number;
+}
+
 const HeroSection = () => {
   const heroRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const subheadlineRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<any[]>([]);
+  const particlesRef = useRef<Particle[]>([]); // Fix line 12
 
   // GSAP Animations
   useEffect(() => {
@@ -99,11 +110,11 @@ const HeroSection = () => {
     canvas.height = window.innerHeight;
 
     // Create particles with GSAP
-    const particles: any[] = [];
+    const particles: Particle[] = []; // Fix line 102
     const particleCount = 80;
 
     for (let i = 0; i < particleCount; i++) {
-      const particle = {
+      const particle: Particle = {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         radius: Math.random() * 2 + 0.5,

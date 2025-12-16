@@ -1,7 +1,6 @@
 "use client";
 import { ArrowRight, Calendar } from 'lucide-react';
-import BlogOne from '@/assets/blogs/blog-1.png'
-import BlogTwo from '@/assets/blogs/blog-2.png'
+
 interface BlogCardProps {
   title: string;
   excerpt: string;

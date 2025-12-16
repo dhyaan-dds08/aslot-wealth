@@ -66,10 +66,9 @@ export async function GET(request: Request) {
         // Wait for content to load
         try {
             await page.waitForSelector('main, .scaffold-layout__main', { timeout: 10000 });
-        } catch (e) {
-            console.log('Main content selector not found, continuing anyway...');
-        }
-
+        } catch {
+    console.log('Main content selector not found, continuing anyway...');
+}
         // Additional wait for dynamic content
         await new Promise(resolve => setTimeout(resolve, 3000));
 
@@ -235,7 +234,16 @@ export async function POST(request: Request) {
 }
 
 // Function to scrape with cookies (for authenticated access)
-async function getWithCookies(url: string, cookies: any[]) {
+async function getWithCookies(url: string, cookies: Array<{
+    name: string;
+    value: string;
+    domain?: string;
+    path?: string;
+    expires?: number;
+    httpOnly?: boolean;
+    secure?: boolean;
+    sameSite?: 'Strict' | 'Lax' | 'None';
+}>) {
     let browser;
 
     try {
@@ -251,7 +259,7 @@ async function getWithCookies(url: string, cookies: any[]) {
 
         await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
         await new Promise(resolve => setTimeout(resolve, 3000));
-        ``
+        
         const activities = await page.evaluate(() => {
             const posts = Array.from(document.querySelectorAll('article, .feed-shared-update-v2'));
             return posts.map(post => ({

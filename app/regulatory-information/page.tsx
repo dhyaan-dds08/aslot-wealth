@@ -32,7 +32,7 @@ const RegulatoryInformation = () => {
                                 <p className="text-sm text-muted-foreground mt-2">Valid and Active as of January 2025</p>
                             </div>
                             <p className="text-muted-foreground leading-relaxed">
-                                We are registered with AMFI (Association of Mutual Funds in India) as a Mutual Fund Distributor. This registration authorizes us to distribute mutual fund products to investors across India. Our ARN registration is subject to renewal and compliance with AMFI's code of conduct and regulations.
+                                We are registered with AMFI (Association of Mutual Funds in India) as a Mutual Fund Distributor. This registration authorizes us to distribute mutual fund products to investors across India. Our ARN registration is subject to renewal and compliance with AMFI&apos;s code of conduct and regulations.
                             </p>
                         </section>
 
@@ -42,13 +42,13 @@ const RegulatoryInformation = () => {
                                 <div>
                                     <h3 className="text-lg font-semibold mb-2 text-foreground">Securities and Exchange Board of India (SEBI)</h3>
                                     <p className="leading-relaxed">
-                                        SEBI is the primary regulatory authority overseeing the securities market in India. We comply with all SEBI regulations, circulars, and guidelines applicable to mutual fund distributors and financial Aslot Wealth Advisor". This includes adherence to fair practice codes, disclosure requirements, and investor protection norms.
+                                        SEBI is the primary regulatory authority overseeing the securities market in India. We comply with all SEBI regulations, circulars, and guidelines applicable to mutual fund distributors and financial Aslot Wealth Advisor&quot;. This includes adherence to fair practice codes, disclosure requirements, and investor protection norms.
                                     </p>
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-semibold mb-2 text-foreground">Association of Mutual Funds in India (AMFI)</h3>
                                     <p className="leading-relaxed">
-                                        AMFI establishes standards and promotes best practices in the mutual fund industry. As an AMFI-registered distributor, we follow AMFI's code of conduct, which includes guidelines on ethics, transparency, disclosure, and professional conduct. We also comply with AMFI's requirements for ongoing training and certification.
+                                        AMFI establishes standards and promotes best practices in the mutual fund industry. As an AMFI-registered distributor, we follow AMFI&apos;s code of conduct, which includes guidelines on ethics, transparency, disclosure, and professional conduct. We also comply with AMFI&apos;s requirements for ongoing training and certification.
                                     </p>
                                 </div>
                                 <div>
@@ -80,7 +80,7 @@ const RegulatoryInformation = () => {
                         <section>
                             <h2 className="text-2xl font-semibold mb-4 text-primary">Certification and Training</h2>
                             <p className="text-muted-foreground leading-relaxed">
-                                All our financial Aslot Wealth Advisor" and mutual fund distributors have successfully completed the mandatory NISM (National Institute of Securities Markets) certification exams, including:
+                                All our financial Aslot Wealth Advisor&quot; and mutual fund distributors have successfully completed the mandatory NISM (National Institute of Securities Markets) certification exams, including:
                             </p>
                             <ul className="list-disc list-inside ml-4 mt-3 space-y-2 text-muted-foreground">
                                 <li>NISM Series V-A: Mutual Fund Distributors Certification</li>
@@ -196,7 +196,7 @@ const RegulatoryInformation = () => {
                         <section>
                             <h2 className="text-2xl font-semibold mb-4 text-primary">Verification of Registration</h2>
                             <p className="text-muted-foreground leading-relaxed">
-                                You can verify our AMFI registration status and credentials by visiting the AMFI website at <a href="https://www.amfiindia.com" className="text-primary hover:underline">www.amfiindia.com</a> and searching for our ARN number (ARN-126127). We encourage all clients to verify the credentials of financial Aslot Wealth Advisor" before engaging their services.
+                                You can verify our AMFI registration status and credentials by visiting the AMFI website at <a href="https://www.amfiindia.com" className="text-primary hover:underline">www.amfiindia.com</a> and searching for our ARN number (ARN-126127). We encourage all clients to verify the credentials of financial Aslot Wealth Advisor&quot; before engaging their services.
                             </p>
                         </section>
 

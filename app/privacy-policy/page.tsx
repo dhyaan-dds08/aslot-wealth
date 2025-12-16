@@ -130,7 +130,7 @@ const PrivacyPolicyPage = () => {
                         <section>
                             <h2 className="text-2xl font-semibold mb-4 text-primary">10. Changes to This Privacy Policy</h2>
                             <p className="text-muted-foreground leading-relaxed">
-                                We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of any material changes by posting the updated policy on our website with a new "Last Updated" date.
+                                We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of any material changes by posting the updated policy on our website with a new &quot;Last Updated&quot; date.
                             </p>
                         </section>
 

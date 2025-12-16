@@ -113,7 +113,7 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
+        <script src="https://platform.linkedin.com/in.js" type="text/javascript" async></script>
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} antialiased`}

@@ -28,7 +28,7 @@ const ContactSection = () => {
           className="text-center mb-16 space-y-4"
         >
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary">
-            Let's Start <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">Your Journey</span>
+            Let&apos;s Start <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">Your Journey</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Schedule a discovery call or reach out to us directly

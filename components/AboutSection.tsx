@@ -92,7 +92,7 @@ const AboutSection = () => {
 
             <p>
               For three decades, that combination of precise tax guidance and prudent risk cover became
-              the firm's hallmark. Yet portfolio needs evolved as clients sought access to broader
+              the firm&apos;s hallmark. Yet portfolio needs evolved as clients sought access to broader
               capital-market opportunities.
             </p>
 

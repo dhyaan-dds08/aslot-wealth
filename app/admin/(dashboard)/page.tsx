@@ -3,7 +3,7 @@ import { BlogPost } from '@/types/blog'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Plus, Edit, Trash2 } from 'lucide-react'
-import TogglePostButton from '@/components/admin/TogglePostButton'
+import TogglePostButton from '@/components/admin/ToggleSwitch'
 import DeletePostButton from '@/components/admin/DeletePostButton'
 import { CldImage } from 'next-cloudinary'
 

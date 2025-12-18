@@ -1,4 +1,4 @@
-import TogglePostButton from '@/components/admin/TogglePostButton'
+import TogglePostButton from '@/components/admin/ToggleSwitch'
 import DeletePostButton from '@/components/admin/DeletePostButton'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { BlogPost } from '@/types/blog'

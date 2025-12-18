@@ -53,7 +53,7 @@ export default function AdminNav({ admin }: AdminNavProps) {
               onClick={handleLogout}
               variant="outline"
               size="sm"
-              className="text-white border-white hover:bg-white hover:text-primary"
+              className="text-black border-white/50 hover:bg-white hover:text-primary hover:border-white"
             >
               <LogOut size={16} className="mr-2" />
               Logout

@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       .eq('email', email)
       .single()
 
-    console.log('Query result:', { admin, error })
+    // console.log('Query result:', { admin, error })
 
     if (error) {
       // console.log('Admin not found for email:', email, 'Error:', error)

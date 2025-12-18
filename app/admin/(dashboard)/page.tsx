@@ -1,13 +1,17 @@
-import TogglePostButton from '@/components/admin/TogglePostButton'
-import DeletePostButton from '@/components/admin/DeletePostButton'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { BlogPost } from '@/types/blog'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Plus, Edit } from 'lucide-react'
+import { Plus, Edit, Trash2 } from 'lucide-react'
+import TogglePostButton from '@/components/admin/TogglePostButton'
+import DeletePostButton from '@/components/admin/DeletePostButton'
+import { CldImage } from 'next-cloudinary'
+
+export const dynamic = 'force-dynamic'
 
 export default async function AdminDashboard() {
-  const supabase = await createServerSupabaseClient(true)
+  const supabase = await createServerSupabaseClient()
+  
   
   const { data: posts } = await supabase
     .from('posts')
@@ -45,16 +49,20 @@ export default async function AdminDashboard() {
               key={post.id}
               className="glass-card rounded-xl p-6 flex items-center gap-6 hover:shadow-lg transition-shadow"
             >
+              {/* Thumbnail */}
               {post.images && post.images.length > 0 && (
                 <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
-                  <img
+                  <CldImage
                     src={post.images[0]}
                     alt={post.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="96px"
                   />
                 </div>
               )}
 
+              {/* Post Info */}
               <div className="flex-1 min-w-0">
                 <h3 className="text-xl font-bold text-primary mb-2 truncate">
                   {post.title}
@@ -72,6 +80,7 @@ export default async function AdminDashboard() {
                 </div>
               </div>
 
+              {/* Status Badge */}
               <div className="flex-shrink-0">
                 {post.active ? (
                   <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
@@ -84,6 +93,7 @@ export default async function AdminDashboard() {
                 )}
               </div>
 
+              {/* Actions */}
               <div className="flex items-center gap-2 flex-shrink-0">
                 <TogglePostButton post={post} />
                 
@@ -93,7 +103,7 @@ export default async function AdminDashboard() {
                   </Button>
                 </Link>
 
-                {/* <DeletePostButton postId={post.id} /> */}
+                <DeletePostButton postId={post.id} />
               </div>
             </div>
           ))}

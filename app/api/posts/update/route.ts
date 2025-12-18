@@ -7,12 +7,26 @@ export async function POST(request: Request) {
     
     // Get the request body
     const body = await request.json()
-    const { id, active } = body
+    const { id, title, content, images, active } = body
 
     // Validate input
-    if (!id || typeof active !== 'boolean') {
+    if (!id) {
       return NextResponse.json(
-        { error: 'Invalid request. ID and active status required.' },
+        { error: 'Post ID is required' },
+        { status: 400 }
+      )
+    }
+
+    if (!title?.trim()) {
+      return NextResponse.json(
+        { error: 'Title is required' },
+        { status: 400 }
+      )
+    }
+
+    if (!content?.trim()) {
+      return NextResponse.json(
+        { error: 'Content is required' },
         { status: 400 }
       )
     }
@@ -20,15 +34,21 @@ export async function POST(request: Request) {
     // Update the post
     const { data, error } = await supabase
       .from('posts')
-      .update({ active, updated_at: new Date().toISOString() })
+      .update({
+        title: title.trim(),
+        content: content.trim(),
+        images: images || [],
+        active: active ?? true,
+        updated_at: new Date().toISOString()
+      })
       .eq('id', id)
       .select()
       .single()
 
     if (error) {
-      console.error('Toggle error:', error)
+      console.error('Update error:', error)
       return NextResponse.json(
-        { error: 'Failed to update post status' },
+        { error: 'Failed to update post' },
         { status: 500 }
       )
     }
@@ -36,11 +56,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ 
       success: true, 
       post: data,
-      message: `Post ${active ? 'activated' : 'deactivated'} successfully`
+      message: 'Post updated successfully'
     })
 
   } catch (error) {
-    console.error('Toggle API error:', error)
+    console.error('Update API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

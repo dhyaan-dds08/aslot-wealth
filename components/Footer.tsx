@@ -30,8 +30,8 @@ const Footer = () => {
             <div className="flex space-x-4">
               <a
                 href="https://www.linkedin.com/in/ishan-aslot/"
-                  target="_blank"
-  rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-primary hover:text-accent transition-colors"
                 aria-label="LinkedIn"
               >
@@ -39,8 +39,8 @@ const Footer = () => {
               </a>
               <a
                 href="https://www.instagram.com/aslotwealth?igsh=NGxiMHA0ZXkxYzI5"
-                  target="_blank"
-  rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-primary hover:text-accent transition-colors"
                 aria-label="Twitter"
               >
@@ -113,7 +113,7 @@ const Footer = () => {
 
         <div className="border-t border-primary pt-8 text-center">
           <p className="text-sm text-primary">
-            © {currentYear} Aslot Wealth Advisor. All rights reserved.
+            © {currentYear} Aslot Wealth Advisor - Aslot and Associates. All rights reserved.
           </p>
           <p className="text-xs text-primary mt-2">
             AMFI registered Mutual Fund Distributor ARN-126127

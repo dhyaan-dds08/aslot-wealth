@@ -1,6 +1,6 @@
 # Aslot Wealth
 
-A modern wealth management website built with Next.js, featuring a blog and admin dashboard.
+A    modern wealth management website built with Next.js, featuring a blog and admin dashboard.
 
 ## Features
 

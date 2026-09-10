@@ -146,7 +146,7 @@ const RegulatoryInformation = () => {
                                     We have established a formal grievance redressal mechanism to address client concerns and complaints promptly. If you have any grievance or complaint, please follow this process:
                                 </p>
                                 <div className="ml-4 space-y-2">
-                                    <p><strong className="text-foreground">Step 1:</strong> Contact us directly at info@aslotwealthadvisor.com with details of your grievance</p>
+                                    <p><strong className="text-foreground">Step 1:</strong> Contact us directly at info@aslotwealth.in with details of your grievance</p>
                                     <p><strong className="text-foreground">Step 2:</strong> We will acknowledge your complaint within 2 business days</p>
                                     <p><strong className="text-foreground">Step 3:</strong> We aim to resolve complaints within 15 business days</p>
                                     <p><strong className="text-foreground">Step 4:</strong> If you are not satisfied with our resolution, you may escalate to:</p>
@@ -208,8 +208,8 @@ const RegulatoryInformation = () => {
                             <div className="mt-4 p-4 bg-muted/50 rounded-lg">
                                 <p className="font-semibold text-foreground">Aslot Wealth Advisor</p>
                                 <p className="text-muted-foreground">AMFI ARN: 126127</p>
-                                <p className="text-muted-foreground">Email: info@aslotwealthadvisor.com</p>
-                                <p className="text-muted-foreground mt-2">For grievances: complaints@aslotwealthadvisor.com</p>
+                                <p className="text-muted-foreground">Email: info@aslotwealth.in</p>
+                                <p className="text-muted-foreground mt-2">For grievances: complaints@aslotwealth.in</p>
                             </div>
                         </section>
                     </div>

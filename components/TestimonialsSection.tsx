@@ -79,7 +79,7 @@ const TestimonialsSection = () => {
     {
       name: 'Dipak Patel',
       testimonial:
-        'High taxes were eating into my returns. Ishan mapped my cash flows and built a tax-efficient portfolio structure that helped me plan for over ₹15 lakh a year in potential tax savings. Their rare CA + wealth advisory combo really does hit two targets with one arrow.',
+        'High taxes were eating into my returns. Ishan mapped my cash flows and built a tax-efficient portfolio structure that helped me plan 6 digit potential tax savings in a year. Their rare CA + wealth advisory combo really does hit two targets with one arrow.',
     },
     {
       name: 'Parimal Patel',
@@ -123,11 +123,14 @@ const TestimonialsSection = () => {
   return (
     <section id="testimonials" className="py-20 md:py-32 bg-primary text-primary-foreground overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12 md:mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-            <span className="">Real People</span>, <span className="text-gradient-gold">Tangible Outcomes</span>
+        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            Client Stories
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            Real People, <span className="text-accent">Tangible Outcomes</span>
           </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-primary-foreground/70 mt-5">
             Stories of trust, growth, and financial freedom
           </p>
         </div>

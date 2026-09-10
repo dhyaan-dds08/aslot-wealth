@@ -1,9 +1,44 @@
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import PragneshImage from '@/assets/teams/Pragnesh Aslot.jpg'
 import SeemaImage from '@/assets/teams/Seema Aslot.jpg'
 import IshanImage from '@/assets/teams/Ishan Aslot.jpg'
+
+const team = [
+  {
+    name: 'Pragnesh Aslot',
+    role: 'Founder',
+    credential: 'Practising since 1989',
+    image: PragneshImage,
+    bio: [
+      'I started this practice in 1989, doing tax advisory for Surat businesses. Over thirty-five years the questions changed — from taxes to questions of protection and preservation.',
+      'Most of the families I work with, I have known for two decades.',
+    ],
+  },
+  {
+    name: 'Seema Aslot',
+    role: 'Risk & Protection',
+    credential: 'Insurance desk since 1991',
+    image: SeemaImage,
+    bio: [
+      'I joined two years after Pragnesh started and set up the insurance side.',
+      'We still handle claim paperwork personally for our clients, because that is the day the relationship is actually tested.',
+    ],
+  },
+  {
+    name: 'Ishan Aslot',
+    role: 'Wealth Management',
+    credential: 'Steering the legacy to new-age, tech-driven wealth management',
+    image: IshanImage,
+    linkedin: 'https://www.linkedin.com/in/ishan-aslot/',
+    bio: [
+      'As financial dynamics evolve, growing an organization requires expanding into new frontiers. My core mission is steering our established legacy into the modern era of wealth management.',
+      'Today’s investors are moving beyond passive capital preservation toward active, long-term wealth creation — a shift that demands forward-thinking strategies. I focus on understanding client goals, evaluating fund flows, analyzing emerging opportunities, and strategically allocating capital to deliver sustainable growth.',
+    ],
+  },
+];
+
 const AboutSection = () => {
   return (
     <section id="about" className="relative py-20 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-primary text-white overflow-hidden">
@@ -40,27 +75,14 @@ const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center max-w-3xl mx-auto mb-14 md:mb-16"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.5, type: "spring" }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 rounded-full px-6 py-2.5 mb-8"
-          >
-            <Sparkles className="text-accent" size={18} />
-            <span className="text-accent font-semibold text-sm tracking-wide">Our Journey</span>
-          </motion.div>
+          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            Our Journey
+          </p>
 
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">
-              Legacy of Clarity
-            </span>
-            <br />
-            <span className="text-white/90">&</span>
-            <br />
-            <span className="text-white">Long-Term Vision</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-white">
+            A Legacy of Clarity <span className="text-accent">&amp;</span> Long-Term Vision
           </h2>
         </motion.div>
 
@@ -70,12 +92,9 @@ const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="relative mb-16 overflow-hidden group hover:border-accent/40 transition-all duration-500"
+          className="relative mb-24 md:mb-32 max-w-3xl mx-auto"
         >
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          <div className="relative z-10 space-y-6 leading-relaxed text-gray-300 text-lg">
+          <div className="space-y-6 leading-relaxed text-gray-300 text-base md:text-lg">
             <p>
               In <span className="text-accent font-semibold">1989</span>,{' '}
               <span className="text-white font-medium">Pragnesh Aslot</span> started a tax-advisory
@@ -112,83 +131,93 @@ const AboutSection = () => {
         </motion.div>
 
         {/* Team Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="relative bg-gradient-to-br from-primary/60 via-primary/40 to-primary/60 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-accent/20 shadow-2xl overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent rounded-3xl" />
-
-          <motion.h3
+        <div className="relative">
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="relative z-10 text-3xl md:text-4xl lg:text-5xl font-bold mb-14 text-center"
+            className="mb-16 md:mb-20 text-center"
           >
-            Meet Our <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">Team</span>
-          </motion.h3>
+            <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+              The People
+            </p>
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+              Meet Our Team
+            </h3>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12 relative z-10">
-            {[
-              { initials: 'PA', name: 'Pragnesh Aslot', image: PragneshImage, delay: 0.6 },
-              { initials: 'SA', name: 'Seema Aslot', image: SeemaImage, delay: 0.7 },
-              { initials: 'IA', name: 'Ishan Aslot', image: IshanImage, delay: 0.8 }
-            ].map((member) => (
-             <motion.div
-  key={member.initials}
-  initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: member.delay }}
-  viewport={{ once: true }}
-  className="text-center space-y-5 group"
->
-  <div className="relative w-36 h-36 md:w-40 md:h-40 mx-auto">
-    {/* Glow Effect */}
-    <motion.div
-      animate={{ scale: [1, 1.1, 1] }}
-      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute inset-0 rounded-full bg-gradient-to-br from-accent/30 to-yellow-600/30 blur-2xl group-hover:blur-3xl transition-all duration-500"
-    />
-    <img 
-      src={member.image.src} 
-      alt={member.name + ' Avatar'} 
-      className="relative w-full h-full rounded-full object-contain" 
-      loading="lazy" 
-      width={200} 
-      height={200} 
-    />
-  </div>
-  <div>
-    <h4 className="font-bold text-xl md:text-2xl text-white mb-2 group-hover:text-accent transition-colors duration-300">
-      {member.name}
-    </h4>
-  </div>
-</motion.div>
+          <div className="space-y-20 md:space-y-28">
+            {team.map((member, i) => (
+              <motion.article
+                key={member.name}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                viewport={{ once: true, margin: '-80px' }}
+                className="grid gap-10 md:gap-16 md:grid-cols-12 md:items-center"
+              >
+                <figure className={`md:col-span-5 relative ${i % 2 === 1 ? 'md:col-start-8' : ''}`}>
+                  <div className="absolute -inset-3 bg-accent/10 rounded-2xl -z-10" aria-hidden />
+                  <img
+                    src={member.image.src}
+                    alt={member.name}
+                    className="w-full aspect-[4/5] object-cover rounded-2xl shadow-2xl"
+                    loading="lazy"
+                    width={640}
+                    height={800}
+                  />
+                </figure>
+
+                <div className={`md:col-span-6 ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : 'md:col-start-7'}`}>
+                  <h4 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                    {member.name}
+                  </h4>
+                  <p className="mt-2 text-accent font-semibold">{member.role}</p>
+                  <p className="mt-1 text-sm text-white/60">{member.credential}</p>
+
+                  <div className="mt-6 h-px w-16 bg-accent/40" />
+
+                  <div className="mt-6 space-y-4 text-gray-300 leading-relaxed">
+                    {member.bio.map((para) => (
+                      <p key={para.slice(0, 24)}>{para}</p>
+                    ))}
+                  </div>
+
+                  {member.linkedin && (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-6 inline-flex items-center gap-2 text-sm text-white/70 hover:text-accent transition-colors"
+                    >
+                      <Linkedin size={16} />
+                      Connect on LinkedIn
+                    </a>
+                  )}
+                </div>
+              </motion.article>
             ))}
           </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center relative z-10"
+            className="text-center mt-20"
           >
             <Button
               onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group relative bg-gradient-to-r from-accent to-yellow-600 hover:from-yellow-400 hover:to-accent text-primary font-bold px-12 py-7 text-lg rounded-full transition-all duration-500 hover:scale-105 hover:shadow-[0_0_50px_rgba(255,215,0,0.7)] overflow-hidden"
+              className="group bg-accent hover:bg-accent/90 text-primary font-semibold px-10 py-6 text-base rounded-full transition-all duration-300 hover:scale-[1.03]"
             >
-              <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-              <span className="relative flex items-center gap-3">
+              <span className="flex items-center gap-3">
                 Connect With Us
-                <ArrowRight className="group-hover:translate-x-2 transition-transform duration-300" size={22} />
+                <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
               </span>
             </Button>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

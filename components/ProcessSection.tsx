@@ -76,18 +76,14 @@ const ProcessSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent"></div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-20 space-y-6">
-          <div className="inline-block">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="h-px w-12 bg-accent"></div>
-              <span className="text-sm font-bold text-accent tracking-widest">HOW WE WORK</span>
-              <div className="h-px w-12 bg-accent"></div>
-            </div>
-          </div>
-          <h2 className="text-5xl md:text-6xl font-bold text-primary">
-            A Proven <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">Process</span>
+        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-20">
+          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            How We Work
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary">
+            A Proven <span className="text-accent">Process</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-muted-foreground mt-5 leading-relaxed">
             Four strategic phases designed to transform your financial future
           </p>
         </div>

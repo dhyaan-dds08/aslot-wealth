@@ -64,30 +64,18 @@ const ValuePillars = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-6">
-          <div className="inline-block animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 backdrop-blur-sm mb-4">
-              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-sm text-accent font-medium">Foundation of Excellence</span>
-            </div>
-          </div>
-
-          <h2
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white animate-fade-in-up"
-          >
-            Our <span className="bg-gradient-to-r from-yellow-400 via-accent to-accent bg-clip-text text-transparent">Value Pillars</span>
-          </h2>
-
-          <p className="text-lg md:text-xl text-white max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            Building wealth on principles that stand the test of time
+        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
+          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            Foundation of Excellence
           </p>
 
-          {/* Decorative Line */}
-          <div className="flex items-center justify-center gap-2 pt-4">
-            <div className="h-[2px] w-12 bg-gradient-to-r from-transparent to-accent/50" />
-            <div className="w-2 h-2 rounded-full bg-accent" />
-            <div className="h-[2px] w-12 bg-gradient-to-l from-transparent to-accent/50" />
-          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
+            Our <span className="text-accent">Value Pillars</span>
+          </h2>
+
+          <p className="text-base md:text-lg text-white/70 mt-5 leading-relaxed">
+            Building wealth on principles that stand the test of time
+          </p>
         </div>
 
         {/* Pillars Grid */}

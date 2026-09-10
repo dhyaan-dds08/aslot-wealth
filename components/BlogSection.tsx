@@ -40,9 +40,12 @@ const BlogSection = () => {
   return (
     <section id="blogs" className="py-20 md:py-32 bg-primary text-primary-foreground">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 space-y-4 animate-fade-in-up">
-          <h2 className="text-4xl md:text-5xl font-bold">
-            <span className="">Insights</span> & <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">Perspectives</span>
+        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
+          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            From The Desk
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            Insights &amp; <span className="text-accent">Perspectives</span>
           </h2>
         </div>
 

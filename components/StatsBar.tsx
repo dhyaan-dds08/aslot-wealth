@@ -47,63 +47,48 @@ const StatItem = ({ value, label, suffix = '', icon: Icon }: StatItemProps) => {
   return (
     <div
       ref={ref}
-      className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-50 to-white p-8 md:p-10 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-slate-100"
+      className="group relative rounded-2xl bg-white p-8 md:p-10 border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-accent/40 transition-all duration-300 hover:-translate-y-1"
     >
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-accent/50 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <Icon
+        className="w-9 h-9 text-accent mb-8"
+        strokeWidth={1.5}
+      />
 
-      {/* Floating icon */}
-      <div className="relative mb-6 flex justify-center">
-        <div className="transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
-          <Icon
-            className="w-14 h-14 md:w-16 md:h-16 text-accent"
-            strokeWidth={1.5}
-          />
-        </div>
+      <div className="text-5xl md:text-6xl font-semibold text-primary leading-none tracking-tight tabular-nums">
+        {value.includes('₹') && '₹'}
+        {count}
+        <span className="text-accent">{suffix}</span>
       </div>
 
-      {/* Stats */}
-      <div className="relative text-center space-y-3">
-        <div className="text-5xl md:text-6xl font-black bg-gradient-to-r from-accent via-accent/70 to-accent bg-clip-text text-transparent leading-tight tracking-tight">
-          {value.includes('₹') && '₹'}
-          {count}
-          {suffix}
-        </div>
-        <div className="text-base md:text-lg text-primary font-semibold">
-          {label}
-        </div>
+      <div className="mt-4 text-sm md:text-base text-muted-foreground font-medium">
+        {label}
       </div>
-
-      {/* Decorative corner accent */}
-      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary to-transparent rounded-bl-full transform translate-x-12 -translate-y-12 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500" />
     </div>
   );
 };
 
 const StatsBar = () => {
   return (
-    <section className="relative bg-gradient-to-b from-white via-slate-50 to-white py-20 md:py-32 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-white via-slate-50 to-white py-20 md:py-28">
 
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Title with animated underline */}
-        <div className="text-center mb-16 md:mb-20">
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-slate-900 mb-4 animate-fade-in-up">
-            Trust ,{' '}
-            <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">
-                Measured
-              </span>
-            </span>
+      <div className="container mx-auto px-6">
+        {/* Title */}
+        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
+          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            By The Numbers
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary">
+            Trust, <span className="text-accent">Measured</span>
           </h2>
-          <p className="text-lg md:text-xl text-primary font-medium mt-6">
+          <p className="text-base md:text-lg text-muted-foreground mt-5">
             Numbers that speak volumes about our commitment
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           <StatItem
-            value="50"
+            value="75"
             label="Assets Under Management"
             suffix=" cr+"
             icon={TrendingUp}
@@ -121,15 +106,10 @@ const StatsBar = () => {
             icon={Award}
           />
         </div>
-      </div>
 
-
-      {/* Footer Note with modern card */}
-      <div className="absolute bottom-0 right-0 max-w-md ml-auto bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-200 shadow-sm">
-        <p className="text-slate-600 text-sm leading-relaxed">
-          <span className="font-bold text-primary/50">Figures as of Sep 2025</span>
-          <br />
-          <span className="text-xs">Updated quarterly • Aggregated across distributed products</span>
+        {/* Footer note */}
+        <p className="mt-10 text-center text-xs text-muted-foreground">
+          Figures as of Sep 2026 • Updated quarterly • Aggregated across distributed products
         </p>
       </div>
 

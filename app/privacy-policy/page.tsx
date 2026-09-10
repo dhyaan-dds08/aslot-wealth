@@ -141,7 +141,7 @@ const PrivacyPolicyPage = () => {
                             </p>
                             <div className="mt-4 p-4 bg-muted/50 rounded-lg">
                                 <p className="font-semibold text-foreground">Aslot Wealth Advisor</p>
-                                <p className="text-muted-foreground">Email: info@aslotwealthadvisor.com</p>
+                                <p className="text-muted-foreground">Email: info@aslotwealth.in</p>
                                 <p className="text-muted-foreground">AMFI ARN: 126127</p>
                             </div>
                         </section>

@@ -47,7 +47,7 @@ const Footer = () => {
                 <Instagram size={20} />
               </a>
               <a
-                href="mailto:info@aslotwealthadvisor.com"
+                href="mailto:info@aslotwealth.in"
                 className="text-primary hover:text-accent transition-colors"
                 aria-label="Email"
               >

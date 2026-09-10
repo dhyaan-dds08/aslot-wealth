@@ -19,7 +19,7 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Aslot Wealth Advisor - Personalised Investment Management",
   description:
-    "Three generations of trusted financial advice. Goal-aligned portfolios built for the long run. ₹50cr+ AUM, 250+ clients, 99% retention.",
+    "Trusted financial advice since 1989. Goal-aligned portfolios built for the long run. ₹75cr+ AUM, 250+ clients, 99% retention.",
   authors: [{ name: "Aslot Wealth Advisor" }],
   icons: {
     icon: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Aslot Wealth Advisor - Personalised Investment Management",
     description:
-      "Three generations of trusted financial advice. Goal-aligned portfolios built for the long run.",
+      "Trusted financial advice since 1989. Goal-aligned portfolios built for the long run.",
     type: "website",
   },
 };
@@ -47,7 +47,7 @@ const jsonLd = {
   "@type": "FinancialService",
   name: "Aslot Wealth Advisor",
   description:
-    "Personalised investment management and wealth advisory services with three generations of expertise",
+    "Personalised investment management and wealth advisory services, practising since 1989",
   telephone: "+91-XXXXXXXXXX",
   address: {
     "@type": "PostalAddress",

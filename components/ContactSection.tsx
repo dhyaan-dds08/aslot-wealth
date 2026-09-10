@@ -31,11 +31,14 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-0 md:py-0 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary">
-            Let&apos;s Start <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">Your Journey</span>
+        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
+          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            Get In Touch
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary">
+            Let&apos;s Start <span className="text-accent">Your Journey</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground mt-5">
             Schedule a discovery call or reach out to us directly
           </p>
         </div>

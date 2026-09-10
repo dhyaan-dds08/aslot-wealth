@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-inter",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+/* Serif display, shared with the sister Aslot & Associates site. Light weights
+ * only — the editorial look comes from large + light, never large + bold. */
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-playfair",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
@@ -116,7 +118,7 @@ export default function RootLayout({
         <script src="https://platform.linkedin.com/in.js" type="text/javascript" async></script>
       </head>
       <body
-        className={`${inter.variable} ${playfair.variable} antialiased`}
+        className={`${inter.variable} ${cormorant.variable} antialiased`}
       >
         {children}
 

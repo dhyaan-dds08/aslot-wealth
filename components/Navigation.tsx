@@ -71,10 +71,10 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white backdrop-blur-md shadow-lg' : 'bg-white'
+      className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${isScrolled ? 'border-b border-border' : 'border-b border-transparent'
         }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="container-page">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link
@@ -102,15 +102,15 @@ const Navigation = () => {
                     scrollToSection(link.href);
                   }
                 }}
-                className="text-primary hover:text-accent transition-colors duration-300 font-medium"
+                className="text-sm text-primary/80 hover:text-accent transition-colors duration-300"
                 aria-label={`Navigate to ${link.label}`}
               >
                 {link.label}
               </Link>
             ))}
             <Button
+              variant="default"
               onClick={() => scrollToSection('/#contact')}
-              className="bg-accent hover:bg-accent/90 text-primary font-semibold px-6 py-2 rounded-full transition-all duration-300 hover:scale-105"
               aria-label="Schedule a consultation call"
             >
               Schedule a Call
@@ -129,8 +129,8 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 bg-primary backdrop-blur-md shadow-xl animate-fade-in">
-            <div className="flex flex-col space-y-4 p-6">
+          <div className="md:hidden absolute top-20 left-0 right-0 bg-primary animate-fade-in">
+            <div className="flex flex-col p-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -141,14 +141,16 @@ const Navigation = () => {
                       scrollToSection(link.href);
                     }
                   }}
-                  className="text-primary-foreground hover:text-accent transition-colors duration-300 font-medium text-lg"
+                  className="border-b border-white/10 py-4 font-serif text-2xl font-light text-white transition-colors duration-300 hover:text-accent"
                 >
                   {link.label}
                 </Link>
               ))}
               <Button
+                variant="onDarkSolid"
+                size="lg"
                 onClick={() => scrollToSection('/#contact')}
-                className="bg-accent hover:bg-accent/90 text-primary font-semibold px-6 py-3 rounded-full w-full"
+                className="mt-8 w-full"
               >
                 Schedule a Call
               </Button>

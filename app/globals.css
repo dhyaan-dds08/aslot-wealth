@@ -2,15 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
 All colors MUST be HSL for compatibility with shadcn/ui.
+Type: Cormorant Garamond (display) + Inter (text), both loaded in app/layout.tsx.
 */
-@font-face {
-  font-family: 'bircola';
-  src: url('/fonts/bricola.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
 
 @layer base {
   :root {
@@ -114,23 +109,21 @@ All colors MUST be HSL for compatibility with shadcn/ui.
   }
 }
 
-.font-bricola {
-  font-family: 'bircola', sans-serif;
-}
 
 /* ── Design tokens: typography + motion ──
  * Fluid type scale. One class per level — never hand-pick text-5xl/font-black
  * at a call site, or the scale drifts section by section.
  */
 :root {
-  --font-size-h1: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem);
-  --line-height-h1: 1.06;
-  --font-size-h2: clamp(2rem, 1.35rem + 2.6vw, 3.25rem);
-  --line-height-h2: 1.1;
-  --font-size-h3: clamp(1.5rem, 1.2rem + 1.2vw, 2.125rem);
-  --line-height-h3: 1.2;
-  --font-size-h4: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  --line-height-h4: 1.3;
+  /* Serif at light weight needs more scale than bold sans to hold the page. */
+  --font-size-h1: clamp(2.75rem, 1.6rem + 4.6vw, 5rem);
+  --line-height-h1: 1.1;
+  --font-size-h2: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+  --line-height-h2: 1.15;
+  --font-size-h3: clamp(1.625rem, 1.25rem + 1.5vw, 2.375rem);
+  --line-height-h3: 1.25;
+  --font-size-h4: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --line-height-h4: 1.35;
   --font-size-h5: 1.0625rem;
   --line-height-h5: 1.5;
 
@@ -154,40 +147,43 @@ All colors MUST be HSL for compatibility with shadcn/ui.
   --duration-slow: 600ms;
 }
 
-/* Display font carries brand on headings/numerals; Inter carries running text. */
+/* Cormorant carries every heading; Inter carries running text and UI.
+ * The editorial look comes from LARGE + LIGHT — never large + bold. */
 .heading-1,
 .heading-2,
 .heading-3,
-.heading-4,
+.heading-4 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
 .heading-5 {
-  font-family: 'bircola', 'Inter', sans-serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-inter), system-ui, sans-serif;
   text-wrap: balance;
 }
 
 .heading-1 {
   font-size: var(--font-size-h1);
   line-height: var(--line-height-h1);
-  font-weight: 700;
 }
 
 .heading-2 {
   font-size: var(--font-size-h2);
   line-height: var(--line-height-h2);
-  font-weight: 700;
 }
 
 .heading-3 {
   font-size: var(--font-size-h3);
   line-height: var(--line-height-h3);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .heading-4 {
   font-size: var(--font-size-h4);
   line-height: var(--line-height-h4);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 400;
 }
 
 .heading-5 {
@@ -195,6 +191,25 @@ All colors MUST be HSL for compatibility with shadcn/ui.
   line-height: var(--line-height-h5);
   font-weight: 600;
   letter-spacing: 0;
+}
+
+/* Big light serif numerals for stats — the number IS the design. */
+.stat-number {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(2.75rem, 1.9rem + 3.4vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tiny tracked caption under a stat / beside a label. */
+.caption-track {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .body-lg {
@@ -265,7 +280,7 @@ All colors MUST be HSL for compatibility with shadcn/ui.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--font-inter), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

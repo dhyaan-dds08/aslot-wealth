@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { reveal, staggerChild, staggerParent, VIEWPORT } from '@/lib/motion';
+import { staggerChild, staggerParent, VIEWPORT } from '@/lib/motion';
 
 interface SectionHeadingProps {
   eyebrow?: string;
@@ -15,16 +15,15 @@ interface SectionHeadingProps {
 }
 
 /**
- * The one section header on this site. Every section used to roll its own
- * eyebrow (pill / dashes / none) and heading size, which is why the page read
- * as five different sites stitched together.
+ * The one section header on this site. Left-aligned by default — centred
+ * everything is what made the page read as a template.
  */
 const SectionHeading = ({
   eyebrow,
   title,
   subtitle,
   tone = 'light',
-  align = 'center',
+  align = 'left',
   className,
 }: SectionHeadingProps) => (
   <motion.div
@@ -33,13 +32,19 @@ const SectionHeading = ({
     whileInView="show"
     viewport={VIEWPORT}
     className={cn(
-      'max-w-2xl mb-14 md:mb-16',
-      align === 'center' ? 'text-center mx-auto' : 'text-left',
+      'mb-14 md:mb-20',
+      align === 'center' ? 'text-center mx-auto max-w-2xl' : 'max-w-3xl',
       className,
     )}
   >
     {eyebrow && (
-      <motion.p variants={staggerChild} className="eyebrow text-accent mb-4">
+      <motion.p
+        variants={staggerChild}
+        className={cn(
+          'caption-track mb-6',
+          tone === 'dark' ? 'text-accent' : 'text-accent',
+        )}
+      >
         {eyebrow}
       </motion.p>
     )}
@@ -53,10 +58,11 @@ const SectionHeading = ({
 
     {subtitle && (
       <motion.p
-        variants={reveal}
+        variants={staggerChild}
         className={cn(
-          'body-lg mt-5',
-          tone === 'dark' ? 'text-white/70' : 'text-muted-foreground',
+          'body-lg mt-6 max-w-xl',
+          align === 'center' && 'mx-auto',
+          tone === 'dark' ? 'text-white/65' : 'text-muted-foreground',
         )}
       >
         {subtitle}

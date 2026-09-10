@@ -33,8 +33,8 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-muted/10 to-background py-8 pb-0 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="section-y bg-background">
+      <div className="container-page">
         {/* Header */}
         <SectionHeading
           eyebrow="From The Desk"
@@ -52,7 +52,7 @@ export default async function BlogPage() {
             <Link 
               key={post.id} 
               href={`/blog/${post.id}`}
-              className="group glass-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col"
+              className="group border border-border bg-card overflow-hidden transition-colors duration-300 ease-soft hover:border-accent/50 flex flex-col"
             >
               {post.images && post.images.length > 0 && (
                 <div className="relative h-64 lg:h-72 bg-gradient-to-br from-accent/20 to-primary/20 overflow-hidden flex-shrink-0">

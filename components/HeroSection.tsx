@@ -170,33 +170,29 @@ const HeroSection = () => {
       {/* Main Content Container */}
       <div className="container-page pt-28 pb-20 relative z-10">
         <div className="max-w-4xl">
-          {/* Eyebrow ties the hero into the same system as every section below. */}
-          <p className="eyebrow text-accent mb-6">Aslot Wealth Advisor · Since 1989</p>
+          <p className="caption-track text-accent mb-8">
+            Aslot Wealth Advisor · Surat · Since 1989
+          </p>
 
           <div ref={headlineRef}>
             <h1 className="heading-1 text-white">
-              <span className="headline-word inline-block">Personalised</span>{' '}
-              <span className="headline-word inline-block">Purpose-Driven</span>{' '}
-              <span className="headline-word inline-block">Portfolio</span>{' '}
-              <span className="headline-word inline-block text-accent">
-                Built for the Long Run
-              </span>
+              <span className="headline-word inline-block">Personalised,</span>{' '}
+              <span className="headline-word inline-block">purpose-driven</span>{' '}
+              <span className="headline-word inline-block">portfolios</span>{' '}
+              <span className="headline-word inline-block">built for the long run</span>
             </h1>
           </div>
 
           <div ref={subheadlineRef} className="opacity-0">
-            <p className="body-lg mt-6 max-w-2xl text-white/75">
+            <p className="body-lg mt-8 max-w-xl text-white/70">
               We design investment roadmaps that stay relevant throughout the decades —
-              <span className="text-white"> funding milestones</span>,
-              <span className="text-white"> preserving wealth</span>, and
-              <span className="text-white"> managing risk</span>.
+              funding milestones, preserving wealth, and managing risk.
             </p>
           </div>
 
-          <div ref={buttonRef} className="mt-10 flex flex-col sm:flex-row gap-3 opacity-0">
-            <Button variant="accent" size="lg" onClick={scrollToContact}>
+          <div ref={buttonRef} className="mt-12 flex flex-col sm:flex-row gap-3 opacity-0">
+            <Button variant="onDarkSolid" size="lg" onClick={scrollToContact}>
               Schedule Discovery Call
-              <ArrowRight className="transition-transform duration-300 ease-soft group-hover/button:translate-x-1" />
             </Button>
             <Button
               variant="onDark"
@@ -208,15 +204,17 @@ const HeroSection = () => {
           </div>
 
           {/* Proof strip — the numbers that used to only appear a full screen down. */}
-          <dl className="mt-14 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/15 pt-8">
+          <dl className="mt-20 flex flex-wrap gap-x-14 gap-y-6 border-t border-white/15 pt-10">
             {[
               ['₹75cr+', 'Assets Under Management'],
               ['250+', 'Families Advised'],
-              ['35+ yrs', 'Practising Since 1989'],
+              ['35+', 'Years of Practice'],
             ].map(([value, label]) => (
               <div key={label}>
-                <dt className="heading-4 text-white tabular-nums">{value}</dt>
-                <dd className="label-sm mt-1 text-white/60">{label}</dd>
+                <dt className="font-serif text-4xl font-light text-white tabular-nums">
+                  {value}
+                </dt>
+                <dd className="caption-track mt-3 text-white/50">{label}</dd>
               </div>
             ))}
           </dl>

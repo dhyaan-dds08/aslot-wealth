@@ -30,7 +30,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-0 md:py-0 bg-background">
+    <section id="contact" className="section-y bg-background">
       <div className="container-page">
         <SectionHeading
           eyebrow="Get In Touch"
@@ -44,8 +44,8 @@ const ContactSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Form */}
-          <div className="glass-card rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-primary mb-6">Send us a message</h3>
+          <div className="border border-border bg-card p-8 md:p-10">
+            <h3 className="heading-4 text-primary mb-8">Send us a message</h3>
             <form onSubmit={handleSubmit} className="space-y-6" aria-label="Contact form">
               <div>
                 <label htmlFor="name" className="sr-only">Your Name</label>
@@ -89,7 +89,7 @@ const ContactSection = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground mb-3">Or start a quick chat:</p>
+              <p className="body-sm text-muted-foreground mb-3">Or start a quick chat:</p>
               <Button onClick={handleWhatsApp} variant="outline" size="lg" className="w-full">
                 Quick Consultation
               </Button>
@@ -98,25 +98,25 @@ const ContactSection = () => {
 
           {/* Contact Information */}
           <div className="space-y-8">
-            <div className="glass-card rounded-2xl p-8 space-y-6">
+            <div className="border border-border bg-card p-8 space-y-6">
               <div className="flex items-start space-x-4">
                 <MapPin className="text-accent mt-1" size={24} />
                 <div>
-                  <h4 className="font-semibold text-primary mb-2">Office Address</h4>
-                  <p className="text-muted-foreground">
+                  <h4 className="caption-track text-primary mb-2">Office Address</h4>
+                  <p className="body-md text-muted-foreground">
                     9, Gr. Floor, West side, Vishwakarma Society<br />
                     b/h Vishwakarma temple, Nr. ITC Building<br />
                     Majura Gate, Surat, Gujarat, India - 395002.
                   </p>
-                  <p className="text-sm text-accent mt-2">Visitor parking available</p>
+                  <p className="body-sm text-accent mt-2">Visitor parking available</p>
                 </div>
               </div>
 
               <div className="flex items-start space-x-4">
                 <Phone className="text-accent mt-1" size={24} />
                 <div>
-                  <h4 className="font-semibold text-primary mb-2">Phone</h4>
-                  <a href="tel:+919328826939" className="text-muted-foreground hover:text-accent transition-colors">
+                  <h4 className="caption-track text-primary mb-2">Phone</h4>
+                  <a href="tel:+919328826939" className="body-md text-muted-foreground hover:text-accent transition-colors">
                     +91 9328826939
                   </a>
                 </div>
@@ -125,8 +125,8 @@ const ContactSection = () => {
               <div className="flex items-start space-x-4">
                 <Mail className="text-accent mt-1" size={24} />
                 <div>
-                  <h4 className="font-semibold text-primary mb-2">Email</h4>
-                  <a href="mailto:info@aslotwealth.in" className="text-muted-foreground hover:text-accent transition-colors">
+                  <h4 className="caption-track text-primary mb-2">Email</h4>
+                  <a href="mailto:info@aslotwealth.in" className="body-md text-muted-foreground hover:text-accent transition-colors">
                     info@aslotwealth.in
                   </a>
                 </div>
@@ -135,14 +135,14 @@ const ContactSection = () => {
               <div className="flex items-start space-x-4">
                 <Clock className="text-accent mt-1" size={24} />
                 <div>
-                  <h4 className="font-semibold text-primary mb-2">Office Hours</h4>
-                  <p className="text-muted-foreground">Monday - Saturday: 10:30 AM to 7:00 PM</p>
+                  <h4 className="caption-track text-primary mb-2">Office Hours</h4>
+                  <p className="body-md text-muted-foreground">Monday - Saturday: 10:30 AM to 7:00 PM</p>
                 </div>
               </div>
             </div>
 
             {/* Map */}
-            <div className="glass-card rounded-2xl p-0 h-64 flex items-center justify-center bg-muted/20 border-2 border-accent/30 overflow-hidden">
+            <div className="h-64 overflow-hidden border border-border">
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3720.2642259473105!2d72.81732347526084!3d21.18166008050618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDEwJzU0LjAiTiA3MsKwNDknMTEuNiJF!5e0!3m2!1sen!2sin!4v1762702185037!5m2!1sen!2sin" 
                 width="100%" 
@@ -150,7 +150,7 @@ const ContactSection = () => {
                 allowFullScreen 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
-                className="rounded-2xl"
+                className=""
                 style={{ border: 0 }}
               />
             </div>

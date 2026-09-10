@@ -43,51 +43,17 @@ const team = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="relative section-y bg-gradient-to-br from-primary via-primary/90 to-primary text-white overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,215,0,0.2) 1px, transparent 0)`,
-          backgroundSize: '50px 50px'
-        }} />
-      </div>
-
-      {/* Floating Orbs */}
-      <motion.div
-        animate={{
-          y: [0, -30, 0],
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-20 left-10 w-72 h-72 bg-accent/20 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{
-          y: [0, 40, 0],
-          opacity: [0.2, 0.5, 0.2]
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
-      />
-
-      <div className="container-page relative z-10 max-w-6xl">
+    <section id="about" className="section-y bg-primary text-white">
+      <div className="container-page max-w-6xl">
         <SectionHeading
           tone="dark"
           eyebrow="Our Journey"
-          title={
-            <>
-              A Legacy of Clarity <span className="text-accent">&amp;</span> Long-Term Vision
-            </>
-          }
-          className="max-w-4xl"
+          title="A legacy of clarity and long-term vision"
         />
 
         {/* Story Content */}
-        <motion.div
-          {...revealOnScroll}
-          className="relative mb-24 md:mb-32 measure mx-auto"
-        >
-          <div className="space-y-6 body-lg text-white/75">
+        <motion.div {...revealOnScroll} className="mb-24 md:mb-36 measure">
+          <div className="space-y-6 body-lg text-white/70">
             <p>
               In <span className="text-accent font-semibold">1989</span>,{' '}
               <span className="text-white font-medium">Pragnesh Aslot</span> started a tax-advisory
@@ -115,24 +81,19 @@ const AboutSection = () => {
               platform spanning listed equity, PMS, AIFs, and private-equity co-investments.
             </p>
 
-            <p className="heading-4 text-white">
-              Today, <span className="text-accent">Aslot Wealth Advisory</span> blends seasoned
-              leadership with next-generation strategy—delivering goal-aligned, long-term portfolios
-              while upholding the integrity on which the firm was founded.
+            <p className="heading-3 text-white pt-4">
+              Today, Aslot Wealth Advisory blends seasoned leadership with next-generation
+              strategy—delivering goal-aligned, long-term portfolios while upholding the integrity
+              on which the firm was founded.
             </p>
           </div>
         </motion.div>
 
         {/* Team Section */}
         <div className="relative">
-          <SectionHeading
-            tone="dark"
-            eyebrow="The People"
-            title="Meet Our Team"
-            className="mb-16 md:mb-20"
-          />
+          <SectionHeading tone="dark" eyebrow="The People" title="Meet our team" />
 
-          <div className="space-y-20 md:space-y-28">
+          <div className="border-t border-white/15">
             {team.map((member, i) => (
               <motion.article
                 key={member.name}
@@ -140,26 +101,18 @@ const AboutSection = () => {
                 initial="hidden"
                 whileInView="show"
                 viewport={VIEWPORT}
-                className="group grid gap-10 md:gap-16 md:grid-cols-12 md:items-center"
+                className="group grid gap-8 md:gap-14 md:grid-cols-12 border-b border-white/15 py-14 md:py-20"
               >
                 <motion.figure
                   variants={staggerChild}
-                  className={`md:col-span-4 relative ${i % 2 === 1 ? 'md:col-start-9' : ''}`}
+                  className={`md:col-span-4 ${i % 2 === 1 ? 'md:col-start-9 md:row-start-1' : ''}`}
                 >
-                  {/* Offset accent plate — shifts toward the frame on hover. */}
-                  <span
-                    aria-hidden
-                    className={`absolute inset-0 rounded-2xl border border-accent/30 transition-transform duration-500 ease-soft ${i % 2 === 1
-                      ? 'translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2'
-                      : '-translate-x-4 translate-y-4 group-hover:-translate-x-2 group-hover:translate-y-2'
-                      }`}
-                  />
-                  {/* Frame settles in while the image pushes out — reformly's card hover. */}
-                  <div className="relative overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500 ease-soft group-hover:scale-[0.985]">
+                  {/* Square crop, no frame, no shadow — grayscale lifts on hover. */}
+                  <div className="overflow-hidden bg-white/5">
                     <img
                       src={member.image.src}
                       alt={member.name}
-                      className="w-full aspect-[4/5] object-cover transition-transform duration-500 ease-soft group-hover:scale-[1.05]"
+                      className="w-full aspect-[4/5] object-cover grayscale transition-all duration-700 ease-soft group-hover:grayscale-0 group-hover:scale-[1.03]"
                       loading="lazy"
                       width={640}
                       height={800}
@@ -172,13 +125,11 @@ const AboutSection = () => {
                   className={`md:col-span-7 ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : 'md:col-start-6'}`}
                 >
                   <h3 className="heading-3 text-white">{member.name}</h3>
-                  <p className="mt-2 label-md text-accent">{member.role}</p>
-                  <p className="mt-1 body-sm text-white/55">{member.credential}</p>
 
-                  {/* Rule extends as the row comes into focus. */}
-                  <span className="mt-6 block h-px w-12 bg-accent/40 transition-all duration-500 ease-soft group-hover:w-24 group-hover:bg-accent" />
+                  <p className="caption-track mt-4 text-accent">{member.role}</p>
+                  <p className="body-sm mt-2 text-white/50">{member.credential}</p>
 
-                  <div className="mt-6 space-y-4 body-md text-white/75">
+                  <div className="mt-8 space-y-5 body-md text-white/70">
                     {member.bio.map((para) => (
                       <p key={para.slice(0, 24)}>{para}</p>
                     ))}
@@ -189,9 +140,9 @@ const AboutSection = () => {
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group/link mt-6 inline-flex items-center gap-2 label-md text-white/70 transition-colors duration-300 hover:text-accent"
+                      className="mt-8 inline-flex items-center gap-2 caption-track text-white/60 border-b border-white/25 pb-1 transition-colors duration-300 hover:text-accent hover:border-accent"
                     >
-                      <Linkedin size={16} className="transition-transform duration-300 ease-soft group-hover/link:-translate-y-0.5" />
+                      <Linkedin size={13} />
                       Connect on LinkedIn
                     </a>
                   )}
@@ -200,12 +151,9 @@ const AboutSection = () => {
             ))}
           </div>
 
-          <motion.div
-            {...revealOnScroll}
-            className="text-center mt-20"
-          >
+          <motion.div {...revealOnScroll} className="mt-16">
             <Button
-              variant="accent"
+              variant="onDark"
               size="lg"
               onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
             >

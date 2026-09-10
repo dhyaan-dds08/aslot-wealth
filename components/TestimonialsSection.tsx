@@ -37,26 +37,23 @@ const TestimonialCard = ({ name, testimonial, position }: TestimonialCardProps) 
           pointerEvents: position >= 0 && position < 2 ? "auto" : "none",
         }}
       >
-        <div className="h-full rounded-2xl border border-white/15 bg-white/[0.09] p-8 md:p-10 shadow-on-dark transition-colors duration-300 ease-soft hover:border-accent/50 hover:bg-white/[0.12]">
-          {/* Quote mark instead of a name-first card — reads as testimony, not a byline. */}
-          <span aria-hidden className="block font-serif text-7xl leading-[0.6] text-accent/50">
-            &ldquo;
-          </span>
-
-          <blockquote className="mt-5 body-lg text-white/90">{displayText}</blockquote>
+        {/* No card — a hairline top rule and a large serif quote carry it. */}
+        <div className="h-full border-t border-white/20 pt-8 pr-0 md:pr-8">
+          <blockquote className="font-serif text-2xl md:text-[1.75rem] font-light leading-[1.45] text-white/90">
+            {displayText}
+          </blockquote>
 
           {shouldTruncate && (
             <button
               onClick={() => setShowModal(true)}
-              className="mt-4 label-md text-accent underline underline-offset-4 transition-opacity duration-300 hover:opacity-70"
+              className="mt-6 caption-track text-accent border-b border-accent/40 pb-1 transition-colors duration-300 hover:border-accent"
             >
               Read full story
             </button>
           )}
 
-          <footer className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
-            <span className="h-px w-6 bg-accent/60" />
-            <cite className="label-md not-italic text-white">{name}</cite>
+          <footer className="mt-8">
+            <cite className="caption-track not-italic text-white/50">{name}</cite>
           </footer>
         </div>
       </div>
@@ -72,23 +69,20 @@ const TestimonialCard = ({ name, testimonial, position }: TestimonialCardProps) 
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl rounded-2xl border border-white/15 bg-primary p-8 md:p-10 shadow-2xl"
+            className="w-full max-w-xl border border-white/20 bg-primary p-8 md:p-12"
           >
-            <span aria-hidden className="block font-serif text-5xl leading-none text-accent/40">
-              &ldquo;
-            </span>
+            <blockquote className="font-serif text-xl md:text-2xl font-light leading-[1.5] text-white/90">
+              {testimonial}
+            </blockquote>
 
-            <blockquote className="mt-4 body-lg text-white/85">{testimonial}</blockquote>
-
-            <footer className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
-              <span className="h-px w-6 bg-accent/60" />
-              <cite className="label-md not-italic text-white">{name}</cite>
+            <footer className="mt-8 border-t border-white/15 pt-6">
+              <cite className="caption-track not-italic text-white/50">{name}</cite>
             </footer>
 
             <Button
               variant="onDark"
               onClick={() => setShowModal(false)}
-              className="mt-8 w-full"
+              className="mt-10 w-full"
               autoFocus
             >
               Close
@@ -153,32 +147,29 @@ const TestimonialsSection = () => {
   return (
     <section id="testimonials" className="section-y bg-primary text-primary-foreground overflow-hidden">
       <div className="container-page">
-        <SectionHeading
-          tone="dark"
-          eyebrow="Client Stories"
-          title={
-            <>
-              Real People, <span className="text-accent">Tangible Outcomes</span>
-            </>
-          }
-          subtitle="Stories of trust, growth, and financial freedom"
-          className="mb-12 md:mb-16"
-        />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+          <SectionHeading
+            tone="dark"
+            eyebrow="Client Stories"
+            title="Real people, tangible outcomes"
+            className="mb-0 flex-1"
+          />
 
-        <div className="flex justify-end items-center gap-3 mb-8 max-w-6xl mx-auto px-4">
-          <Button variant="onDark" size="icon" onClick={handlePrevious} aria-label="Previous testimonial">
-            <ChevronLeft />
-          </Button>
-          <Button variant="onDark" size="icon" onClick={handleNext} aria-label="Next testimonial">
-            <ChevronRight />
-          </Button>
+          <div className="flex items-center gap-3 shrink-0">
+            <Button variant="onDark" size="icon" onClick={handlePrevious} aria-label="Previous testimonial">
+              <ChevronLeft />
+            </Button>
+            <Button variant="onDark" size="icon" onClick={handleNext} aria-label="Next testimonial">
+              <ChevronRight />
+            </Button>
+          </div>
         </div>
 
         {/* Slider Container */}
-        <div className="relative max-w-6xl mx-auto">
+        <div className="relative mt-14 md:mt-20">
           {/* Cards are absolutely positioned, so this min-height IS the height.
               It used to shrink at md (350px < 400px), which clipped every card. */}
-          <div className="relative min-h-[460px] sm:min-h-[420px] overflow-hidden">
+          <div className="relative min-h-[440px] sm:min-h-[380px] overflow-hidden">
             <div className="flex gap-4">
               {getVisibleTestimonials().map((testimonial, index) => (
                 <TestimonialCard
@@ -194,7 +185,7 @@ const TestimonialsSection = () => {
 
 
         {/* Dots Indicator */}
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex gap-2 mt-4">
           {testimonials.map((_, index) => (
             <button
               key={index}

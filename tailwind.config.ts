@@ -67,6 +67,19 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      transitionTimingFunction: {
+        // Site-wide easing. Named token so call sites never inline a bezier.
+        soft: "cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      /* Elevation scale, tinted with the brand navy/green rather than pure black
+       * so shadows sit in the palette instead of greying it out. */
+      boxShadow: {
+        card: "0 1px 2px hsl(var(--primary) / 0.04), 0 2px 8px -2px hsl(var(--primary) / 0.06)",
+        "card-hover":
+          "0 2px 4px hsl(var(--primary) / 0.05), 0 16px 32px -12px hsl(var(--primary) / 0.20)",
+        float: "0 24px 48px -16px hsl(var(--primary) / 0.28)",
+        "on-dark": "0 16px 40px -16px hsl(0 0% 0% / 0.45)",
+      },
       keyframes: {
         "accordion-down": {
           from: {

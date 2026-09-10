@@ -1,153 +1,96 @@
-import { useEffect, useRef, useState } from 'react';
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion';
 import { LucideIcon, TrendingUp, Users, Award } from 'lucide-react';
+import SectionHeading from '@/components/SectionHeading';
+import { EASE, staggerChild, staggerParent, VIEWPORT } from '@/lib/motion';
 
-interface StatItemProps {
-  value: string;
-  label: string;
-  suffix?: string;
-  icon: LucideIcon;
-}
+const STATS = [
+  { value: 75, suffix: 'cr+', prefix: '₹', label: 'Assets Under Management', icon: TrendingUp },
+  { value: 250, suffix: '+', prefix: '', label: 'Happy Clients', icon: Users },
+  { value: 99, suffix: '%', prefix: '', label: 'Client Retention Rate', icon: Award },
+] as const;
 
-const StatItem = ({ value, label, suffix = '', icon: Icon }: StatItemProps) => {
-  const [count, setCount] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+/** Counts once, driven by the section's own inView flag so all three run together. */
+const AnimatedValue = ({ value, inView }: { value: number; inView: boolean }) => {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (v) => Math.round(v));
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          const numericValue = parseInt(value.replace(/\D/g, ''));
-          const duration = 2000;
-          const steps = 60;
-          const increment = numericValue / steps;
-          let current = 0;
+    if (!inView) return;
+    const controls = animate(count, value, { duration: 1.6, ease: EASE });
+    return () => controls.stop();
+  }, [inView, value, count]);
 
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= numericValue) {
-              setCount(numericValue);
-              clearInterval(timer);
-            } else {
-              setCount(Math.floor(current));
-            }
-          }, duration / steps);
+  return <motion.span>{rounded}</motion.span>;
+};
 
-          return () => clearInterval(timer);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [value, hasAnimated]);
+const StatCard = ({
+  stat,
+  inView,
+}: {
+  stat: (typeof STATS)[number];
+  inView: boolean;
+}) => {
+  const Icon: LucideIcon = stat.icon;
 
   return (
-    <div
-      ref={ref}
-      className="group relative rounded-2xl bg-white p-8 md:p-10 border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-accent/40 transition-all duration-300 hover:-translate-y-1"
+    <motion.div
+      variants={staggerChild}
+      className="group flex items-center gap-5 rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 ease-soft hover:-translate-y-1 hover:border-accent/50 hover:shadow-card-hover sm:block sm:p-7 lg:p-8"
     >
-      <Icon
-        className="w-9 h-9 text-accent mb-8"
-        strokeWidth={1.5}
-      />
-
-      <div className="text-5xl md:text-6xl font-semibold text-primary leading-none tracking-tight tabular-nums">
-        {value.includes('₹') && '₹'}
-        {count}
-        <span className="text-accent">{suffix}</span>
+      {/* Row on mobile (a 230px-tall card per number wasted the screen), stack from sm up. */}
+      <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent/20 sm:mb-7">
+        <Icon className="size-5" strokeWidth={1.75} />
       </div>
 
-      <div className="mt-4 text-sm md:text-base text-muted-foreground font-medium">
-        {label}
+      <div>
+        <div className="heading-2 text-primary tabular-nums">
+          {stat.prefix}
+          <AnimatedValue value={stat.value} inView={inView} />
+          <span className="text-accent">{stat.suffix}</span>
+        </div>
+
+        <p className="mt-1 body-sm text-muted-foreground sm:mt-2">{stat.label}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 const StatsBar = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+
   return (
-    <section className="relative bg-gradient-to-b from-white via-slate-50 to-white py-20 md:py-28">
+    <section ref={ref} className="bg-background section-y">
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="By The Numbers"
+          title={
+            <>
+              Trust, <span className="text-accent">Measured</span>
+            </>
+          }
+          subtitle="Numbers that speak volumes about our commitment"
+        />
 
-      <div className="container mx-auto px-6">
-        {/* Title */}
-        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
-          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-            By The Numbers
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary">
-            Trust, <span className="text-accent">Measured</span>
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground mt-5">
-            Numbers that speak volumes about our commitment
-          </p>
-        </div>
+        <motion.div
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6"
+        >
+          {STATS.map((stat) => (
+            <StatCard key={stat.label} stat={stat} inView={inView} />
+          ))}
+        </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          <StatItem
-            value="75"
-            label="Assets Under Management"
-            suffix=" cr+"
-            icon={TrendingUp}
-          />
-          <StatItem
-            value="250"
-            label="Happy Clients"
-            suffix="+"
-            icon={Users}
-          />
-          <StatItem
-            value="99"
-            label="Client Retention Rate"
-            suffix="%"
-            icon={Award}
-          />
-        </div>
-
-        {/* Footer note */}
-        <p className="mt-10 text-center text-xs text-muted-foreground">
-          Figures as of Sep 2026 • Updated quarterly • Aggregated across distributed products
+        <p className="mt-10 text-center label-sm text-muted-foreground">
+          Figures as of Sep 2026 · Updated quarterly · Aggregated across distributed products
         </p>
       </div>
-
-      <style>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes draw-line {
-          from {
-            stroke-dasharray: 200;
-            stroke-dashoffset: 200;
-          }
-          to {
-            stroke-dasharray: 200;
-            stroke-dashoffset: 0;
-          }
-        }
-
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out;
-        }
-
-        .animate-draw-line {
-          animation: draw-line 1.5s ease-out 0.5s forwards;
-        }
-
-        .delay-1000 {
-          animation-delay: 1s;
-        }
-      `}</style>
     </section>
   );
 };

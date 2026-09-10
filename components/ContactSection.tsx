@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { useState } from 'react';
+import SectionHeading from '@/components/SectionHeading';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -30,18 +31,16 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="py-0 md:py-0 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
-          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-            Get In Touch
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary">
-            Let&apos;s Start <span className="text-accent">Your Journey</span>
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground mt-5">
-            Schedule a discovery call or reach out to us directly
-          </p>
-        </div>
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="Get In Touch"
+          title={
+            <>
+              Let&apos;s Start <span className="text-accent">Your Journey</span>
+            </>
+          }
+          subtitle="Schedule a discovery call or reach out to us directly"
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Form */}
@@ -75,10 +74,7 @@ const ContactSection = () => {
                   aria-label="Message"
                 />
               </div>
-              <Button
-                type="submit"
-                className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-semibold py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              >
+              <Button type="submit" variant="accent" size="lg" className="w-full">
                 <svg
                   className="mr-2"
                   width="20"
@@ -94,11 +90,7 @@ const ContactSection = () => {
 
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground mb-3">Or start a quick chat:</p>
-              <Button
-                onClick={handleWhatsApp}
-                variant="outline"
-                className="w-full border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all duration-300"
-              >
+              <Button onClick={handleWhatsApp} variant="outline" size="lg" className="w-full">
                 Quick Consultation
               </Button>
             </div>

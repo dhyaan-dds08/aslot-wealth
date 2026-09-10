@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import SectionHeading from '@/components/SectionHeading';
+import { Button } from '@/components/ui/button';
 
 interface TestimonialCardProps {
   name: string;
@@ -9,6 +11,14 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ name, testimonial, position }: TestimonialCardProps) => {
   const [showModal, setShowModal] = useState(false);
+
+  // Escape closes the modal; without this the only exit is the mouse.
+  useEffect(() => {
+    if (!showModal) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setShowModal(false);
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [showModal]);
 
   const MAX_CHARS = 200;
   const shouldTruncate = testimonial.length > MAX_CHARS;
@@ -27,42 +37,62 @@ const TestimonialCard = ({ name, testimonial, position }: TestimonialCardProps) 
           pointerEvents: position >= 0 && position < 2 ? "auto" : "none",
         }}
       >
-        <div className="glass-card rounded-3xl p-8 md:p-12 bg-white/10 backdrop-blur-sm border border-white/20">
-          <div className="flex flex-col items-center text-center space-y-6">
-            <div className="space-y-4">
-              <p className="text-xl md:text-2xl font-semibold text-white">{name}</p>
+        <div className="h-full rounded-2xl border border-white/15 bg-white/[0.09] p-8 md:p-10 shadow-on-dark transition-colors duration-300 ease-soft hover:border-accent/50 hover:bg-white/[0.12]">
+          {/* Quote mark instead of a name-first card — reads as testimony, not a byline. */}
+          <span aria-hidden className="block font-serif text-7xl leading-[0.6] text-accent/50">
+            &ldquo;
+          </span>
 
-              <p className="text-accent text-base md:text-lg leading-relaxed max-w-3xl">
-                &quot;{displayText}&quot;
-              </p>
+          <blockquote className="mt-5 body-lg text-white/90">{displayText}</blockquote>
 
-              {shouldTruncate && (
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="text-accent underline underline-offset-4 hover:text-accent/50 transition-colors"
-                >
-                  Show more
-                </button>
-              )}
-            </div>
-          </div>
+          {shouldTruncate && (
+            <button
+              onClick={() => setShowModal(true)}
+              className="mt-4 label-md text-accent underline underline-offset-4 transition-opacity duration-300 hover:opacity-70"
+            >
+              Read full story
+            </button>
+          )}
+
+          <footer className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
+            <span className="h-px w-6 bg-accent/60" />
+            <cite className="label-md not-italic text-white">{name}</cite>
+          </footer>
         </div>
       </div>
 
       {/* MODAL / POPOVER */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white/10 border border-white/20 backdrop-blur-md p-6 md:p-10 rounded-3xl shadow-lg max-w-xl w-[90%] animate-fadeIn">
-            <p className="text-accent text-lg md:text-xl leading-relaxed">
-              &quot;{testimonial}&quot;
-            </p>
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Testimonial from ${name}`}
+          onClick={() => setShowModal(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-primary/80 p-4 backdrop-blur-sm animate-fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-xl rounded-2xl border border-white/15 bg-primary p-8 md:p-10 shadow-2xl"
+          >
+            <span aria-hidden className="block font-serif text-5xl leading-none text-accent/40">
+              &ldquo;
+            </span>
 
-            <button
+            <blockquote className="mt-4 body-lg text-white/85">{testimonial}</blockquote>
+
+            <footer className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
+              <span className="h-px w-6 bg-accent/60" />
+              <cite className="label-md not-italic text-white">{name}</cite>
+            </footer>
+
+            <Button
+              variant="onDark"
               onClick={() => setShowModal(false)}
-              className="mt-6 bg-white/20 hover:bg-white/30 text-white px-5 py-2 rounded-xl"
+              className="mt-8 w-full"
+              autoFocus
             >
               Close
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -121,40 +151,34 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section id="testimonials" className="py-20 md:py-32 bg-primary text-primary-foreground overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
-          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-            Client Stories
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-            Real People, <span className="text-accent">Tangible Outcomes</span>
-          </h2>
-          <p className="text-base md:text-lg text-primary-foreground/70 mt-5">
-            Stories of trust, growth, and financial freedom
-          </p>
-        </div>
+    <section id="testimonials" className="section-y bg-primary text-primary-foreground overflow-hidden">
+      <div className="container-page">
+        <SectionHeading
+          tone="dark"
+          eyebrow="Client Stories"
+          title={
+            <>
+              Real People, <span className="text-accent">Tangible Outcomes</span>
+            </>
+          }
+          subtitle="Stories of trust, growth, and financial freedom"
+          className="mb-12 md:mb-16"
+        />
 
         <div className="flex justify-end items-center gap-3 mb-8 max-w-6xl mx-auto px-4">
-          <button
-            onClick={handlePrevious}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="text-white" size={20} />
-          </button>
-          <button
-            onClick={handleNext}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="text-white" size={20} />
-          </button>
+          <Button variant="onDark" size="icon" onClick={handlePrevious} aria-label="Previous testimonial">
+            <ChevronLeft />
+          </Button>
+          <Button variant="onDark" size="icon" onClick={handleNext} aria-label="Next testimonial">
+            <ChevronRight />
+          </Button>
         </div>
 
         {/* Slider Container */}
         <div className="relative max-w-6xl mx-auto">
-          <div className="relative min-h-[400px] md:min-h-[350px] overflow-hidden">
+          {/* Cards are absolutely positioned, so this min-height IS the height.
+              It used to shrink at md (350px < 400px), which clipped every card. */}
+          <div className="relative min-h-[460px] sm:min-h-[420px] overflow-hidden">
             <div className="flex gap-4">
               {getVisibleTestimonials().map((testimonial, index) => (
                 <TestimonialCard

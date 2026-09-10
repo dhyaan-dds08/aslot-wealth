@@ -168,69 +168,58 @@ const HeroSection = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
       {/* Main Content Container */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="space-y-8 md:text-center lg:text-left">
-            {/* Main Headline with GSAP animation */}
-            <div ref={headlineRef} className="">
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
-                <div className="">
-                  <span
-                    className="headline-word inline-block mb-2"
+      <div className="container-page pt-28 pb-20 relative z-10">
+        <div className="max-w-4xl">
+          {/* Eyebrow ties the hero into the same system as every section below. */}
+          <p className="eyebrow text-accent mb-6">Aslot Wealth Advisor · Since 1989</p>
 
-                  >
-                    Personalised
-                  </span>
-                </div>
-                <div className="">
-                  <span
-                    className="headline-word inline-block mb-2"
-                  >
-                    Purpose-Driven
-                  </span>
-                </div>
-                <div className="">
-                  <span className="headline-word inline-block mb-2 text-white">
-                    Portfolio
-                  </span>{' '}
-                  <span
-                    className="headline-word gradient-text inline-block bg-gradient-to-r from-accent via-yellow-300 to-accent bg-clip-text text-transparent"
-                    style={{
-                      backgroundSize: '200% 100%',
-                      backgroundPosition: '100% 0%'
-                    }}
-                  >
-                    Built for the Long Run
-                  </span>
-                </div>
-              </h1>
-            </div>
-
-            {/* Subheadline */}
-            <div ref={subheadlineRef} className="opacity-0">
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-300 leading-relaxed max-w-4xl mx-auto lg:mx-0">
-                We design investment roadmaps that stay relevant throughout the decades —
-                <span className="text-accent font-semibold"> funding milestones</span>,
-                <span className="text-accent font-semibold"> preserving wealth</span>, and
-                <span className="text-accent font-semibold"> managing risk</span>.
-              </p>
-            </div>
-
-            {/* CTA Button */}
-            <div ref={buttonRef} className="pt-8 opacity-0">
-              <Button
-                onClick={scrollToContact}
-                size="lg"
-                className="group relative bg-gradient-to-r from-accent to-yellow-400 hover:from-yellow-400 hover:to-accent text-[#355244] font-bold px-10 py-7 text-lg rounded-full transition-all duration-500 hover:scale-105 hover:shadow-[0_0_50px_rgba(255,215,0,0.8)] overflow-hidden"
-              >
-                <span className="absolute inset-0 bg-white/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                <span className="relative flex items-center justify-center gap-3">
-                  Schedule Discovery Call
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
-                </span>
-              </Button>
-            </div>
+          <div ref={headlineRef}>
+            <h1 className="heading-1 text-white">
+              <span className="headline-word inline-block">Personalised</span>{' '}
+              <span className="headline-word inline-block">Purpose-Driven</span>{' '}
+              <span className="headline-word inline-block">Portfolio</span>{' '}
+              <span className="headline-word inline-block text-accent">
+                Built for the Long Run
+              </span>
+            </h1>
           </div>
+
+          <div ref={subheadlineRef} className="opacity-0">
+            <p className="body-lg mt-6 max-w-2xl text-white/75">
+              We design investment roadmaps that stay relevant throughout the decades —
+              <span className="text-white"> funding milestones</span>,
+              <span className="text-white"> preserving wealth</span>, and
+              <span className="text-white"> managing risk</span>.
+            </p>
+          </div>
+
+          <div ref={buttonRef} className="mt-10 flex flex-col sm:flex-row gap-3 opacity-0">
+            <Button variant="accent" size="lg" onClick={scrollToContact}>
+              Schedule Discovery Call
+              <ArrowRight className="transition-transform duration-300 ease-soft group-hover/button:translate-x-1" />
+            </Button>
+            <Button
+              variant="onDark"
+              size="lg"
+              onClick={() => document.querySelector('#process')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              How We Work
+            </Button>
+          </div>
+
+          {/* Proof strip — the numbers that used to only appear a full screen down. */}
+          <dl className="mt-14 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/15 pt-8">
+            {[
+              ['₹75cr+', 'Assets Under Management'],
+              ['250+', 'Families Advised'],
+              ['35+ yrs', 'Practising Since 1989'],
+            ].map(([value, label]) => (
+              <div key={label}>
+                <dt className="heading-4 text-white tabular-nums">{value}</dt>
+                <dd className="label-sm mt-1 text-white/60">{label}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
 

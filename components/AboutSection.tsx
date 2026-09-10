@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SectionHeading from '@/components/SectionHeading';
+import { revealOnScroll, staggerChild, staggerParent, VIEWPORT } from '@/lib/motion';
 import PragneshImage from '@/assets/teams/Pragnesh Aslot.jpg'
 import SeemaImage from '@/assets/teams/Seema Aslot.jpg'
 import IshanImage from '@/assets/teams/Ishan Aslot.jpg'
@@ -41,7 +43,7 @@ const team = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="relative py-20 md:py-32 bg-gradient-to-br from-primary via-primary/90 to-primary text-white overflow-hidden">
+    <section id="about" className="relative section-y bg-gradient-to-br from-primary via-primary/90 to-primary text-white overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -68,33 +70,24 @@ const AboutSection = () => {
         className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
       />
 
-      <div className="container relative z-10 mx-auto px-6 max-w-6xl">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto mb-14 md:mb-16"
-        >
-          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-            Our Journey
-          </p>
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-white">
-            A Legacy of Clarity <span className="text-accent">&amp;</span> Long-Term Vision
-          </h2>
-        </motion.div>
+      <div className="container-page relative z-10 max-w-6xl">
+        <SectionHeading
+          tone="dark"
+          eyebrow="Our Journey"
+          title={
+            <>
+              A Legacy of Clarity <span className="text-accent">&amp;</span> Long-Term Vision
+            </>
+          }
+          className="max-w-4xl"
+        />
 
         {/* Story Content */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="relative mb-24 md:mb-32 max-w-3xl mx-auto"
+          {...revealOnScroll}
+          className="relative mb-24 md:mb-32 measure mx-auto"
         >
-          <div className="space-y-6 leading-relaxed text-gray-300 text-base md:text-lg">
+          <div className="space-y-6 body-lg text-white/75">
             <p>
               In <span className="text-accent font-semibold">1989</span>,{' '}
               <span className="text-white font-medium">Pragnesh Aslot</span> started a tax-advisory
@@ -122,7 +115,7 @@ const AboutSection = () => {
               platform spanning listed equity, PMS, AIFs, and private-equity co-investments.
             </p>
 
-            <p className="text-white font-medium text-xl">
+            <p className="heading-4 text-white">
               Today, <span className="text-accent">Aslot Wealth Advisory</span> blends seasoned
               leadership with next-generation strategy—delivering goal-aligned, long-term portfolios
               while upholding the integrity on which the firm was founded.
@@ -132,53 +125,60 @@ const AboutSection = () => {
 
         {/* Team Section */}
         <div className="relative">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="mb-16 md:mb-20 text-center"
-          >
-            <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-              The People
-            </p>
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-              Meet Our Team
-            </h3>
-          </motion.div>
+          <SectionHeading
+            tone="dark"
+            eyebrow="The People"
+            title="Meet Our Team"
+            className="mb-16 md:mb-20"
+          />
 
           <div className="space-y-20 md:space-y-28">
             {team.map((member, i) => (
               <motion.article
                 key={member.name}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-                viewport={{ once: true, margin: '-80px' }}
-                className="grid gap-10 md:gap-16 md:grid-cols-12 md:items-center"
+                variants={staggerParent}
+                initial="hidden"
+                whileInView="show"
+                viewport={VIEWPORT}
+                className="group grid gap-10 md:gap-16 md:grid-cols-12 md:items-center"
               >
-                <figure className={`md:col-span-5 relative ${i % 2 === 1 ? 'md:col-start-8' : ''}`}>
-                  <div className="absolute -inset-3 bg-accent/10 rounded-2xl -z-10" aria-hidden />
-                  <img
-                    src={member.image.src}
-                    alt={member.name}
-                    className="w-full aspect-[4/5] object-cover rounded-2xl shadow-2xl"
-                    loading="lazy"
-                    width={640}
-                    height={800}
+                <motion.figure
+                  variants={staggerChild}
+                  className={`md:col-span-4 relative ${i % 2 === 1 ? 'md:col-start-9' : ''}`}
+                >
+                  {/* Offset accent plate — shifts toward the frame on hover. */}
+                  <span
+                    aria-hidden
+                    className={`absolute inset-0 rounded-2xl border border-accent/30 transition-transform duration-500 ease-soft ${i % 2 === 1
+                      ? 'translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2'
+                      : '-translate-x-4 translate-y-4 group-hover:-translate-x-2 group-hover:translate-y-2'
+                      }`}
                   />
-                </figure>
+                  {/* Frame settles in while the image pushes out — reformly's card hover. */}
+                  <div className="relative overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500 ease-soft group-hover:scale-[0.985]">
+                    <img
+                      src={member.image.src}
+                      alt={member.name}
+                      className="w-full aspect-[4/5] object-cover transition-transform duration-500 ease-soft group-hover:scale-[1.05]"
+                      loading="lazy"
+                      width={640}
+                      height={800}
+                    />
+                  </div>
+                </motion.figure>
 
-                <div className={`md:col-span-6 ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : 'md:col-start-7'}`}>
-                  <h4 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-                    {member.name}
-                  </h4>
-                  <p className="mt-2 text-accent font-semibold">{member.role}</p>
-                  <p className="mt-1 text-sm text-white/60">{member.credential}</p>
+                <motion.div
+                  variants={staggerChild}
+                  className={`md:col-span-7 ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : 'md:col-start-6'}`}
+                >
+                  <h3 className="heading-3 text-white">{member.name}</h3>
+                  <p className="mt-2 label-md text-accent">{member.role}</p>
+                  <p className="mt-1 body-sm text-white/55">{member.credential}</p>
 
-                  <div className="mt-6 h-px w-16 bg-accent/40" />
+                  {/* Rule extends as the row comes into focus. */}
+                  <span className="mt-6 block h-px w-12 bg-accent/40 transition-all duration-500 ease-soft group-hover:w-24 group-hover:bg-accent" />
 
-                  <div className="mt-6 space-y-4 text-gray-300 leading-relaxed">
+                  <div className="mt-6 space-y-4 body-md text-white/75">
                     {member.bio.map((para) => (
                       <p key={para.slice(0, 24)}>{para}</p>
                     ))}
@@ -189,32 +189,28 @@ const AboutSection = () => {
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-6 inline-flex items-center gap-2 text-sm text-white/70 hover:text-accent transition-colors"
+                      className="group/link mt-6 inline-flex items-center gap-2 label-md text-white/70 transition-colors duration-300 hover:text-accent"
                     >
-                      <Linkedin size={16} />
+                      <Linkedin size={16} className="transition-transform duration-300 ease-soft group-hover/link:-translate-y-0.5" />
                       Connect on LinkedIn
                     </a>
                   )}
-                </div>
+                </motion.div>
               </motion.article>
             ))}
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            {...revealOnScroll}
             className="text-center mt-20"
           >
             <Button
+              variant="accent"
+              size="lg"
               onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group bg-accent hover:bg-accent/90 text-primary font-semibold px-10 py-6 text-base rounded-full transition-all duration-300 hover:scale-[1.03]"
             >
-              <span className="flex items-center gap-3">
-                Connect With Us
-                <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
-              </span>
+              Connect With Us
+              <ArrowRight className="transition-transform duration-300 ease-soft group-hover/button:translate-x-1" />
             </Button>
           </motion.div>
         </div>

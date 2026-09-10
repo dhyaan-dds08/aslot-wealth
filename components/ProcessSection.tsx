@@ -1,137 +1,126 @@
-import { Search, Lightbulb, Rocket, BarChart3 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+'use client';
 
-interface ProcessStepProps {
-  number: string;
-  icon: React.ReactNode;
+import { Search, Lightbulb, Rocket, BarChart3, ArrowRight, type LucideIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import SectionHeading from '@/components/SectionHeading';
+import { revealOnScroll, staggerChild, staggerParent, VIEWPORT } from '@/lib/motion';
+
+const STEPS: { icon: LucideIcon; title: string; description: string }[] = [
+  {
+    icon: Search,
+    title: 'Discovery',
+    description:
+      'Deep-dive on goals, existing portfolio, risk tolerance, and what matters most to you.',
+  },
+  {
+    icon: Lightbulb,
+    title: 'Design',
+    description:
+      'Propose holistic plan tailored to your objectives with clear asset allocation strategy.',
+  },
+  {
+    icon: Rocket,
+    title: 'Implementation',
+    description:
+      'Open accounts, execute allocations, set up reporting — making the plan a reality.',
+  },
+  {
+    icon: BarChart3,
+    title: 'Monitor & Refine',
+    description:
+      'Quarterly reviews, tactical tilts, annual goal realignment to keep you on track.',
+  },
+];
+
+const ProcessStep = ({
+  index,
+  icon: Icon,
+  title,
+  description,
+}: {
+  index: number;
+  icon: LucideIcon;
   title: string;
   description: string;
-  delay: number;
-}
+}) => (
+  <motion.article
+    variants={staggerChild}
+    className="group relative h-full rounded-2xl border border-border bg-card p-7 md:p-8 shadow-card transition-all duration-300 ease-soft hover:-translate-y-1 hover:border-accent/50 hover:shadow-card-hover"
+  >
+    <div className="flex items-start gap-5">
+      <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-accent/20">
+        <Icon size={22} strokeWidth={1.75} />
+      </div>
 
-const ProcessStep = ({ number, icon, title, description, delay }: ProcessStepProps) => {
-  return (
-    <div className="group relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent/5 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-      <div className="relative bg-card border-2 border-border rounded-3xl p-8 hover:border-accent transition-all duration-500 overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full -mr-16 -mt-16"></div>
-
-        <div className="relative flex items-start space-x-6">
-          <div className="flex-shrink-0">
-            <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <div className="text-accent">
-                {icon}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex-1 space-y-3">
-            <div className="flex items-center space-x-3">
-              <span className="text-sm font-bold text-accent/60">STEP {number}</span>
-              <div className="h-px flex-1 bg-gradient-to-r from-accent/20 to-transparent"></div>
-            </div>
-            <h3 className="text-2xl font-bold text-primary group-hover:text-accent transition-colors duration-300">
-              {title}
-            </h3>
-            <p className="text-muted-foreground leading-relaxed text-sm">
-              {description}
-            </p>
-          </div>
+      <div className="flex-1">
+        <div className="flex items-center gap-3">
+          <span className="label-sm tabular-nums text-accent/70">
+            STEP {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className="h-px flex-1 bg-border" />
         </div>
+
+        <h3 className="heading-4 mt-3 text-primary transition-colors duration-300 group-hover:text-accent">
+          {title}
+        </h3>
+
+        <p className="mt-2 body-sm text-muted-foreground">{description}</p>
       </div>
     </div>
-  );
-};
+  </motion.article>
+);
 
-const ProcessSection = () => {
-  const steps = [
-    {
-      icon: <Search size={40} />,
-      title: 'Discovery',
-      description:
-        'Deep-dive on goals, existing portfolio, risk tolerance, and what matters most to you.',
-    },
-    {
-      icon: <Lightbulb size={40} />,
-      title: 'Design',
-      description:
-        'Propose holistic plan tailored to your objectives with clear asset allocation strategy.',
-    },
-    {
-      icon: <Rocket size={40} />,
-      title: 'Implementation',
-      description:
-        'Open accounts, execute allocations, set up reporting — making the plan a reality.',
-    },
-    {
-      icon: <BarChart3 size={40} />,
-      title: 'Monitor & Refine',
-      description:
-        'Quarterly reviews, tactical tilts, annual goal realignment to keep you on track.',
-    },
-  ];
+const ProcessSection = () => (
+  <section id="process" className="relative section-y bg-background overflow-hidden">
+    <div
+      aria-hidden
+      className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-accent/5 to-transparent"
+    />
 
-  return (
-    <section id="process" className="py-20 md:py-32 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent"></div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-20">
-          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-            How We Work
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary">
+    <div className="container-page relative z-10">
+      <SectionHeading
+        eyebrow="How We Work"
+        title={
+          <>
             A Proven <span className="text-accent">Process</span>
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground mt-5 leading-relaxed">
-            Four strategic phases designed to transform your financial future
-          </p>
+          </>
+        }
+        subtitle="Four strategic phases designed to transform your financial future"
+      />
+
+      <motion.div
+        variants={staggerParent}
+        initial="hidden"
+        whileInView="show"
+        viewport={VIEWPORT}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto"
+      >
+        {STEPS.map((step, index) => (
+          <ProcessStep key={step.title} index={index} {...step} />
+        ))}
+      </motion.div>
+
+      <motion.div {...revealOnScroll} className="flex flex-col items-center gap-8 mt-16">
+        <div className="inline-flex items-center gap-3 rounded-full border border-accent/25 bg-accent/5 px-6 py-3">
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
+            <span className="relative inline-flex size-2 rounded-full bg-accent" />
+          </span>
+          <span className="label-md text-primary">99% client retention since inception</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto mb-20">
-          {steps.map((step, index) => (
-            <ProcessStep
-              key={step.title}
-              number={(index + 1).toString()}
-              icon={step.icon}
-              title={step.title}
-              description={step.description}
-              delay={index * 150}
-            />
-          ))}
-        </div>
+        <Button
+          variant="accent"
+          size="lg"
+          onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          Start Your Journey
+          <ArrowRight className="transition-transform duration-300 ease-soft group-hover/button:translate-x-1" />
+        </Button>
+      </motion.div>
+    </div>
+  </section>
+);
 
-        <div className="flex flex-col items-center space-y-8 mt-16">
-          <div className="relative">
-            <div className="absolute inset-0 bg-accent/20 blur-2xl rounded-full"></div>
-            <div className="relative bg-gradient-to-r from-accent/10 to-accent/5 border border-accent/20 rounded-2xl px-10 py-5 inline-flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse delay-75"></div>
-                <div className="w-2 h-2 rounded-full bg-green-300 animate-pulse delay-150"></div>
-              </div>
-              <span className="text-primary font-bold text-lg">
-                99% client retention since inception
-              </span>
-            </div>
-          </div>
-
-          <Button
-            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-            size="lg"
-            className="group bg-accent hover:bg-accent/90 text-primary font-bold px-12 py-7 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-accent/25"
-          >
-            <span className="flex items-center space-x-2">
-              <span>Start Your Journey</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default ProcessSection
+export default ProcessSection;

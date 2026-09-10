@@ -33,8 +33,9 @@ const ERAS = [
   },
 ];
 
+/* "Today" is the heading, so the sentence no longer repeats it. */
 const TODAY =
-  'Today, Aslot Wealth Advisory blends seasoned leadership with next-generation strategy — delivering goal-aligned, long-term portfolios while upholding the integrity on which the firm was founded.';
+  'Aslot Wealth Advisory blends seasoned leadership with next-generation strategy — delivering goal-aligned, long-term portfolios while upholding the integrity on which the firm was founded.';
 
 const JourneySection = () => {
   const railRef = useRef<HTMLOListElement>(null);
@@ -90,7 +91,7 @@ const JourneySection = () => {
 
                 <div className="era-body">
                   <p className="figure font-serif text-[1.75rem] leading-none">{era.year}</p>
-                  <p className="prose-sm-x measure mt-3 text-white/70">{era.body}</p>
+                  <p className="prose-sm-x measure mt-3 text-white/80">{era.body}</p>
                 </div>
               </li>
             ))}
@@ -98,7 +99,9 @@ const JourneySection = () => {
 
           <aside className="mt-12 lg:col-span-4 lg:mt-0">
             <div className="border-t border-white/20 pt-6 lg:sticky lg:top-28">
-              <p className="meta text-white/70">Today</p>
+              {/* Sized to match the era years so it reads as the timeline's
+                  final beat, not a caption. */}
+              <p className="figure font-serif text-[1.75rem] leading-none text-white">Today</p>
               <p className="lede mt-4 text-white/85">{TODAY}</p>
             </div>
           </aside>

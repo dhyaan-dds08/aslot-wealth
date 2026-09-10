@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
 /* Two families, two roles. Limited weights keep the payload small on
    Indian mobile networks; next/font self-hosts and preloads both. */
-const inter = Inter({
+/* Humanist-geometric, warm and confident at text sizes, and it holds up
+   against Garamond's high-contrast strokes. Variable axis so body copy can
+   sit at 450 — 400 read thin, 500 is heavy over a paragraph. */
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-inter",
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -133,7 +135,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-IN">
-      <body className={`${inter.variable} ${cormorant.variable} antialiased`}>
+      <body className={`${sans.variable} ${cormorant.variable} antialiased`}>
         {children}
 
         <script

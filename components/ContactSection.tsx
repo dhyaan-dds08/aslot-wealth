@@ -103,9 +103,9 @@ const ContactSection = () => {
         <div className="mt-14 grid gap-x-16 gap-y-14 lg:grid-cols-2">
           {/* Message form — writes straight into WhatsApp, no inbox in between. */}
           <div>
-            <form onSubmit={sendWhatsApp} className="space-y-5">
+            <form onSubmit={sendWhatsApp} className="space-y-6">
               <div>
-                <label htmlFor="wa-name" className="meta block pb-2 font-medium text-forest">
+                <label htmlFor="wa-name" className="field-label">
                   Your name
                 </label>
                 <input
@@ -115,12 +115,13 @@ const ContactSection = () => {
                   onChange={(e) => setName(e.target.value)}
                   required
                   autoComplete="name"
-                  className="h-12 w-full border border-input bg-surface px-4 text-[0.9375rem] outline-none transition-colors duration-150 focus:border-forest"
+                  placeholder="e.g. Dipak Patel"
+                  className="field h-14"
                 />
               </div>
 
               <div>
-                <label htmlFor="wa-msg" className="meta block pb-2 font-medium text-forest">
+                <label htmlFor="wa-msg" className="field-label">
                   Message
                 </label>
                 <textarea
@@ -131,7 +132,7 @@ const ContactSection = () => {
                   required
                   rows={5}
                   placeholder="Tell us about your goals, or what you'd like reviewed…"
-                  className="w-full resize-y border border-input bg-surface p-4 text-[0.9375rem] outline-none transition-colors duration-150 placeholder:text-ink/35 focus:border-forest"
+                  className="field resize-y py-4"
                 />
               </div>
 

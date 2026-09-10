@@ -12,5 +12,8 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
 
-Sitemap: https://aslot-wealth.com/sitemap.xml
+Sitemap: https://www.aslotwealth.com/sitemap.xml

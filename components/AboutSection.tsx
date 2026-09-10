@@ -70,7 +70,7 @@ const AboutSection = () => (
                 <img
                   src={m.image.src}
                   alt={`${m.name}, ${m.role ?? 'Aslot Wealth Advisor'}`}
-                  className="team-photo aspect-[4/3] w-full object-cover md:aspect-[3/4]"
+                  className="team-photo aspect-[4/3] w-full object-cover object-top md:aspect-[3/4]"
                   loading="lazy"
                   width={640}
                   height={800}

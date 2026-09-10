@@ -24,11 +24,12 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aslotwealth.in"),
+  metadataBase: new URL("https://www.aslotwealth.com"),
   title: "Aslot Wealth Advisor – Personalised Investment Management",
   description:
     "A family wealth practice in Surat since 1989. Goal-aligned portfolios built for the long run. ₹75 crore+ AUM, 250+ clients, 99% retention.",
   authors: [{ name: "Aslot Wealth Advisor" }],
+  alternates: { canonical: "/" },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -45,6 +46,7 @@ export const metadata: Metadata = {
       "A family wealth practice in Surat since 1989. Goal-aligned portfolios built for the long run. ₹75 crore+ AUM, 250+ clients, 99% retention.",
     type: "website",
     locale: "en_IN",
+    url: "/",
     siteName: "Aslot Wealth Advisor",
   },
   twitter: {
@@ -61,7 +63,7 @@ const jsonLd = {
   name: "Aslot Wealth Advisor",
   description:
     "Personalised investment management and wealth advisory services in Surat, practising since 1989.",
-  url: "https://aslotwealth.in",
+  url: "https://www.aslotwealth.com",
   telephone: "+91-9328826939",
   email: "info@aslotwealth.in",
   address: {

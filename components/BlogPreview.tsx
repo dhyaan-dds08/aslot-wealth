@@ -35,12 +35,14 @@ export default async function BlogPage() {
     <div className="min-h-screen bg-gradient-to-b from-background via-muted/10 to-background py-8 pb-0 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-12">
-         
-          <h1 className="text-5xl md:text-6xl font-bold text-primary mb-4">
-            Insights & Expertise
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+        <div className="text-center max-w-2xl mx-auto mb-14 md:mb-16">
+          <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            From The Desk
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary">
+            Insights &amp; <span className="text-accent">Expertise</span>
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground mt-5">
             Discover our latest perspectives on wealth management, financial planning, and market insights
           </p>
         </div>

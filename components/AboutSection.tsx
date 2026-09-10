@@ -75,7 +75,7 @@ const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-14 md:mb-16"
+          className="text-center max-w-4xl mx-auto mb-14 md:mb-16"
         >
           <p className="text-accent text-xs font-semibold tracking-[0.2em] uppercase mb-4">
             Our Journey

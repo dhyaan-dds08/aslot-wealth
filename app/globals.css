@@ -67,8 +67,31 @@
     --step-sm: 0.9375rem;
     --step-xs: 0.8125rem;
 
-    /* ── Motion ──────────────────────────────────────────────────── */
+    /* ── Motion tokens ───────────────────────────────────────────────
+       Calm and precise: private bank, not startup launch. Never bounce,
+       elastic or spring overshoot. */
+    --micro: 150ms;
+    /* hover, press, focus, underline      */
+    --short: 250ms;
+    /* menus, toggles, header changes      */
+    --medium: 500ms;
+    /* standard scroll reveals             */
+    --long: 900ms;
+    /* hero intro, line draw, counters     */
+
     --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    /* entering  */
+    --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+    /* moving    */
+
+    /* Reveals move max 24px desktop / 12px mobile. */
+    --reveal-y: 24px;
+  }
+
+  @media (max-width: 767px) {
+    :root {
+      --reveal-y: 12px;
+    }
   }
 }
 
@@ -212,6 +235,447 @@
 @media (max-width: 767px) {
   body {
     padding-bottom: 4.25rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO LOAD SEQUENCE — signature moment 1, under 1.6s total.
+   Pure CSS, so it needs no JavaScript and collapses to nothing under
+   reduced motion (the global rule zeroes every duration).
+   ═══════════════════════════════════════════════════════════════════ */
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+  /* Descenders would clip against a tight mask. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.hero-line-in {
+  display: block;
+  animation: hero-line-up 700ms var(--ease-out-soft) var(--d, 0ms) both;
+}
+
+@keyframes hero-line-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-el {
+  display: block;
+  animation: hero-fade-up var(--medium) var(--ease-out-soft) var(--d, 0ms) both;
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-photo {
+  animation: hero-photo-in 1200ms var(--ease-out-soft) 200ms both;
+}
+
+@keyframes hero-photo-in {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-rule {
+  animation: hero-rule-draw 600ms var(--ease-out-soft) 900ms both;
+}
+
+@keyframes hero-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ARTICLE BODY
+   Written out rather than pulling in @tailwindcss/typography, which is
+   not installed. Comparison tables and worked examples are first-class.
+   No animation here — reading is never interrupted.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.article {
+  font-size: var(--step-body-lg);
+  line-height: 1.75;
+  color: hsl(var(--ink) / 0.82);
+}
+
+.article> :first-child {
+  margin-top: 0;
+}
+
+.article p,
+.article ul,
+.article ol {
+  margin-block: 1.35em;
+  max-width: 68ch;
+}
+
+.article h2,
+.article h3 {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-weight: 400;
+  color: hsl(var(--forest));
+  letter-spacing: -0.012em;
+}
+
+.article h2 {
+  font-size: var(--step-h3);
+  line-height: 1.25;
+  margin-block: 2em 0.6em;
+}
+
+.article h3 {
+  font-size: var(--step-h4);
+  line-height: 1.35;
+  margin-block: 1.8em 0.5em;
+}
+
+.article ul,
+.article ol {
+  padding-left: 1.3em;
+}
+
+.article ul {
+  list-style: disc;
+}
+
+.article ol {
+  list-style: decimal;
+}
+
+.article li {
+  margin-block: 0.4em;
+}
+
+.article li::marker {
+  color: hsl(var(--growth));
+}
+
+.article a {
+  color: hsl(var(--growth));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article strong {
+  font-weight: 600;
+  color: hsl(var(--ink));
+}
+
+.article blockquote {
+  border-left: 2px solid hsl(var(--growth));
+  padding-left: 1.2em;
+  margin-block: 1.8em;
+  color: hsl(var(--ink) / 0.7);
+}
+
+/* Comparison tables scroll rather than break the layout. */
+.article .table-wrap {
+  overflow-x: auto;
+  margin-block: 2em;
+  border: 1px solid hsl(var(--border));
+}
+
+.article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.article th,
+.article td {
+  padding: 0.85em 1em;
+  text-align: left;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.article th {
+  background: hsl(var(--surface));
+  font-weight: 600;
+  color: hsl(var(--forest));
+  white-space: nowrap;
+}
+
+.article tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Worked example — a figured aside, visually distinct from prose. */
+.article .worked-example {
+  margin-block: 2em;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--surface));
+  padding: 1.5rem;
+  font-size: var(--step-sm);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SCROLL REVEALS
+   Content ships visible. JS sets data-reveal="armed" to opt in, then
+   "in" to play. No JS or reduced motion → nothing is ever hidden.
+   ═══════════════════════════════════════════════════════════════════ */
+
+[data-reveal='armed'] {
+  opacity: 0;
+  transform: translateY(var(--reveal-y));
+}
+
+[data-reveal='in'] {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft) var(--reveal-delay, 0ms),
+    transform var(--medium) var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+
+/* Stagger direct children, capped so long lists never crawl. */
+.reveal-stagger[data-reveal='armed'] > * {
+  opacity: 0;
+  transform: translateY(var(--reveal-y));
+}
+
+.reveal-stagger[data-reveal='in'] {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-stagger[data-reveal='in'] > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft),
+    transform var(--medium) var(--ease-out-soft);
+}
+
+.reveal-stagger[data-reveal='in'] > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(n + 6) { transition-delay: 400ms; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   COMPARISON ROWS
+   The row wrapper is the Reveal target; its parts move independently.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.cmp-row[data-reveal='armed'] {
+  /* The row itself does not move — only its contents do. */
+  opacity: 1;
+  transform: none;
+}
+
+.cmp-row[data-reveal='armed'] .cmp-aslot {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+.cmp-row[data-reveal='armed'] .cmp-typical {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+.cmp-row[data-reveal='armed'] .cmp-rule {
+  transform: scaleY(0);
+}
+
+.cmp-row[data-reveal='armed'] .cmp-vs,
+.cmp-row[data-reveal='armed'] .check-draw {
+  opacity: 0;
+}
+
+.cmp-row[data-reveal='in'] .cmp-aslot,
+.cmp-row[data-reveal='in'] .cmp-typical {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity var(--medium) var(--ease-out-soft),
+    transform var(--medium) var(--ease-out-soft);
+}
+
+.cmp-row[data-reveal='in'] .cmp-typical {
+  transition-delay: 150ms;
+}
+
+.cmp-row[data-reveal='in'] .cmp-rule {
+  transform: scaleY(1);
+  transition: transform 400ms var(--ease-out-soft) 100ms;
+}
+
+.cmp-row[data-reveal='in'] .cmp-vs {
+  opacity: 1;
+  transition: opacity var(--short) ease 300ms;
+}
+
+/* The tick draws itself rather than fading in. */
+.cmp-row[data-reveal='in'] .check-draw {
+  opacity: 1;
+  transition: opacity 1ms linear 200ms;
+}
+
+.cmp-row[data-reveal='in'] .check-draw path {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 22;
+  animation: check-draw 400ms var(--ease-out-soft) 200ms forwards;
+}
+
+@keyframes check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (hover: hover) {
+  .cmp-row:hover {
+    background-color: hsl(var(--surface) / 0.6);
+    transition: background-color var(--micro) ease;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HOW WE WORK — line draws through the numbered steps.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.steps[data-reveal='armed'] {
+  opacity: 1;
+  transform: none;
+}
+
+.steps[data-reveal='armed'] .steps-line {
+  transform: scaleX(0);
+}
+
+.steps[data-reveal='armed'] .steps-line:last-of-type {
+  transform: scaleY(0);
+}
+
+.steps[data-reveal='armed'] .step-dot,
+.steps[data-reveal='armed'] .step-text {
+  opacity: 0;
+}
+
+.steps[data-reveal='armed'] .step-text {
+  transform: translateY(16px);
+}
+
+.steps[data-reveal='in'] .steps-line {
+  transform: scaleX(1);
+  transition: transform 1200ms var(--ease-in-out-soft);
+}
+
+.steps[data-reveal='in'] .steps-line:last-of-type {
+  transform: scaleY(1);
+  transition: transform 1200ms var(--ease-in-out-soft);
+}
+
+/* Circles light up as the line reaches them, ~300ms apart. */
+.steps[data-reveal='in'] .step-dot {
+  opacity: 1;
+  border-color: hsl(var(--forest));
+  transition: opacity var(--short) ease calc(var(--i) * 300ms),
+    border-color var(--short) ease calc(var(--i) * 300ms);
+}
+
+.steps[data-reveal='in'] .step:nth-child(1) .step-text { transition-delay: 0ms; }
+.steps[data-reveal='in'] .step:nth-child(2) .step-text { transition-delay: 300ms; }
+.steps[data-reveal='in'] .step:nth-child(3) .step-text { transition-delay: 600ms; }
+.steps[data-reveal='in'] .step:nth-child(4) .step-text { transition-delay: 900ms; }
+
+.steps[data-reveal='in'] .step-text {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft),
+    transform var(--medium) var(--ease-out-soft);
+}
+
+/* One rotation only — monitoring is ongoing, the icon is not. */
+.steps[data-reveal='in'] .step-loop {
+  animation: spin-once 800ms var(--ease-in-out-soft) 1100ms 1 both;
+}
+
+@keyframes spin-once {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (hover: hover) {
+  .step:hover .step-dot {
+    transform: scale(1.05);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TEAM — photo uncovered by a bottom-to-top wipe.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.team-card[data-reveal='armed'] {
+  opacity: 1;
+  transform: none;
+}
+
+.team-card[data-reveal='armed'] .team-frame {
+  clip-path: inset(100% 0 0 0);
+}
+
+.team-card[data-reveal='armed'] .team-photo {
+  transform: scale(1.1);
+}
+
+.team-card[data-reveal='armed'] .team-meta {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.team-card[data-reveal='in'] .team-frame {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 700ms var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+
+.team-card[data-reveal='in'] .team-photo {
+  transform: scale(1);
+  transition: transform 700ms var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+
+/* Text starts once the wipe is ~50% through. */
+.team-card[data-reveal='in'] .team-meta {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft)
+      calc(var(--reveal-delay, 0ms) + 350ms),
+    transform var(--medium) var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 350ms);
+}
+
+@media (hover: hover) {
+  .team-card:hover .team-photo {
+    transform: scale(1.03);
+    transition: transform 400ms var(--ease-out-soft);
   }
 }
 

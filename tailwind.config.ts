@@ -64,7 +64,10 @@ export default {
         sm: "var(--radius)",
       },
       transitionTimingFunction: {
+        /* Entering the screen. */
         soft: "cubic-bezier(0.22, 1, 0.36, 1)",
+        /* Moving or changing state. */
+        "soft-io": "cubic-bezier(0.65, 0, 0.35, 1)",
       },
     },
   },

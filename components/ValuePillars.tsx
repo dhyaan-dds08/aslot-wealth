@@ -1,53 +1,99 @@
-const PILLARS = [
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import Reveal from '@/components/motion/Reveal';
+
+const SERVICES = [
   {
-    title: 'Goal-Aligned Planning',
-    body:
-      'Asset allocation begins with a clear understanding of your life and business objectives.',
+    id: 'review',
+    name: 'Review your existing portfolio',
+    points: [
+      'Check risk, overlap and tax efficiency',
+      'Map your cash flows to your goals',
+      'Get a clear plan in a one-on-one call',
+    ],
   },
   {
-    title: 'Long-Term Focus',
-    body:
-      'Emphasis on disciplined compounding, tax efficiency and staying invested through cycles.',
+    id: 'goals',
+    name: 'Goal-based investing',
+    points: [
+      'Mutual fund SIPs for long-term goals',
+      'SWPs for predictable income',
+      'Rebalancing through market cycles',
+    ],
   },
   {
-    title: 'Independent Access',
-    body:
-      'Curated list of third-party funds and strategies, with no proprietary products to bias our view.',
+    id: 'beyond',
+    name: 'Beyond mutual funds',
+    points: [
+      'PMS and AIFs, screened and explained',
+      'NCDs and market-linked debentures',
+      'Private equity co-investments',
+    ],
   },
   {
-    title: 'Disciplined Risk Management',
-    body:
-      'Ongoing monitoring, rebalancing, and transparent reporting keep portfolios on track through market cycles.',
+    id: 'protection',
+    name: 'Protection',
+    points: ['Insurance advisory to safeguard your earnings and assets, since 1991'],
   },
 ];
 
-/**
- * Deliberately unnumbered. Numbers are reserved for the process and the
- * journey, where sequence actually means something.
- */
-const ValuePillars = () => (
-  <section className="section-y bg-canvas">
-    <div className="container-page">
-      <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-16">
-        <div className="md:col-span-4">
-          <p className="section-label">Our value pillars</p>
-          <h2 className="h2 mt-4 text-forest">
-            Building wealth on principles that stand the test of time
-          </h2>
-        </div>
+const Tick = () => (
+  <svg
+    viewBox="0 0 20 20"
+    className="mt-[0.4rem] size-3.5 shrink-0 text-growth"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
+    <path d="M4 10.5l4 4 8-9" />
+  </svg>
+);
 
-        <dl className="md:col-span-8">
-          {PILLARS.map(({ title, body }) => (
-            <div
-              key={title}
-              className="grid gap-x-8 gap-y-2 border-t border-border py-7 sm:grid-cols-5"
-            >
-              <dt className="h4 text-forest sm:col-span-2">{title}</dt>
-              <dd className="prose-sm-x text-ink/65 sm:col-span-3">{body}</dd>
-            </div>
-          ))}
-        </dl>
+const ValuePillars = () => (
+  <section id="services" className="section-y bg-canvas">
+    <div className="container-page">
+      <Reveal>
+        <p className="section-label">How we can help</p>
+        <h2 className="h2 mt-4 max-w-2xl text-forest">
+          Four ways families work with us
+        </h2>
+      </Reveal>
+
+      <div className="mt-14 grid gap-x-8 gap-y-12 md:grid-cols-2">
+        {SERVICES.map((s, i) => (
+          <Reveal key={s.id} as="div" delay={(i % 2) * 80} className="block">
+            <article id={s.id} className="flex h-full flex-col border-t border-border pt-6">
+              <h3 className="h4 text-forest">{s.name}</h3>
+
+              <ul className="mt-5 flex-1 space-y-3">
+                {s.points.map((p) => (
+                  <li key={p} className="flex gap-3">
+                    <Tick />
+                    <span className="prose-sm-x text-ink/70">{p}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-7">
+                <Button variant="outline" asChild>
+                  <Link href="#contact">Talk to us about this</Link>
+                </Button>
+              </div>
+            </article>
+          </Reveal>
+        ))}
       </div>
+
+      {/* COMPLIANCE BLOCK */}
+      <Reveal>
+        <p className="meta measure mt-12 text-ink/50">
+          For illustrative purposes only. All investments are subject to market risks. Market-linked
+          debentures carry issuer credit risk.
+        </p>
+      </Reveal>
     </div>
   </section>
 );

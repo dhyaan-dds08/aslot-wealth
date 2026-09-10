@@ -89,11 +89,18 @@ const Footer = () => (
         </nav>
       </div>
 
+      {/* Trust badges — only things Aslot actually holds. */}
+      <div className="mt-14 flex flex-wrap gap-3 border-t border-white/15 pt-8">
+        <span className="meta border border-white/25 px-3 py-2 text-white/75">
+          AMFI-registered Mutual Fund Distributor · <span className="tnum">ARN-126127</span>
+        </span>
+        <span className="meta border border-white/25 px-3 py-2 text-white/75">
+          Serving families since <span className="tnum">1989</span>
+        </span>
+      </div>
+
       {/* COMPLIANCE BLOCK — editable, legible, never grey micro-text. */}
-      <div className="mt-14 space-y-3 border-t border-white/15 pt-8">
-        <p className="meta text-white/70">
-          AMFI-registered Mutual Fund Distributor, <span className="tnum">ARN-126127</span>
-        </p>
+      <div className="mt-8 space-y-3">
         <p className="meta measure text-white/70">{DISCLAIMER_MF}</p>
         <p className="meta pt-3 text-white/45">
           © <span className="tnum">2026</span> Aslot Wealth Advisor. All rights reserved.

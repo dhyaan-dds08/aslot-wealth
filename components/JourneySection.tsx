@@ -1,163 +1,207 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useReducedMotion } from 'framer-motion';
+import { EASE_OUT_SOFT } from '@/lib/motion';
 
 /**
- * THE SIGNATURE SECTION.
+ * SIGNATURE MOMENT 2 — the legacy.
  *
- * Each generation adds a capability without setting aside the last — clarity,
- * then protection, then growth. The bar beside each era shows every layer
- * earned so far, so the column literally compounds as you scroll.
- *
- * This is the only orchestrated motion on the site. It is progressive: the
- * markup renders fully visible, and JS opts in to animating it.
+ * Three generations, each adding a capability without replacing the last.
+ * The timeline draws in step with scroll, the year rolls over odometer-style,
+ * and the capability layers stack like foundations. Native scrolling only:
+ * nothing is pinned by JS, just CSS `position: sticky`.
  */
 
-type Era = {
-  year: string;
-  capability: string | null;
-  body: string;
-  /** How many capability layers exist by this point in the story. */
-  layers: number;
-};
-
-const ERAS: Era[] = [
+const MILESTONES = [
   {
     year: '1989',
-    capability: 'Clarity',
     layers: 1,
-    body:
-      'Pragnesh Aslot starts a tax-advisory practice built on one principle: every financial decision should be rooted in clarity and compliance. Over time, client conversations widen from taxes to questions of protection and preservation.',
+    body: 'Pragnesh Aslot starts a tax-advisory practice rooted in clarity and compliance.',
   },
   {
     year: '1991',
-    capability: 'Protection',
     layers: 2,
-    body:
-      'Seema Aslot joins the firm and launches its first insurance-advisory desk, helping clients safeguard their earnings and assets.',
-  },
-  {
-    year: 'Three decades',
-    capability: null,
-    layers: 2,
-    body:
-      "Precise tax guidance combined with prudent risk cover becomes the firm's hallmark, while clients increasingly seek broader capital-market opportunities.",
+    body: "Seema Aslot joins and launches the firm's insurance-advisory desk.",
   },
   {
     year: '2023',
-    capability: 'Growth',
     layers: 3,
     body:
-      'Ishan Aslot brings data-driven research and global exposure, growing the business into a comprehensive wealth-management platform spanning listed equity, PMS, AIFs, and private-equity co-investments.',
+      'Ishan Aslot brings data-driven research and global exposure, growing the firm into a full wealth-management platform spanning listed equity, PMS, AIFs, and private-equity co-investments.',
   },
   {
     year: 'Today',
-    capability: null,
     layers: 3,
     body:
-      'Aslot Wealth Advisory blends seasoned leadership with next-generation strategy, delivering goal-aligned, long-term portfolios while upholding the integrity on which the firm was founded.',
+      'Seasoned leadership combined with next-generation strategy, delivering goal-aligned, long-term portfolios.',
   },
 ];
 
-/**
- * A brightness ramp, not three arbitrary hues: each generation lights the
- * column further. Marigold is deliberately absent — the accent is reserved
- * for calls to action, and forest-on-forest would be invisible here anyway.
- */
-const LAYER_TONES = ['bg-white/35', 'bg-white/65', 'bg-white'];
-const LAYER_NAMES = ['Clarity', 'Protection', 'Growth'];
+const LAYERS = [
+  { name: 'Clarity', note: 'Tax', tone: 'bg-white/30' },
+  { name: 'Protection', note: 'Insurance', tone: 'bg-white/60' },
+  { name: 'Growth', note: 'Wealth management', tone: 'bg-white' },
+];
 
 const JourneySection = () => {
-  const listRef = useRef<HTMLOListElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const railRef = useRef<HTMLOListElement>(null);
+  const reduced = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(reduced ? MILESTONES.length - 1 : 0);
+  const [armed, setArmed] = useState(false);
+
+  const { scrollYProgress } = useScroll({
+    target: railRef,
+    offset: ['start 0.7', 'end 0.85'],
+  });
 
   useEffect(() => {
-    const list = listRef.current;
-    if (!list) return;
+    if (reduced) return;
 
-    // Honour reduced motion by simply never opting in.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Arm after paint: the markup ships fully visible, so a failed or slow
+    // hydration leaves the whole legacy readable rather than blank.
+    const frame = requestAnimationFrame(() => setArmed(true));
 
-    const items = Array.from(list.querySelectorAll<HTMLElement>('[data-era]'));
-    if (!items.length) return;
-
-    // Opt in to the animated state, then reveal as each era scrolls in.
-    list.dataset.anim = 'on';
+    const items = railRef.current?.querySelectorAll<HTMLElement>('[data-ms]');
+    if (!items?.length) return () => cancelAnimationFrame(frame);
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          (entry.target as HTMLElement).dataset.on = 'true';
-          observer.unobserve(entry.target);
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          setActiveIndex((prev) => Math.max(prev, Number((e.target as HTMLElement).dataset.ms)));
         });
       },
-      { rootMargin: '0px 0px -20% 0px', threshold: 0.2 },
+      { rootMargin: '0px 0px -45% 0px', threshold: 0.1 },
     );
 
     items.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [reduced]);
+
+  const current = MILESTONES[activeIndex];
 
   return (
-    <section id="about" className="section-y bg-forest text-white">
+    <section id="about" ref={sectionRef} className="section-y bg-forest text-white">
       <div className="container-page">
-        <p className="section-label text-white/55">Our journey</p>
-        <h2 className="h2 mt-4 max-w-3xl">A legacy of clarity and long-term vision</h2>
-        <p className="lede measure mt-6 text-white/65">
-          Each generation added a capability without setting aside the last. What began as tax
-          advice is now clarity, protection and growth, compounding together.
-        </p>
+        <p className="section-label text-white/55">Our legacy</p>
+        <h2 className="h2 mt-4 max-w-2xl">Three decades, three generations</h2>
 
-        <ol ref={listRef} className="journey mt-16 md:mt-20">
-          {ERAS.map((era, i) => (
-            <li
-              key={era.year}
-              data-era={i}
-              data-on="false"
-              className="grid gap-x-8 gap-y-5 border-t border-white/15 py-9 md:grid-cols-12 md:py-11"
-            >
-              <div className="md:col-span-3">
-                <p className="tnum font-serif text-2xl text-white md:text-[1.75rem]">
-                  {era.year}
-                </p>
-                {era.capability && (
-                  <p className="meta mt-2 text-white/70">+ {era.capability}</p>
-                )}
+        <div className="mt-16 grid gap-x-12 lg:grid-cols-12 lg:mt-20">
+          {/* Sticky year — odometer roll on change. */}
+          <div className="hidden lg:col-span-3 lg:block">
+            <div className="sticky top-32">
+              <div className="h-[1.1em] overflow-hidden font-serif text-[3.5rem] leading-[1.1] tabular-nums">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.span
+                    key={current.year}
+                    className="flex"
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '-100%' }}
+                    transition={{ duration: 0.3, ease: EASE_OUT_SOFT }}
+                  >
+                    {current.year.split('').map((ch, i) => (
+                      <motion.span
+                        key={`${current.year}-${i}`}
+                        initial={{ y: '100%', opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.3, delay: i * 0.04, ease: EASE_OUT_SOFT }}
+                      >
+                        {ch}
+                      </motion.span>
+                    ))}
+                  </motion.span>
+                </AnimatePresence>
               </div>
+            </div>
+          </div>
 
-              {/* The compounding column: every layer earned so far. */}
-              <div
-                className="flex items-end gap-1.5 md:col-span-2"
-                role="img"
-                aria-label={`Capabilities by ${era.year}: ${LAYER_NAMES.slice(0, era.layers).join(', ')}`}
-              >
-                {LAYER_NAMES.map((name, li) => {
-                  const active = li < era.layers;
-                  return (
+          {/* Timeline */}
+          <div className="lg:col-span-5">
+            <ol ref={railRef} className="relative pl-8">
+              {/* Track + scroll-linked draw */}
+              <span aria-hidden className="absolute left-[3px] top-2 h-full w-px bg-white/15" />
+              <motion.span
+                aria-hidden
+                className="absolute left-[3px] top-2 h-full w-px origin-top bg-white/70"
+                style={{ scaleY: reduced ? 1 : scrollYProgress }}
+              />
+
+              {MILESTONES.map((m, i) => {
+                const on = i <= activeIndex;
+                return (
+                  <li key={m.year} data-ms={i} className="relative pb-14 last:pb-0">
                     <span
-                      key={name}
-                      className={`era-layer h-12 w-6 origin-bottom md:h-14 md:w-7 ${active ? `is-active ${LAYER_TONES[li]}` : 'border border-white/20'
+                      aria-hidden
+                      className={`absolute -left-8 top-1.5 size-[7px] rounded-full transition-all duration-250 ease-soft ${on ? 'scale-100 bg-white' : 'scale-0 bg-white/40'
                         }`}
                     />
+                    <p className="font-serif text-2xl lg:hidden">{m.year}</p>
+                    <p
+                      className="prose-sm-x measure mt-2 text-white/70 lg:mt-0"
+                      style={
+                        armed
+                          ? {
+                            opacity: on ? 1 : 0,
+                            transform: on ? 'none' : 'translateY(24px)',
+                            transition:
+                              'opacity 500ms cubic-bezier(0.22,1,0.36,1), transform 500ms cubic-bezier(0.22,1,0.36,1)',
+                          }
+                          : undefined
+                      }
+                    >
+                      {m.body}
+                    </p>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+
+          {/* Sticky layers — capability compounds, it does not replace. */}
+          <div className="mt-14 lg:col-span-4 lg:mt-0">
+            <div className="sticky top-32">
+              <div className="flex flex-col-reverse gap-2">
+                {LAYERS.map((l, i) => {
+                  const on = i < current.layers;
+                  return (
+                    <div
+                      key={l.name}
+                      className="flex items-center gap-4"
+                      style={
+                        armed
+                          ? {
+                            opacity: on ? 1 : 0.25,
+                            transform: on ? 'none' : 'translateY(20px)',
+                            transition:
+                              'opacity 500ms cubic-bezier(0.22,1,0.36,1), transform 500ms cubic-bezier(0.22,1,0.36,1)',
+                          }
+                          : undefined
+                      }
+                    >
+                      <span
+                        className={`h-11 w-24 shrink-0 ${on ? l.tone : 'border border-white/25'}`}
+                        aria-hidden
+                      />
+                      <div>
+                        <p className="text-[0.9375rem] text-white">{l.name}</p>
+                        <p className="meta text-white/50">{l.note}</p>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
 
-              <p className="era-body prose-sm-x measure text-white/70 md:col-span-7">
-                {era.body}
+              <p className="meta mt-6 border-t border-white/15 pt-5 text-white/50">
+                Each generation added a capability. None replaced the last.
               </p>
-            </li>
-          ))}
-        </ol>
-
-        {/* The finished column, named. */}
-        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/15 pt-8">
-          {LAYER_NAMES.map((name, i) => (
-            <span key={name} className="flex items-center gap-2.5">
-              <span className={`h-3 w-3 ${LAYER_TONES[i]}`} aria-hidden />
-              <span className="meta text-white/70">{name}</span>
-            </span>
-          ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

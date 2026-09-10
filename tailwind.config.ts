@@ -2,22 +2,28 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
-  prefix: "",
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        serif: ["var(--font-source-serif)", "Georgia", "serif"],
       },
       colors: {
+        /* The six brand tokens, addressable directly. */
+        canvas: "hsl(var(--canvas))",
+        surface: "hsl(var(--surface))",
+        ink: "hsl(var(--ink))",
+        forest: "hsl(var(--forest))",
+        marigold: "hsl(var(--marigold))",
+        growth: "hsl(var(--growth))",
+
+        /* shadcn/ui aliases */
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -51,56 +57,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
-        },
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "var(--radius)",
+        sm: "var(--radius)",
       },
       transitionTimingFunction: {
-        // Site-wide easing. Named token so call sites never inline a bezier.
         soft: "cubic-bezier(0.22, 1, 0.36, 1)",
-      },
-      /* Elevation scale, tinted with the brand navy/green rather than pure black
-       * so shadows sit in the palette instead of greying it out. */
-      boxShadow: {
-        card: "0 1px 2px hsl(var(--primary) / 0.04), 0 2px 8px -2px hsl(var(--primary) / 0.06)",
-        "card-hover":
-          "0 2px 4px hsl(var(--primary) / 0.05), 0 16px 32px -12px hsl(var(--primary) / 0.20)",
-        float: "0 24px 48px -16px hsl(var(--primary) / 0.28)",
-        "on-dark": "0 16px 40px -16px hsl(0 0% 0% / 0.45)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
-        },
-        "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },

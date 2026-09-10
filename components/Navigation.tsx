@@ -1,164 +1,138 @@
-"use client";
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import logo from '@/assets/images/logo.png'
+'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Menu, X, Phone, MessageCircle } from 'lucide-react';
+import logo from '@/assets/images/logo.png';
+import { Button } from '@/components/ui/button';
+import { NAV_LINKS, PHONE_HREF, WA_DEFAULT } from '@/lib/site';
 
 const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks = [
-    { label: 'Home', href: '/#home' },
-    { label: 'About Us', href: '/#about' },
-    { label: 'Process', href: '/#process' },
-    { label: 'Client Stories', href: '/#testimonials' },
-    { label: 'Contact', href: '/#contact' },
-    // { label: 'Blogs', href: '/#blogs' },
-  ];
+  // Lock the page while the mobile sheet is open.
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
-  const scrollToSection = (href: string) => {
-    // Extract the hash from the href (e.g., '/#about' -> '#about')
-    const hash = href.includes('#') ? href.split('#')[1] : '';
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsOpen(false);
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isOpen]);
 
-    // If we're on the home page, scroll directly
-    if (pathname === '/') {
-      const element = document.querySelector(`#${hash}`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        setIsMobileMenuOpen(false);
-      }
-    } else {
-      // If we're on another page, navigate to home with hash
-      // Next.js will handle the navigation, then we scroll after page load
-      window.location.href = href;
-    }
+  const go = (href: string) => (e: React.MouseEvent) => {
+    setIsOpen(false);
+    if (pathname !== '/') return;
+    e.preventDefault();
+    document.querySelector(href.replace('/', ''))?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Handle scrolling to hash on page load (when coming from another page)
-  useEffect(() => {
-    if (pathname === '/' && window.location.hash) {
-      const hash = window.location.hash.substring(1);
-      setTimeout(() => {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-  }, [pathname]);
-
-  useEffect(() => {
-    // block the scroll when mobile menu is open
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [isMobileMenuOpen]);
-
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${isScrolled ? 'border-b border-border' : 'border-b border-transparent'
-        }`}
-    >
-      <div className="container-page">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link
-            href="/#home"
-            className="flex items-center space-x-2"
-            onClick={(e) => {
-              if (pathname === '/') {
-                e.preventDefault();
-                scrollToSection('/#home');
-              }
-            }}
-          >
-            <img src={logo.src} alt="aslot wealth advisor" className="h-28" />
-          </Link>
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 bg-canvas transition-colors duration-200 ${scrolled ? 'border-b border-border' : 'border-b border-transparent'
+          }`}
+      >
+        <div className="container-page">
+          <div className="flex h-[4.5rem] items-center justify-between gap-6">
+            <Link href="/#home" onClick={go('/#home')} className="flex items-center">
+              <img
+                src={logo.src}
+                alt="Aslot Wealth Advisor"
+                className="h-9 w-auto md:h-11"
+                width={493}
+                height={144}
+              />
+            </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={(e) => {
-                  if (pathname === '/') {
-                    e.preventDefault();
-                    scrollToSection(link.href);
-                  }
-                }}
-                className="text-sm text-primary/80 hover:text-accent transition-colors duration-300"
-                aria-label={`Navigate to ${link.label}`}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Button
-              variant="default"
-              onClick={() => scrollToSection('/#contact')}
-              aria-label="Schedule a consultation call"
-            >
-              Schedule a Call
-            </Button>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-primary"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 right-0 bg-primary animate-fade-in">
-            <div className="flex flex-col p-6">
-              {navLinks.map((link) => (
+            <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
+              {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={(e) => {
-                    if (pathname === '/') {
-                      e.preventDefault();
-                      scrollToSection(link.href);
-                    }
-                  }}
-                  className="border-b border-white/10 py-4 font-serif text-2xl font-light text-white transition-colors duration-300 hover:text-accent"
+                  onClick={go(link.href)}
+                  className="prose-sm-x text-ink/75 transition-colors hover:text-forest"
                 >
                   {link.label}
                 </Link>
               ))}
-              <Button
-                variant="onDarkSolid"
-                size="lg"
-                onClick={() => scrollToSection('/#contact')}
-                className="mt-8 w-full"
-              >
-                Schedule a Call
+              <Button variant="cta" asChild>
+                <Link href="/#contact" onClick={go('/#contact')}>
+                  Schedule a Call
+                </Link>
               </Button>
-            </div>
+            </nav>
+
+            <button
+              type="button"
+              onClick={() => setIsOpen((v) => !v)}
+              className="lg:hidden -mr-2 p-2 text-forest"
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isOpen}
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {isOpen && (
+          <div className="lg:hidden border-t border-border bg-canvas">
+            <nav className="container-page py-2" aria-label="Mobile">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={go(link.href)}
+                  className="block border-b border-border py-4 font-serif text-xl text-forest"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Button variant="cta" size="lg" className="my-5 w-full" asChild>
+                <Link href="/#contact" onClick={go('/#contact')}>
+                  Schedule a Call
+                </Link>
+              </Button>
+            </nav>
           </div>
         )}
+      </header>
+
+      {/* Mobile action bar — the two things a Surat client actually wants. */}
+      <div className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 border-t border-border bg-canvas md:hidden">
+        <a
+          href={PHONE_HREF}
+          className="flex items-center justify-center gap-2 py-4 text-[0.9375rem] font-medium text-forest"
+        >
+          <Phone size={17} />
+          Call
+        </a>
+        <a
+          href={WA_DEFAULT}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 border-l border-border bg-marigold py-4 text-[0.9375rem] font-medium text-ink"
+        >
+          <MessageCircle size={17} />
+          WhatsApp
+        </a>
       </div>
-    </nav>
+    </>
   );
 };
 

@@ -1,68 +1,33 @@
-'use client';
-
-import { useEffect, useRef } from 'react';
-import { animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion';
-import { EASE, staggerChild, staggerParent, VIEWPORT } from '@/lib/motion';
-
-const STATS = [
-  { value: 75, prefix: '₹', suffix: 'cr+', label: 'Assets Under Management' },
-  { value: 250, prefix: '', suffix: '+', label: 'Families Advised' },
-  { value: 99, prefix: '', suffix: '%', label: 'Client Retention Rate' },
-  { value: 35, prefix: '', suffix: '+', label: 'Years of Practice' },
-] as const;
-
-/** Counts once, driven by the section's inView flag so all four run together. */
-const AnimatedValue = ({ value, inView }: { value: number; inView: boolean }) => {
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (v) => Math.round(v));
-
-  useEffect(() => {
-    if (!inView) return;
-    const controls = animate(count, value, { duration: 1.6, ease: EASE });
-    return () => controls.stop();
-  }, [inView, value, count]);
-
-  return <motion.span>{rounded}</motion.span>;
-};
+import { TRUST_FIGURES, TRUST_FOOTNOTE } from '@/lib/site';
 
 /**
- * No cards, no icons, no shadows — the numerals carry it. Boxing each stat in
- * a rounded card was what made this read as a dashboard instead of a practice.
+ * Static by design. The brief's predecessor animated these from 0, which put
+ * "0" in the HTML — bad for SEO, link previews and slow connections.
  */
-const StatsBar = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
+const StatsBar = () => (
+  <section className="section-y bg-surface">
+    <div className="container-page">
+      <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-16">
+        <div className="md:col-span-4">
+          <p className="section-label">Trust, measured</p>
+          <h2 className="h2 mt-4 text-forest">The numbers behind the relationship</h2>
+        </div>
 
-  return (
-    <section ref={ref} className="bg-background section-y">
-      <div className="container-page">
-        <motion.dl
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14 border-t border-border pt-14"
-        >
-          {STATS.map((stat) => (
-            <motion.div key={stat.label} variants={staggerChild}>
-              <dt className="stat-number text-primary">
-                {stat.prefix}
-                <AnimatedValue value={stat.value} inView={inView} />
-                <span className="text-accent">{stat.suffix}</span>
+        <dl className="grid grid-cols-1 gap-y-8 sm:grid-cols-3 md:col-span-8 md:gap-x-8">
+          {TRUST_FIGURES.map(({ value, label }) => (
+            <div key={label} className="border-t border-forest/20 pt-5">
+              <dt className="tnum font-serif text-[2.5rem] leading-none text-forest lg:text-[3rem]">
+                {value}
               </dt>
-              <dd className="caption-track mt-4 text-muted-foreground max-w-[11rem]">
-                {stat.label}
-              </dd>
-            </motion.div>
+              <dd className="meta mt-3 text-ink/60">{label}</dd>
+            </div>
           ))}
-        </motion.dl>
-
-        <p className="mt-16 body-sm text-muted-foreground/70">
-          Figures as of Sep 2026 · Updated quarterly · Aggregated across distributed products
-        </p>
+        </dl>
       </div>
-    </section>
-  );
-};
+
+      <p className="meta mt-12 text-ink/45">{TRUST_FOOTNOTE}</p>
+    </div>
+  </section>
+);
 
 export default StatsBar;

@@ -2,275 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
-All colors MUST be HSL for compatibility with shadcn/ui.
-Type: Cormorant Garamond (display) + Inter (text), both loaded in app/layout.tsx.
-*/
+/* ═══════════════════════════════════════════════════════════════════
+   ASLOT WEALTH ADVISOR — DESIGN SYSTEM
+   Palette sampled from the logo: forest #035127, marigold #F4A608.
+   Type: Source Serif 4 (headings) + Inter (body & all figures).
+   All colours HSL for shadcn/ui compatibility.
+   ═══════════════════════════════════════════════════════════════════ */
 
 @layer base {
   :root {
-    /* Navy/Gold/White Professional Palette */
-    --background: 220 15% 97%;
-    --foreground: 220 85% 15%;
+    /* ── The six tokens ──────────────────────────────────────────── */
+    --canvas: 0 0% 100%;
+    /* page background            #FFFFFF */
+    --surface: 96 19% 95%;
+    /* muted alternating surface  #F1F4EF */
+    --ink: 150 23% 10%;
+    /* body text                  #14201A */
+    --forest: 148 93% 16%;
+    /* brand primary              #035127 */
+    --marigold: 40 94% 49%;
+    /* CTA ONLY                   #F4A608 */
+    --growth: 150 59% 30%;
+    /* positive figures           #1F7A4C */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 85% 15%;
+    /* Marigold on white is only 2.0:1 — it can never be text on a light
+       surface. Kept as a fill token so the constraint is structural. */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 85% 15%;
+    /* ── shadcn/ui mapping ───────────────────────────────────────── */
+    --background: var(--canvas);
+    --foreground: var(--ink);
+    --card: var(--canvas);
+    --card-foreground: var(--ink);
+    --popover: var(--canvas);
+    --popover-foreground: var(--ink);
 
-    /* Deep Navy Primary */
-    --primary: 151 21% 26%;
+    --primary: var(--forest);
     --primary-foreground: 0 0% 100%;
+    --secondary: var(--surface);
+    --secondary-foreground: var(--forest);
 
-    /* Rich Gold Accent */
-    --accent: 40 76% 58%;
-    --accent-foreground: 220 85% 15%;
+    --muted: var(--surface);
+    --muted-foreground: 150 12% 38%;
 
-    /* Light Navy Secondary */
-    --secondary: 220 30% 25%;
-    --secondary-foreground: 0 0% 100%;
+    --accent: var(--marigold);
+    --accent-foreground: var(--ink);
 
-    --muted: 220 15% 90%;
-    --muted-foreground: 220 10% 45%;
-
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 45 90% 55%;
+    --border: 150 12% 88%;
+    --input: 150 12% 84%;
+    --ring: var(--forest);
 
-    --radius: 0.75rem;
+    --radius: 2px;
+    /* near-square: the ledger, not the brochure */
 
-    /* Chart colors for recharts compatibility */
-    --chart-1: 220 90% 50%;
-    --chart-2: 45 90% 55%;
-    --chart-3: 180 80% 50%;
-    --chart-4: 280 70% 60%;
-    --chart-5: 340 75% 55%;
+    /* ── Type scale ──────────────────────────────────────────────── */
+    --step-display: clamp(2.5rem, 1.55rem + 4.2vw, 4.75rem);
+    --step-h2: clamp(1.875rem, 1.35rem + 2.3vw, 3rem);
+    --step-h3: clamp(1.375rem, 1.15rem + 1vw, 1.875rem);
+    --step-h4: clamp(1.125rem, 1.03rem + 0.4vw, 1.3125rem);
+    --step-body-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+    --step-body: 1rem;
+    --step-sm: 0.9375rem;
+    --step-xs: 0.8125rem;
 
-    /* Sidebar (if using sidebar component) */
-    --sidebar: 0 0% 100%;
-    --sidebar-foreground: 220 85% 15%;
-    --sidebar-primary: 151 21% 26%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 90%;
-    --sidebar-accent-foreground: 220 85% 15%;
-    --sidebar-border: 220 15% 88%;
-    --sidebar-ring: 45 90% 55%;
+    /* ── Motion ──────────────────────────────────────────────────── */
+    --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
   }
-
-  .dark {
-    --background: 220 85% 10%;
-    --foreground: 0 0% 95%;
-
-    --card: 220 80% 12%;
-    --card-foreground: 0 0% 95%;
-
-    --popover: 220 80% 12%;
-    --popover-foreground: 0 0% 95%;
-
-    --primary: 151 21% 40%;
-    --primary-foreground: 0 0% 100%;
-
-    --accent: 40 76% 58%;
-    --accent-foreground: 220 85% 10%;
-
-    --secondary: 220 30% 20%;
-    --secondary-foreground: 0 0% 95%;
-
-    --muted: 220 30% 20%;
-    --muted-foreground: 220 10% 65%;
-
-    --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 0 0% 95%;
-
-    --border: 220 30% 25%;
-    --input: 220 30% 25%;
-    --ring: 45 90% 55%;
-
-    /* Chart colors for dark mode */
-    --chart-1: 220 90% 60%;
-    --chart-2: 45 90% 65%;
-    --chart-3: 180 80% 60%;
-    --chart-4: 280 70% 70%;
-    --chart-5: 340 75% 65%;
-
-    /* Sidebar dark mode */
-    --sidebar: 220 80% 12%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 151 21% 40%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 30% 20%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 220 30% 25%;
-    --sidebar-ring: 45 90% 55%;
-  }
-}
-
-
-/* ── Design tokens: typography + motion ──
- * Fluid type scale. One class per level — never hand-pick text-5xl/font-black
- * at a call site, or the scale drifts section by section.
- */
-:root {
-  /* Serif at light weight needs more scale than bold sans to hold the page. */
-  --font-size-h1: clamp(2.75rem, 1.6rem + 4.6vw, 5rem);
-  --line-height-h1: 1.1;
-  --font-size-h2: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
-  --line-height-h2: 1.15;
-  --font-size-h3: clamp(1.625rem, 1.25rem + 1.5vw, 2.375rem);
-  --line-height-h3: 1.25;
-  --font-size-h4: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
-  --line-height-h4: 1.35;
-  --font-size-h5: 1.0625rem;
-  --line-height-h5: 1.5;
-
-  /* Body text is fluid too — 18px is too heavy on a 390px screen. */
-  --font-size-body-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --line-height-body-lg: 1.7;
-  --font-size-body-md: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
-  --line-height-body-md: 1.65;
-  --font-size-body-sm: 0.875rem;
-  --line-height-body-sm: 1.6;
-
-  --font-size-label-md: 0.875rem;
-  --line-height-label-md: 1.4;
-  --font-size-label-sm: 0.75rem;
-  --line-height-label-sm: 1.35;
-
-  /* Motion — one easing, three durations. */
-  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --duration-fast: 180ms;
-  --duration-base: 300ms;
-  --duration-slow: 600ms;
-}
-
-/* Cormorant carries every heading; Inter carries running text and UI.
- * The editorial look comes from LARGE + LIGHT — never large + bold. */
-.heading-1,
-.heading-2,
-.heading-3,
-.heading-4 {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-weight: 300;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-.heading-5 {
-  font-family: var(--font-inter), system-ui, sans-serif;
-  text-wrap: balance;
-}
-
-.heading-1 {
-  font-size: var(--font-size-h1);
-  line-height: var(--line-height-h1);
-}
-
-.heading-2 {
-  font-size: var(--font-size-h2);
-  line-height: var(--line-height-h2);
-}
-
-.heading-3 {
-  font-size: var(--font-size-h3);
-  line-height: var(--line-height-h3);
-  font-weight: 400;
-}
-
-.heading-4 {
-  font-size: var(--font-size-h4);
-  line-height: var(--line-height-h4);
-  font-weight: 400;
-}
-
-.heading-5 {
-  font-size: var(--font-size-h5);
-  line-height: var(--line-height-h5);
-  font-weight: 600;
-  letter-spacing: 0;
-}
-
-/* Big light serif numerals for stats — the number IS the design. */
-.stat-number {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-weight: 300;
-  font-size: clamp(2.75rem, 1.9rem + 3.4vw, 4rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Tiny tracked caption under a stat / beside a label. */
-.caption-track {
-  font-family: var(--font-inter), system-ui, sans-serif;
-  font-size: 0.6875rem;
-  line-height: 1.5;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.body-lg {
-  font-size: var(--font-size-body-lg);
-  line-height: var(--line-height-body-lg);
-}
-
-.body-md {
-  font-size: var(--font-size-body-md);
-  line-height: var(--line-height-body-md);
-}
-
-.body-sm {
-  font-size: var(--font-size-body-sm);
-  line-height: var(--line-height-body-sm);
-}
-
-.body-lg,
-.body-md,
-.body-sm {
-  text-wrap: pretty;
-}
-
-.label-md {
-  font-size: var(--font-size-label-md);
-  line-height: var(--line-height-label-md);
-  font-weight: 500;
-}
-
-.label-sm {
-  font-size: var(--font-size-label-sm);
-  line-height: var(--line-height-label-sm);
-  font-weight: 500;
-}
-
-/* Section eyebrow — the small caps kicker above every section heading. */
-.eyebrow {
-  font-size: var(--font-size-label-sm);
-  line-height: var(--line-height-label-sm);
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-/* Measure cap for running text — long lines are the #1 readability killer. */
-.measure {
-  max-width: 68ch;
-}
-
-/* Vertical rhythm: one section padding, fluid between mobile and desktop.
- * Replaces the ad-hoc py-20/py-28/py-32 sprinkled per section. */
-.section-y {
-  padding-block: clamp(3.5rem, 2rem + 6vw, 7rem);
-}
-
-/* Consistent page gutter + max width. */
-.container-page {
-  width: 100%;
-  max-width: 80rem;
-  margin-inline: auto;
-  padding-inline: clamp(1.25rem, 0.5rem + 3vw, 2rem);
 }
 
 @layer base {
@@ -278,15 +77,33 @@ Type: Cormorant Garamond (display) + Inter (text), both loaded in app/layout.tsx
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header + mobile action bar both need scroll clearance. */
+    scroll-padding-top: 6rem;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: var(--step-body);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  html {
-    scroll-behavior: smooth;
+  /* Every figure on the site aligns. */
+  .tnum,
+  time,
+  data {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Visible keyboard focus everywhere, never removed. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--forest));
+    outline-offset: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -302,257 +119,135 @@ Type: Cormorant Garamond (display) + Inter (text), both loaded in app/layout.tsx
   }
 }
 
-@layer utilities {
+/* ═══════════════════════════════════════════════════════════════════
+   TYPOGRAPHY ROLES
+   Plain CSS (not @layer components) so nothing is tree-shaken away.
+   ═══════════════════════════════════════════════════════════════════ */
 
-  /* Glassmorphism Effects */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(10, 22, 40, 0.1);
-  }
+.display,
+.h2,
+.h3,
+.h4 {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-weight: 400;
+  text-wrap: balance;
+}
 
-  /* Gradient Backgrounds */
-  .gradient-hero {
-    background: linear-gradient(135deg, hsl(220 90% 10%) 0%, hsl(220 85% 15%) 50%, hsl(220 80% 20%) 100%);
-  }
+.display {
+  font-size: var(--step-display);
+  line-height: 1.04;
+  letter-spacing: -0.021em;
+}
 
-  .gradient-gold {
-    background: linear-gradient(135deg, hsl(45 95% 65%) 0%, hsl(45 90% 55%) 100%);
-  }
+.h2 {
+  font-size: var(--step-h2);
+  line-height: 1.12;
+  letter-spacing: -0.016em;
+}
 
-  .gradient-mesh {
-    background:
-      radial-gradient(circle at 20% 50%, hsla(220, 90%, 15%, 0.8) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, hsla(45, 90%, 55%, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 40% 20%, hsla(180, 80%, 50%, 0.1) 0%, transparent 50%);
-  }
+.h3 {
+  font-size: var(--step-h3);
+  line-height: 1.25;
+  letter-spacing: -0.011em;
+}
 
-  /* Text Gradient */
-  .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(45 95% 65%) 0%, hsl(45 90% 55%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+.h4 {
+  font-size: var(--step-h4);
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.006em;
+}
 
-  /* Marker Highlight Animation */
-  @keyframes marker-draw {
-    0% {
-      width: 0%;
-      opacity: 0;
-    }
+/* Serif prose gets slightly generous leading per the brief. */
+.lede {
+  font-size: var(--step-body-lg);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
 
-    50% {
-      opacity: 1;
-    }
+.prose-sm-x {
+  font-size: var(--step-sm);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
 
-    100% {
-      width: 100%;
-      opacity: 1;
-    }
-  }
+.meta {
+  font-size: var(--step-xs);
+  line-height: 1.5;
+  letter-spacing: 0.005em;
+}
 
-  .marker-highlight {
-    position: relative;
-    display: inline-block;
-  }
+/* Section label — sentence case, NOT tracked-out all-caps. */
+.section-label {
+  font-size: var(--step-xs);
+  font-weight: 600;
+  color: hsl(var(--growth));
+}
 
-  .marker-highlight::after {
-    content: '';
-    position: absolute;
-    left: -4px;
-    right: -4px;
-    bottom: 2px;
-    height: 12px;
-    background: linear-gradient(135deg, hsl(40 76% 58%), hsl(45 100% 70%));
-    opacity: 0.3;
-    z-index: -1;
-    border-radius: 2px;
-    animation: marker-draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
+/* Keep every measure under ~75 characters. */
+.measure {
+  max-width: 68ch;
+}
 
-  /* Circle Highlight Animation */
-  @keyframes circle-draw {
-    0% {
-      stroke-dashoffset: 500;
-      opacity: 0;
-    }
+.measure-tight {
+  max-width: 54ch;
+}
 
-    50% {
-      opacity: 1;
-    }
+/* ═══════════════════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════════════════ */
 
-    100% {
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-  }
+.container-page {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 0.75rem + 2.4vw, 3rem);
+}
 
-  .circle-highlight {
-    position: relative;
-    display: inline-block;
-  }
+.section-y {
+  padding-block: clamp(4rem, 2.2rem + 6.4vw, 7.5rem);
+}
 
-  .circle-highlight svg {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 110%;
-    height: 130%;
-    pointer-events: none;
-  }
-
-  .circle-highlight svg circle {
-    fill: none;
-    stroke: hsl(40 76% 58%);
-    stroke-width: 3;
-    stroke-dasharray: 500;
-    stroke-dashoffset: 500;
-    animation: circle-draw 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: 0.3s;
-  }
-
-  /* Text Reveal Animation */
-  @keyframes text-reveal {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-text-reveal {
-    animation: text-reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-
-  /* Staggered Animations */
-  .stagger-1 {
-    animation-delay: 0.1s;
-  }
-
-  .stagger-2 {
-    animation-delay: 0.2s;
-  }
-
-  .stagger-3 {
-    animation-delay: 0.3s;
-  }
-
-  .stagger-4 {
-    animation-delay: 0.4s;
-  }
-
-  /* Noise Texture Overlay */
-  .noise-texture {
-    position: relative;
-  }
-
-  .noise-texture::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Footer Glow Animation */
-  @keyframes pulse-glow {
-
-    0%,
-    100% {
-      opacity: 0.5;
-      transform: scale(1);
-    }
-
-    50% {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-  }
-
-  .footer-glow {
-    animation: pulse-glow 4s ease-in-out infinite;
-  }
-
-  /* Parallax Lines Animation */
-  @keyframes flow-lines {
-    0% {
-      transform: translateX(-100%);
-    }
-
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  .parallax-lines {
-    animation: flow-lines 20s linear infinite;
-  }
-
-  /* Fade In Animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
-  }
-
-  .animate-slide-in-right {
-    animation: slideInRight 0.7s ease-out forwards;
+/* Mobile action bar clearance so the footer is never covered. */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 4.25rem;
   }
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-::-webkit-scrollbar {
-  display: none;
+/* ═══════════════════════════════════════════════════════════════════
+   THE ONE MOTION: generational layers accumulating.
+   Everything else on the page is still.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Default state is VISIBLE. JavaScript opts the list into animating by
+   setting data-anim="on", so with no JS (or reduced motion) the whole story
+   is simply readable. */
+.journey[data-anim='on'] .era-body {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 520ms ease 120ms,
+    transform 520ms var(--ease-out-soft) 120ms;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-* {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.journey[data-anim='on'] .era-layer.is-active {
+  transform: scaleY(0.12);
+  transition: transform 620ms var(--ease-out-soft);
+}
+
+.journey[data-anim='on'] .era-layer.is-active:nth-child(2) {
+  transition-delay: 110ms;
+}
+
+.journey[data-anim='on'] .era-layer.is-active:nth-child(3) {
+  transition-delay: 220ms;
+}
+
+.journey[data-anim='on'] [data-on='true'] .era-body {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.journey[data-anim='on'] [data-on='true'] .era-layer.is-active {
+  transform: scaleY(1);
 }

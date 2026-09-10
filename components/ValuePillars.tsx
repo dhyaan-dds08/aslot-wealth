@@ -1,67 +1,53 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import SectionHeading from '@/components/SectionHeading';
-import { staggerChild, staggerParent, VIEWPORT } from '@/lib/motion';
-
 const PILLARS = [
   {
     title: 'Goal-Aligned Planning',
-    description:
+    body:
       'Asset allocation begins with a clear understanding of your life and business objectives.',
   },
   {
     title: 'Long-Term Focus',
-    description:
+    body:
       'Emphasis on disciplined compounding, tax efficiency and staying invested through cycles.',
   },
   {
     title: 'Independent Access',
-    description:
-      'Curated list of third-party funds and strategies — no proprietary products to bias our view.',
+    body:
+      'Curated list of third-party funds and strategies, with no proprietary products to bias our view.',
   },
   {
     title: 'Disciplined Risk Management',
-    description:
-      'Ongoing monitoring, rebalancing, and transparent reporting keep portfolios on-track through market cycles.',
+    body:
+      'Ongoing monitoring, rebalancing, and transparent reporting keep portfolios on track through market cycles.',
   },
 ];
 
 /**
- * A numbered index, not a card grid. Hairline rules carry the structure so the
- * section has rhythm without four boxes floating on drop shadows.
+ * Deliberately unnumbered. Numbers are reserved for the process and the
+ * journey, where sequence actually means something.
  */
 const ValuePillars = () => (
-  <section className="section-y bg-background">
+  <section className="section-y bg-canvas">
     <div className="container-page">
-      <SectionHeading
-        eyebrow="Foundation of Excellence"
-        title="Principles that hold through every market cycle"
-      />
+      <div className="grid gap-y-10 md:grid-cols-12 md:gap-x-16">
+        <div className="md:col-span-4">
+          <p className="section-label">Our value pillars</p>
+          <h2 className="h2 mt-4 text-forest">
+            Building wealth on principles that stand the test of time
+          </h2>
+        </div>
 
-      <motion.ol
-        variants={staggerParent}
-        initial="hidden"
-        whileInView="show"
-        viewport={VIEWPORT}
-        className="border-t border-border"
-      >
-        {PILLARS.map(({ title, description }, i) => (
-          <motion.li
-            key={title}
-            variants={staggerChild}
-            className="group grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-3 border-b border-border py-8 md:py-10 transition-colors duration-300 ease-soft hover:bg-muted/40"
-          >
-            <span className="caption-track md:col-span-2 pt-1 text-accent">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-
-            <h3 className="heading-4 md:col-span-4 text-primary">{title}</h3>
-
-            <p className="body-md md:col-span-6 text-muted-foreground">{description}</p>
-          </motion.li>
-        ))}
-      </motion.ol>
+        <dl className="md:col-span-8">
+          {PILLARS.map(({ title, body }) => (
+            <div
+              key={title}
+              className="grid gap-x-8 gap-y-2 border-t border-border py-7 sm:grid-cols-5"
+            >
+              <dt className="h4 text-forest sm:col-span-2">{title}</dt>
+              <dd className="prose-sm-x text-ink/65 sm:col-span-3">{body}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </div>
   </section>
 );

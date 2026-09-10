@@ -1,27 +1,28 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Inter, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
+/* Two families, two roles. Limited weights keep the payload small on
+   Indian mobile networks; next/font self-hosts and preloads both. */
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-inter",
   display: "swap",
 });
 
-/* Serif display, shared with the sister Aslot & Associates site. Light weights
- * only — the editorial look comes from large + light, never large + bold. */
-const cormorant = Cormorant_Garamond({
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-cormorant",
+  weight: ["400", "600"],
+  variable: "--font-source-serif",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Aslot Wealth Advisor - Personalised Investment Management",
+  metadataBase: new URL("https://aslotwealth.in"),
+  title: "Aslot Wealth Advisor – Personalised Investment Management",
   description:
-    "Trusted financial advice since 1989. Goal-aligned portfolios built for the long run. ₹75cr+ AUM, 250+ clients, 99% retention.",
+    "A family wealth practice in Surat since 1989. Goal-aligned portfolios built for the long run. ₹75 crore+ AUM, 250+ clients, 99% retention.",
   authors: [{ name: "Aslot Wealth Advisor" }],
   icons: {
     icon: [
@@ -31,37 +32,66 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
-  appleWebApp: {
-    title: "Aslot",
-  },
+  appleWebApp: { title: "Aslot" },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "Aslot Wealth Advisor - Personalised Investment Management",
+    title: "Aslot Wealth Advisor – Personalised Investment Management",
     description:
-      "Trusted financial advice since 1989. Goal-aligned portfolios built for the long run.",
+      "A family wealth practice in Surat since 1989. Goal-aligned portfolios built for the long run. ₹75 crore+ AUM, 250+ clients, 99% retention.",
     type: "website",
+    locale: "en_IN",
+    siteName: "Aslot Wealth Advisor",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aslot Wealth Advisor – Personalised Investment Management",
+    description:
+      "A family wealth practice in Surat since 1989. Goal-aligned portfolios built for the long run.",
   },
 };
 
-// JSON-LD structured data for SEO
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "FinancialService",
   name: "Aslot Wealth Advisor",
   description:
-    "Personalised investment management and wealth advisory services, practising since 1989",
-  telephone: "+91-XXXXXXXXXX",
+    "Personalised investment management and wealth advisory services in Surat, practising since 1989.",
+  url: "https://aslotwealth.in",
+  telephone: "+91-9328826939",
+  email: "info@aslotwealth.in",
   address: {
     "@type": "PostalAddress",
+    streetAddress:
+      "9, Gr. Floor, West Side, Vishwakarma Society, b/h Vishwakarma Temple, Nr. ITC Building, Majura Gate",
+    addressLocality: "Surat",
+    addressRegion: "Gujarat",
+    postalCode: "395002",
     addressCountry: "IN",
   },
+  geo: { "@type": "GeoCoordinates", latitude: 21.1817, longitude: 72.8195 },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      opens: "10:30",
+      closes: "19:00",
+    },
+  ],
   priceRange: "₹₹₹",
   foundingDate: "1989",
-  founder: {
-    "@type": "Person",
-    name: "Pragnesh Aslot",
-  },
-  areaServed: "IN",
+  founder: { "@type": "Person", name: "Pragnesh Aslot" },
+  areaServed: { "@type": "State", name: "Gujarat" },
+  sameAs: [
+    "https://www.linkedin.com/in/ishan-aslot/",
+    "https://www.instagram.com/aslotwealth",
+  ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Wealth Management Services",
@@ -93,36 +123,16 @@ const jsonLd = {
       },
     ],
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "250",
-    bestRating: "5",
-  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <script src="https://platform.linkedin.com/in.js" type="text/javascript" async></script>
-      </head>
-      <body
-        className={`${inter.variable} ${cormorant.variable} antialiased`}
-      >
+    <html lang="en-IN">
+      <body className={`${inter.variable} ${sourceSerif.variable} antialiased`}>
         {children}
 
-        {/* JSON-LD structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -1,89 +1,60 @@
-'use client';
-
-import { ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import SectionHeading from '@/components/SectionHeading';
-import { revealOnScroll, staggerChild, staggerParent, VIEWPORT } from '@/lib/motion';
 
 const STEPS = [
   {
     title: 'Discovery',
-    description:
+    body:
       'Deep-dive on goals, existing portfolio, risk tolerance, and what matters most to you.',
   },
   {
     title: 'Design',
-    description:
-      'Propose holistic plan tailored to your objectives with clear asset allocation strategy.',
+    body:
+      'A holistic plan tailored to your objectives, with a clear asset allocation strategy.',
   },
   {
     title: 'Implementation',
-    description:
-      'Open accounts, execute allocations, set up reporting — making the plan a reality.',
+    body:
+      'Open accounts, execute allocations, set up reporting, making the plan a reality.',
   },
   {
     title: 'Monitor & Refine',
-    description:
-      'Quarterly reviews, tactical tilts, annual goal realignment to keep you on track.',
+    body:
+      'Quarterly reviews, tactical tilts, and annual goal realignment to keep you on track.',
   },
 ];
 
+/** Numbered because this is a genuine sequence — one of only two on the site. */
 const ProcessSection = () => (
-  <section id="process" className="section-y bg-muted/40">
+  <section id="process" className="section-y bg-surface">
     <div className="container-page">
-      <SectionHeading
-        eyebrow="How We Work"
-        title="A proven process"
-        subtitle="Four phases that take a conversation through to a portfolio that stays aligned."
-      />
+      <p className="section-label">How we work</p>
+      <h2 className="h2 mt-4 max-w-2xl text-forest">A proven process</h2>
+      <p className="lede measure mt-5 text-ink/65">
+        Four phases designed to transform your financial future.
+      </p>
 
-      {/* Shared hairline grid — one border set, not four floating cards. */}
-      <motion.div
-        variants={staggerParent}
-        initial="hidden"
-        whileInView="show"
-        viewport={VIEWPORT}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-border"
-      >
-        {STEPS.map(({ title, description }, i) => (
-          <motion.article
-            key={title}
-            variants={staggerChild}
-            className="group border-b border-r border-border bg-background p-8 lg:p-10 transition-colors duration-300 ease-soft hover:bg-primary"
-          >
-            <span className="caption-track text-accent">
+      <ol className="mt-14 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4">
+        {STEPS.map((step, i) => (
+          <li key={step.title} className="border-t-2 border-forest pt-5 pb-8">
+            <span className="tnum font-serif text-[1.75rem] leading-none text-growth">
               {String(i + 1).padStart(2, '0')}
             </span>
-
-            <h3 className="heading-4 mt-8 text-primary transition-colors duration-300 group-hover:text-white">
-              {title}
-            </h3>
-
-            <p className="body-sm mt-3 text-muted-foreground transition-colors duration-300 group-hover:text-white/70">
-              {description}
-            </p>
-          </motion.article>
+            <h3 className="h4 mt-4 text-forest">{step.title}</h3>
+            <p className="prose-sm-x mt-2 text-ink/65">{step.body}</p>
+          </li>
         ))}
-      </motion.div>
+      </ol>
 
-      <motion.div
-        {...revealOnScroll}
-        className="mt-14 flex flex-col sm:flex-row sm:items-center gap-6 sm:justify-between"
-      >
-        <p className="body-sm text-muted-foreground">
-          <span className="text-primary">99% client retention</span> since inception.
+      <div className="mt-6 flex flex-col gap-6 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="prose-sm-x text-ink/65">
+          <span className="tnum font-medium text-forest">99% client retention</span> since
+          inception.
         </p>
-
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          Start Your Journey
-          <ArrowRight className="transition-transform duration-300 ease-soft group-hover/button:translate-x-1" />
+        <Button variant="cta" size="lg" asChild>
+          <Link href="#contact">Start Your Journey</Link>
         </Button>
-      </motion.div>
+      </div>
     </div>
   </section>
 );

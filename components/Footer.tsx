@@ -1,127 +1,106 @@
-import logo from '@/assets/images/footer_logo.png';
-import { Instagram, Linkedin, Mail } from 'lucide-react';
 import Link from 'next/link';
+import { Instagram, Linkedin } from 'lucide-react';
+import logo from '@/assets/images/footer_logo.png';
+import { DISCLAIMER_MF, EMAIL } from '@/lib/site';
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
+const QUICK = [
+  { href: '/#home', label: 'Home' },
+  { href: '/#about', label: 'About Us' },
+  { href: '/#process', label: 'Our Process' },
+  { href: '/#insights', label: 'Insights' },
+  { href: '/#contact', label: 'Contact' },
+];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+const LEGAL = [
+  { href: '/privacy-policy', label: 'Privacy Policy' },
+  { href: '/terms-of-service', label: 'Terms of Service' },
+  { href: '/disclaimer', label: 'Disclaimer' },
+  { href: '/regulatory-information', label: 'Regulatory Information' },
+];
 
-  return (
-    <footer className="bg-background border-t border-border py-16 relative overflow-hidden">
-      <div className="container-page relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* Company Info */}
-          <div className="space-y-4">
-            <a href="#home" className="flex items-center" onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('#home');
-            }}>
-              <img src={logo.src} alt="aslot wealth advisor" className="h-12" />
+const Footer = () => (
+  <footer className="bg-forest text-white">
+    <div className="container-page py-16 md:py-20">
+      <div className="grid gap-y-12 md:grid-cols-12 md:gap-x-12">
+        <div className="md:col-span-5">
+          <img
+            src={logo.src}
+            alt="Aslot Wealth Advisor"
+            className="h-11 w-auto brightness-0 invert"
+            width={493}
+            height={144}
+          />
+          <p className="prose-sm-x measure-tight mt-5 text-white/65">
+            Personalised, Purpose-Driven Portfolios Built for the Long Run
+          </p>
+
+          <div className="mt-6 flex gap-3">
+            <a
+              href="https://www.linkedin.com/in/ishan-aslot/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Aslot Wealth Advisor on LinkedIn"
+              className="border border-white/25 p-2.5 transition-colors hover:bg-white hover:text-forest"
+            >
+              <Linkedin size={17} />
             </a>
-            <p className="body-sm text-muted-foreground md:max-w-[260px]">
-              Personalised Purpose-Driven Portfolio Built for the Long Run
-            </p>
-            <div className="flex space-x-4">
-              <a
-                href="https://www.linkedin.com/in/ishan-aslot/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="body-sm text-muted-foreground hover:text-accent transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={20} />
-              </a>
-              <a
-                href="https://www.instagram.com/aslotwealth?igsh=NGxiMHA0ZXkxYzI5"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="body-sm text-muted-foreground hover:text-accent transition-colors"
-                aria-label="Twitter"
-              >
-                <Instagram size={20} />
-              </a>
-              <a
-                href="mailto:info@aslotwealth.in"
-                className="body-sm text-muted-foreground hover:text-accent transition-colors"
-                aria-label="Email"
-              >
-                <Mail size={20} />
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <nav aria-label="Footer navigation">
-            <h4 className="caption-track mb-5 text-accent">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#home" className="body-sm text-muted-foreground hover:text-accent transition-colors">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="body-sm text-muted-foreground hover:text-accent transition-colors">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#process" className="body-sm text-muted-foreground hover:text-accent transition-colors">
-                  Our Process
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="body-sm text-muted-foreground hover:text-accent transition-colors">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          {/* Legal */}
-          <div>
-            <h4 className="caption-track mb-5 text-accent">Legal</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/privacy-policy" className="body-sm text-muted-foreground hover:text-accent transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms-of-service" className="body-sm text-muted-foreground hover:text-accent transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="/disclaimer" className="body-sm text-muted-foreground hover:text-accent transition-colors">
-                  Disclaimer
-                </Link>
-              </li>
-              <li>
-                <Link href="/regulatory-information" className="body-sm text-muted-foreground hover:text-accent transition-colors">
-                  Regulatory Information
-                </Link>
-              </li>
-            </ul>
+            <a
+              href="https://www.instagram.com/aslotwealth"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Aslot Wealth Advisor on Instagram"
+              className="border border-white/25 p-2.5 transition-colors hover:bg-white hover:text-forest"
+            >
+              <Instagram size={17} />
+            </a>
           </div>
         </div>
 
-        <div className="border-t border-primary pt-8 text-center">
-          <p className="body-sm text-muted-foreground">
-            © {currentYear} Aslot Wealth Advisor - Aslot and Associates. All rights reserved.
-          </p>
-          <p className="body-sm text-muted-foreground/70 mt-2">
-            AMFI registered Mutual Fund Distributor ARN-126127
-          </p>
-        </div>
+        <nav className="md:col-span-3" aria-label="Quick links">
+          <h2 className="meta font-medium text-white/55">Quick links</h2>
+          <ul className="mt-4 space-y-2.5">
+            {QUICK.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="prose-sm-x text-white/65 hover:text-white">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav className="md:col-span-4" aria-label="Legal">
+          <h2 className="meta font-medium text-white/55">Legal</h2>
+          <ul className="mt-4 space-y-2.5">
+            {LEGAL.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="prose-sm-x text-white/65 hover:text-white">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <a
+            href={`mailto:${EMAIL}`}
+            className="prose-sm-x mt-5 inline-block text-white/65 hover:text-white"
+          >
+            {EMAIL}
+          </a>
+        </nav>
       </div>
-    </footer>
-  );
-};
+
+      {/* COMPLIANCE BLOCK — editable, legible, never grey micro-text. */}
+      <div className="mt-14 space-y-3 border-t border-white/15 pt-8">
+        <p className="meta text-white/70">
+          AMFI-registered Mutual Fund Distributor, <span className="tnum">ARN-126127</span>
+        </p>
+        <p className="meta measure text-white/70">{DISCLAIMER_MF}</p>
+        <p className="meta pt-3 text-white/45">
+          © <span className="tnum">2026</span> Aslot Wealth Advisor. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;

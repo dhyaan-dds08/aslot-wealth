@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Check, Clock, Copy, MapPin, MessageCircle, Navigation2, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/motion/Reveal';
-import { EMAIL, PHONE_DISPLAY, PHONE_HREF, WA_DEFAULT } from '@/lib/site';
+import { EMAIL, PHONE_DISPLAY, PHONE_HREF, WA_DEFAULT, waLink } from '@/lib/site';
 
 const ADDRESS =
   '9, Gr. Floor, West Side, Vishwakarma Society, b/h Vishwakarma Temple, Nr. ITC Building, Majura Gate, Surat, Gujarat – 395002';
@@ -54,6 +54,19 @@ const ContactSection = () => {
   const [mapReady, setMapReady] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
 
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [sending, setSending] = useState(false);
+
+  const sendWhatsApp = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    window.open(waLink(`Hi, my name is ${name}.\n\n${message}`), '_blank');
+    setName('');
+    setMessage('');
+    setTimeout(() => setSending(false), 1200);
+  };
+
   // Computed after mount — the server has no notion of the visitor's clock.
   useEffect(() => {
     const frame = requestAnimationFrame(() => setOpen(isOpenNow()));
@@ -77,14 +90,62 @@ const ContactSection = () => {
   }, []);
 
   return (
-    <section id="contact" className="section-y bg-surface">
+    <section id="contact" className="section-y bg-canvas">
       <div className="container-page">
         <Reveal>
-          <p className="section-label">Visit our office</p>
-          <h2 className="h2 mt-4 max-w-xl text-forest">Come and talk it through</h2>
+          <p className="section-label">Contact</p>
+          <h2 className="h2 mt-4 max-w-xl text-forest">Let&apos;s Start Your Journey</h2>
+          <p className="lede mt-6 text-ink/65">
+            Schedule a discovery call or reach out to us directly.
+          </p>
         </Reveal>
 
-        <div className="mt-14 grid gap-x-16 gap-y-12 lg:grid-cols-2">
+        <div className="mt-14 grid gap-x-16 gap-y-14 lg:grid-cols-2">
+          {/* Message form — writes straight into WhatsApp, no inbox in between. */}
+          <div>
+            <form onSubmit={sendWhatsApp} className="space-y-5">
+              <div>
+                <label htmlFor="wa-name" className="meta block pb-2 font-medium text-forest">
+                  Your name
+                </label>
+                <input
+                  id="wa-name"
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  autoComplete="name"
+                  className="h-12 w-full border border-input bg-surface px-4 text-[0.9375rem] outline-none transition-colors duration-150 focus:border-forest"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="wa-msg" className="meta block pb-2 font-medium text-forest">
+                  Message
+                </label>
+                <textarea
+                  id="wa-msg"
+                  name="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                  rows={5}
+                  placeholder="Tell us about your goals, or what you'd like reviewed…"
+                  className="w-full resize-y border border-input bg-surface p-4 text-[0.9375rem] outline-none transition-colors duration-150 placeholder:text-ink/35 focus:border-forest"
+                />
+              </div>
+
+              <Button type="submit" variant="cta" size="lg" className="w-full">
+                <MessageCircle />
+                {sending ? 'Opening WhatsApp…' : 'Send via WhatsApp'}
+              </Button>
+
+              <p className="meta text-ink/45">
+                Opens WhatsApp with your message ready to send. Nothing is stored on this site.
+              </p>
+            </form>
+          </div>
+
           <Reveal stagger className="space-y-7">
             <div className="flex gap-4">
               <MapPin className="mt-1 shrink-0 text-growth" size={18} aria-hidden />
@@ -157,20 +218,21 @@ const ContactSection = () => {
                 </a>
               </Button>
             </div>
+            {/* Map belongs with the address. As a third child of a two-column
+                grid it wrapped into row two, stranded under the form. */}
+            <div ref={mapRef} className="!mt-10 h-64 border border-border bg-surface">
+              {mapReady && (
+                <iframe
+                  title="Aslot Wealth Advisor office, Majura Gate, Surat"
+                  src={MAP_SRC}
+                  className="h-full w-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  style={{ border: 0 }}
+                />
+              )}
+            </div>
           </Reveal>
-
-          <div ref={mapRef} className="min-h-[20rem] border border-border bg-canvas lg:min-h-full">
-            {mapReady && (
-              <iframe
-                title="Aslot Wealth Advisor office, Majura Gate, Surat"
-                src={MAP_SRC}
-                className="map-in h-full min-h-[20rem] w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                style={{ border: 0 }}
-              />
-            )}
-          </div>
         </div>
       </div>
     </section>

@@ -5,7 +5,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    ASLOT WEALTH ADVISOR — DESIGN SYSTEM
    Palette sampled from the logo: forest #035127, marigold #F4A608.
-   Type: Source Serif 4 (headings) + Inter (body & all figures).
+   Type: Cormorant Garamond (headings) + Inter (body & UI).
    All colours HSL for shadcn/ui compatibility.
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -58,14 +58,31 @@
     /* near-square: the ledger, not the brochure */
 
     /* ── Type scale ──────────────────────────────────────────────── */
-    --step-display: clamp(2.5rem, 1.55rem + 4.2vw, 4.75rem);
-    --step-h2: clamp(1.875rem, 1.35rem + 2.3vw, 3rem);
-    --step-h3: clamp(1.375rem, 1.15rem + 1vw, 1.875rem);
-    --step-h4: clamp(1.125rem, 1.03rem + 0.4vw, 1.3125rem);
-    --step-body-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+    /* Type ramp: 13 · 15 · 16 · 18 · 20 · 24 · 32 · 52 · 80.
+       Non-linear, ~25% apart at the top so sizes are never a coin-toss.
+       Endpoints are whole pixels — no sub-pixel rendering. */
+    --step-display: clamp(3rem, 1.8rem + 5vw, 5rem);
+    /* 48 → 80 */
+    --step-h2: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+    /* 32 → 52 */
+    --step-h3: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
+    /* 24 → 32 */
+    --step-h4: 1.125rem;
+    /* 18       */
+    --step-body-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.125rem);
     --step-body: 1rem;
     --step-sm: 0.9375rem;
     --step-xs: 0.8125rem;
+
+    /* Spacing ramp, 16px base: 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96. */
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-24: 6rem;
 
     /* ── Motion tokens ───────────────────────────────────────────────
        Calm and precise: private bank, not startup launch. Never bounce,
@@ -115,12 +132,16 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Every figure on the site aligns. */
+  /* Money and metrics: lining + tabular is the financial-UI standard.
+     Cormorant defaults to OLDSTYLE figures, so without lining-nums the
+     digits in "₹75 crore+" sit at different heights. Tabular keeps widths
+     equal so counters don't jitter while animating. */
   .tnum,
+  .figure,
   time,
   data {
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum" 1;
+    font-variant-numeric: lining-nums tabular-nums;
+    font-feature-settings: "lnum" 1, "tnum" 1;
   }
 
   /* Visible keyboard focus everywhere, never removed. */
@@ -149,10 +170,17 @@
 
 .display,
 .h2,
-.h3,
+.h3 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+/* h4 is a UI-scale subhead (team names, card titles). Garamond is too
+   delicate down here, so this one stays in Inter. */
 .h4 {
-  font-family: var(--font-source-serif), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 600;
   text-wrap: balance;
 }
 
@@ -176,8 +204,7 @@
 
 .h4 {
   font-size: var(--step-h4);
-  line-height: 1.4;
-  font-weight: 600;
+  line-height: 1.45;
   letter-spacing: -0.006em;
 }
 
@@ -228,7 +255,8 @@
 }
 
 .section-y {
-  padding-block: clamp(4rem, 2.2rem + 6.4vw, 7.5rem);
+  /* 48 → 96, both on the spacing ramp. */
+  padding-block: clamp(var(--space-12), 1.5rem + 5vw, var(--space-24));
 }
 
 /* Mobile action bar clearance so the footer is never covered. */
@@ -340,7 +368,7 @@
 
 .article h2,
 .article h3 {
-  font-family: var(--font-source-serif), Georgia, serif;
+  font-family: var(--font-cormorant), Georgia, serif;
   font-weight: 400;
   color: hsl(var(--forest));
   letter-spacing: -0.012em;
@@ -439,6 +467,40 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   MOTION & HOVER POLICY
+   Derived from Material 3 (easing/duration) and Refactoring UI
+   (hierarchy through weight + colour, not movement).
+
+   DURATION — what gets which token
+     150ms  micro   hover, focus, press, underline, icon colour
+     250ms  short   menus, accordions, header height, sticky bars
+     500ms  medium  scroll reveals (one per section, never per element)
+     700ms+ long    a line drawing, a photo wipe — structural only
+
+   ANIMATE — transform and opacity only. Both are compositor-driven, so
+   they hold 60fps on a mid-range Android. Plus clip-path for the team
+   wipe and stroke-dashoffset for drawn ticks.
+
+   DO NOT ANIMATE
+     · width/height/top/left/margin — these force layout on every frame
+     · box-shadow or filter on scroll — repaints the whole layer
+     · anything on body copy, tables, figures, or disclaimers: reading
+       must never wait, and compliance text must never be hidden by a
+       state a reader can fail to trigger
+     · looping/infinite motion — one pulse on a status dot, nothing more
+     · parallax on mobile
+
+   REVEALS fire once at 20% in view and never replay on scroll-back.
+   Stagger 60–100ms between siblings, capped at 400ms total, so the last
+   item in a group is never more than ~0.4s behind the first.
+
+   HOVER is an enhancement, never a carrier of information. Everything
+   revealed on hover is already visible — team focus areas, testimonial
+   text, "for illustrative purposes" notes. All hover rules sit behind
+   @media (hover: hover) so a touch device never inherits a stuck state.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════
    SCROLL REVEALS
    Content ships visible. JS sets data-reveal="armed" to opt in, then
    "in" to play. No JS or reduced motion → nothing is ever hidden.
@@ -482,8 +544,42 @@
 .reveal-stagger[data-reveal='in'] > *:nth-child(n + 6) { transition-delay: 400ms; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   COMPARISON ROWS
-   The row wrapper is the Reveal target; its parts move independently.
+   LEGACY TIMELINE — the rail fills downward, era by era.
+   Ships visible; JS adds data-anim="on" to opt in.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.legacy[data-anim='on'] .era-fill {
+  transform: scaleY(0);
+}
+
+.legacy[data-anim='on'] .era-dot {
+  transform: scale(0);
+}
+
+.legacy[data-anim='on'] .era-body {
+  opacity: 0;
+  transform: translateY(var(--reveal-y));
+}
+
+.legacy[data-anim='on'] [data-on='true'] .era-fill {
+  transform: scaleY(1);
+  transition: transform 700ms var(--ease-in-out-soft);
+}
+
+.legacy[data-anim='on'] [data-on='true'] .era-dot {
+  transform: scale(1);
+  transition: transform var(--short) var(--ease-out-soft);
+}
+
+.legacy[data-anim='on'] [data-on='true'] .era-body {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft) 80ms,
+    transform var(--medium) var(--ease-out-soft) 80ms;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   COMPARISON ROWS (retained for reuse; no section uses these today)
    ═══════════════════════════════════════════════════════════════════ */
 
 .cmp-row[data-reveal='armed'] {
@@ -586,26 +682,26 @@
 
 .steps[data-reveal='in'] .steps-line {
   transform: scaleX(1);
-  transition: transform 1200ms var(--ease-in-out-soft);
+  transition: transform 700ms var(--ease-in-out-soft);
 }
 
 .steps[data-reveal='in'] .steps-line:last-of-type {
   transform: scaleY(1);
-  transition: transform 1200ms var(--ease-in-out-soft);
+  transition: transform 700ms var(--ease-in-out-soft);
 }
 
 /* Circles light up as the line reaches them, ~300ms apart. */
 .steps[data-reveal='in'] .step-dot {
   opacity: 1;
   border-color: hsl(var(--forest));
-  transition: opacity var(--short) ease calc(var(--i) * 300ms),
-    border-color var(--short) ease calc(var(--i) * 300ms);
+  transition: opacity var(--short) ease calc(var(--i) * 110ms),
+    border-color var(--short) ease calc(var(--i) * 110ms);
 }
 
-.steps[data-reveal='in'] .step:nth-child(1) .step-text { transition-delay: 0ms; }
-.steps[data-reveal='in'] .step:nth-child(2) .step-text { transition-delay: 300ms; }
-.steps[data-reveal='in'] .step:nth-child(3) .step-text { transition-delay: 600ms; }
-.steps[data-reveal='in'] .step:nth-child(4) .step-text { transition-delay: 900ms; }
+.steps[data-reveal='in'] .step:nth-child(1) .step-text { transition-delay: 60ms; }
+.steps[data-reveal='in'] .step:nth-child(2) .step-text { transition-delay: 170ms; }
+.steps[data-reveal='in'] .step:nth-child(3) .step-text { transition-delay: 280ms; }
+.steps[data-reveal='in'] .step:nth-child(4) .step-text { transition-delay: 390ms; }
 
 .steps[data-reveal='in'] .step-text {
   opacity: 1;
@@ -616,7 +712,7 @@
 
 /* One rotation only — monitoring is ongoing, the icon is not. */
 .steps[data-reveal='in'] .step-loop {
-  animation: spin-once 800ms var(--ease-in-out-soft) 1100ms 1 both;
+  animation: spin-once 700ms var(--ease-in-out-soft) 620ms 1 both;
 }
 
 @keyframes spin-once {
@@ -668,8 +764,8 @@
   opacity: 1;
   transform: translateY(0);
   transition: opacity var(--medium) var(--ease-out-soft)
-      calc(var(--reveal-delay, 0ms) + 350ms),
-    transform var(--medium) var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 350ms);
+      calc(var(--reveal-delay, 0ms) + 260ms),
+    transform var(--medium) var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 260ms);
 }
 
 @media (hover: hover) {

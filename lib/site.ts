@@ -11,19 +11,11 @@ export const WA_DEFAULT = waLink(
 );
 
 export const NAV_LINKS = [
-  { href: '/#home', label: 'Home' },
   { href: '/#about', label: 'About Us' },
   { href: '/#process', label: 'Process' },
   { href: '/#stories', label: 'Client Stories' },
   { href: '/#insights', label: 'Insights' },
   { href: '/#contact', label: 'Contact' },
-] as const;
-
-/* Figures live here so they render into the HTML, never counted up from 0. */
-export const TRUST_FIGURES = [
-  { value: '₹75 crore+', label: 'Assets Under Management' },
-  { value: '250+', label: 'Happy Clients' },
-  { value: '99%', label: 'Client Retention Rate' },
 ] as const;
 
 export const TRUST_FOOTNOTE =

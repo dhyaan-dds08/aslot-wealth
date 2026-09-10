@@ -1,20 +1,18 @@
 import AboutSection from '@/components/AboutSection';
 import BackToTop from '@/components/BackToTop';
 import ClientVoices from '@/components/ClientVoices';
-import ComparisonSection from '@/components/ComparisonSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
-import FounderStatement from '@/components/FounderStatement';
 import HeroSection from '@/components/HeroSection';
 import JourneySection from '@/components/JourneySection';
 import Navigation from '@/components/Navigation';
 import ProcessSection from '@/components/ProcessSection';
+import StatsBar from '@/components/StatsBar';
 import ValuePillars from '@/components/ValuePillars';
 
 /**
- * Section order follows the brief: proof immediately after the hero, the
- * founder statement as a breath, then differentiation, services, and the
- * legacy as the one dark block on the page.
+ * Section order mirrors aslotwealth.com. Everything here is content that
+ * exists on the live site — nothing invented to fill a layout.
  */
 export default function HomeClient({ children }: { children?: React.ReactNode }) {
   return (
@@ -30,13 +28,12 @@ export default function HomeClient({ children }: { children?: React.ReactNode })
 
       <main id="main">
         <HeroSection />
-        <ClientVoices />
-        <FounderStatement />
-        <ComparisonSection />
+        <StatsBar />
         <ValuePillars />
         <JourneySection />
         <AboutSection />
         <ProcessSection />
+        <ClientVoices />
         {children}
         <ContactSection />
       </main>

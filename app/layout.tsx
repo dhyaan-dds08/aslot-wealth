@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
 /* Two families, two roles. Limited weights keep the payload small on
@@ -11,10 +11,13 @@ const inter = Inter({
   display: "swap",
 });
 
-const sourceSerif = Source_Serif_4({
+/* Shared with the sister Aslot & Associates site, so the two brands read as
+   family. Garamond proportions need a touch more size and weight than a
+   neutral text serif — the scale in globals.css accounts for that. */
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-source-serif",
+  weight: ["400", "500", "600"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
@@ -130,7 +133,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-IN">
-      <body className={`${inter.variable} ${sourceSerif.variable} antialiased`}>
+      <body className={`${inter.variable} ${cormorant.variable} antialiased`}>
         {children}
 
         <script

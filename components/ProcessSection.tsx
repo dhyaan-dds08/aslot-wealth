@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/motion/Reveal';
 
@@ -11,70 +10,62 @@ const STEPS = [
   },
   {
     title: 'Design',
-    body: 'A holistic plan tailored to your objectives, with a clear asset allocation strategy.',
+    body:
+      'Propose holistic plan tailored to your objectives with clear asset allocation strategy.',
   },
   {
     title: 'Implementation',
-    body: 'Open accounts, execute allocations, set up reporting.',
+    body:
+      'Open accounts, execute allocations, set up reporting — making the plan a reality.',
   },
   {
     title: 'Monitor & Refine',
-    body: 'Quarterly reviews, tactical tilts, and annual goal realignment.',
-    loop: true,
+    body:
+      'Quarterly reviews, tactical tilts, annual goal realignment to keep you on track.',
   },
 ];
 
+/**
+ * The circled numbers and connector line were fussy and read as a signup
+ * wizard. A phase is better expressed as a large serif numeral over a rule —
+ * the sequence is legible from the numbers alone, so the plumbing can go.
+ */
 const ProcessSection = () => (
   <section id="process" className="section-y bg-surface">
     <div className="container-page">
-      <Reveal>
-        <p className="section-label">How we work</p>
-        <h2 className="h2 mt-4 max-w-xl text-forest">Four phases, then repeat</h2>
-      </Reveal>
+      <div className="grid gap-x-16 gap-y-6 lg:grid-cols-12">
+        <Reveal className="lg:col-span-5">
+          <p className="section-label">How we work</p>
+          <h2 className="h2 mt-4 text-forest">A Proven Process</h2>
+        </Reveal>
+        <Reveal className="lg:col-span-6 lg:col-start-7 lg:pt-4">
+          <p className="lede measure text-ink/65">
+            Four strategic phases designed to transform your financial future.
+          </p>
+        </Reveal>
+      </div>
 
-      <Reveal className="steps relative mt-16 block">
-        {/* Connecting line draws across the row (down the column on mobile). */}
-        <span
-          aria-hidden
-          className="steps-line absolute left-5 top-5 hidden h-px w-[calc(100%-2.5rem)] origin-left bg-forest/25 md:block"
-        />
-        <span
-          aria-hidden
-          className="steps-line absolute left-5 top-5 h-[calc(100%-2.5rem)] w-px origin-top bg-forest/25 md:hidden"
-        />
+      <ol className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+        {STEPS.map((step, i) => (
+          <Reveal key={step.title} as="li" delay={i * 80} className="block">
+            <p className="figure font-serif text-[3rem] leading-none text-growth/40">
+              {String(i + 1).padStart(2, '0')}
+            </p>
+            <div className="mt-5 border-t border-forest/25 pt-5">
+              <h3 className="h3 text-forest">{step.title}</h3>
+              <p className="prose-sm-x mt-3 text-ink/65">{step.body}</p>
+            </div>
+          </Reveal>
+        ))}
+      </ol>
 
-        <ol className="grid grid-cols-1 gap-y-10 md:grid-cols-4 md:gap-x-8">
-          {STEPS.map((step, i) => (
-            <li key={step.title} className="step relative pl-16 md:pl-0">
-              <span
-                className="step-dot absolute left-0 top-0 flex size-10 items-center justify-center rounded-full border border-forest/30 bg-surface tnum meta text-forest transition-transform duration-150 md:relative md:mb-6"
-                style={{ ['--i' as string]: i }}
-              >
-                {String(i + 1).padStart(2, '0')}
-              </span>
-
-              <h3 className="step-text h4 text-forest">
-                {step.title}
-                {step.loop && (
-                  <RotateCw
-                    className="step-loop ml-2 inline size-4 text-growth"
-                    aria-label="ongoing"
-                  />
-                )}
-              </h3>
-              <p className="step-text prose-sm-x mt-2 text-ink/65">{step.body}</p>
-            </li>
-          ))}
-        </ol>
-      </Reveal>
-
-      <Reveal className="mt-14 flex flex-col gap-6 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
-        <p className="prose-sm-x text-ink/65">
+      <Reveal className="mt-16 flex flex-col gap-6 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="lede text-ink/70">
           <span className="tnum font-medium text-forest">99% client retention</span> since
           inception.
         </p>
         <Button variant="cta" size="lg" asChild>
-          <Link href="#contact">Start your journey</Link>
+          <Link href="#contact">Schedule Discovery Call</Link>
         </Button>
       </Reveal>
     </div>

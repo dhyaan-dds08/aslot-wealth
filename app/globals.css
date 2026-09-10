@@ -227,11 +227,14 @@
   letter-spacing: 0.005em;
 }
 
-/* Section label — sentence case, NOT tracked-out all-caps. */
+/* Section label — sentence case, NOT tracked-out all-caps.
+   Deliberately sets NO colour. This rule is unlayered, so a `color` here
+   would outrank every Tailwind text-* utility (unlayered CSS beats
+   @layer utilities) and silently win on dark sections. Colour is set at
+   the call site: text-growth on light, text-white/85 on forest. */
 .section-label {
   font-size: var(--step-xs);
   font-weight: 600;
-  color: hsl(var(--growth));
 }
 
 /* Keep every measure under ~75 characters. */

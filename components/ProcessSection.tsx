@@ -33,17 +33,13 @@ const STEPS = [
 const ProcessSection = () => (
   <section id="process" className="section-y bg-surface">
     <div className="container-page">
-      <div className="grid gap-x-16 gap-y-6 lg:grid-cols-12">
-        <Reveal className="lg:col-span-5">
-          <p className="section-label">How we work</p>
-          <h2 className="h2 mt-4 text-forest">A Proven Process</h2>
-        </Reveal>
-        <Reveal className="lg:col-span-6 lg:col-start-7 lg:pt-4">
-          <p className="lede measure text-ink/65">
-            Four strategic phases designed to transform your financial future.
-          </p>
-        </Reveal>
-      </div>
+      <Reveal>
+        <p className="section-label text-growth">How we work</p>
+        <h2 className="h2 mt-4 text-forest">A Proven Process</h2>
+        <p className="lede measure mt-5 text-ink/65">
+          Four strategic phases designed to transform your financial future.
+        </p>
+      </Reveal>
 
       <ol className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
         {STEPS.map((step, i) => (

@@ -25,7 +25,7 @@ const fmtDate = (iso: string) =>
   });
 
 const Meta = ({ post }: { post: BlogPost }) => (
-  <p className="meta flex items-center gap-2 text-ink/45">
+  <p className="meta flex items-center gap-2 text-ink/70">
     <time dateTime={post.created_at}>{fmtDate(post.created_at)}</time>
     <span aria-hidden>·</span>
     <span className="tnum">{readingTime(post.content)} min read</span>
@@ -55,7 +55,7 @@ export default async function BlogPreview() {
       <div className="container-page">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <Reveal>
-            <p className="section-label">Insights &amp; Expertise</p>
+            <p className="section-label text-growth">Insights &amp; Expertise</p>
             <h2 className="h2 mt-4 max-w-xl text-forest">
               Perspectives on wealth, planning and markets
             </h2>

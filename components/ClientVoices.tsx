@@ -39,7 +39,7 @@ const ClientVoices = () => (
   <section id="stories" className="section-y bg-canvas">
     <div className="container-page">
       <Reveal>
-        <p className="section-label">Client stories</p>
+        <p className="section-label text-growth">Client stories</p>
         <h2 className="h2 mt-4 max-w-2xl text-forest">Real People, Tangible Outcomes</h2>
         <p className="lede mt-6 text-ink/65">Stories of trust, growth, and financial freedom.</p>
       </Reveal>
@@ -49,14 +49,14 @@ const ClientVoices = () => (
           <Reveal key={s.name} as="li" className="block">
             <figure className="border-t border-border pt-6">
               <blockquote className="prose-sm-x text-ink/80">{s.quote}</blockquote>
-              <p className="meta mt-4 text-ink/50">{s.name}</p>
+              <p className="meta mt-4 text-ink/65">{s.name}</p>
             </figure>
           </Reveal>
         ))}
       </ul>
 
       {/* COMPLIANCE BLOCK */}
-      <p className="meta measure mt-12 text-ink/50">{DISCLAIMER_TESTIMONIALS}</p>
+      <p className="meta measure mt-12 text-ink/65">{DISCLAIMER_TESTIMONIALS}</p>
     </div>
   </section>
 );

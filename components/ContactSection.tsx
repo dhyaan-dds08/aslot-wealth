@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Check, Clock, Copy, MapPin, MessageCircle, Navigation2, Phone } from 'lucide-react';
+import { Check, Copy, MessageCircle, Navigation2, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Reveal from '@/components/motion/Reveal';
 import { EMAIL, PHONE_DISPLAY, PHONE_HREF, WA_DEFAULT, waLink } from '@/lib/site';
@@ -40,7 +40,7 @@ const CopyButton = ({ value, label }: { value: string; label: string }) => {
       onClick={() => {
         navigator.clipboard?.writeText(value).then(() => setDone(true));
       }}
-      className="meta inline-flex items-center gap-1.5 text-ink/45 transition-colors duration-150 hover:text-forest"
+      className="meta inline-flex items-center gap-1.5 text-ink/60 transition-colors duration-150 hover:text-forest"
       aria-label={`Copy ${label}`}
     >
       {done ? <Check size={13} /> : <Copy size={13} />}
@@ -93,7 +93,7 @@ const ContactSection = () => {
     <section id="contact" className="section-y bg-canvas">
       <div className="container-page">
         <Reveal>
-          <p className="section-label">Contact</p>
+          <p className="section-label text-growth">Contact</p>
           <h2 className="h2 mt-4 max-w-xl text-forest">Let&apos;s Start Your Journey</h2>
           <p className="lede mt-6 text-ink/65">
             Schedule a discovery call or reach out to us directly.
@@ -140,65 +140,64 @@ const ContactSection = () => {
                 {sending ? 'Opening WhatsApp…' : 'Send via WhatsApp'}
               </Button>
 
-              <p className="meta text-ink/45">
+              <p className="meta text-ink/70">
                 Opens WhatsApp with your message ready to send. Nothing is stored on this site.
               </p>
             </form>
           </div>
 
-          <Reveal stagger className="space-y-7">
-            <div className="flex gap-4">
-              <MapPin className="mt-1 shrink-0 text-growth" size={18} aria-hidden />
-              <div>
-                <p className="meta font-medium text-forest">Address</p>
-                <p className="prose-sm-x mt-1.5 text-ink/70">{ADDRESS}.</p>
-                <p className="prose-sm-x text-growth">Visitor parking available.</p>
-                <div className="mt-2">
-                  <CopyButton value={ADDRESS} label="address" />
-                </div>
+          {/* Hairline rows, no icon gutter. The icons created a third left
+              edge (label at one x, text at another), so nothing in the two
+              columns lined up. Same ledger pattern as the rest of the site. */}
+          <Reveal stagger>
+            <dl>
+              <div className="border-t border-border py-5">
+                <dt className="meta font-medium text-forest">Address</dt>
+                <dd className="prose-sm-x mt-2 text-ink/70">
+                  {ADDRESS}.
+                  <span className="mt-1 block text-growth">Visitor parking available.</span>
+                  <span className="mt-2 block">
+                    <CopyButton value={ADDRESS} label="address" />
+                  </span>
+                </dd>
               </div>
-            </div>
 
-            <div className="flex gap-4">
-              <Phone className="mt-1 shrink-0 text-growth" size={18} aria-hidden />
-              <div>
-                <p className="meta font-medium text-forest">Phone</p>
-                <a href={PHONE_HREF} className="prose-sm-x tnum mt-1.5 block text-ink/75 hover:text-forest">
-                  {PHONE_DISPLAY}
-                </a>
-                <div className="mt-2">
-                  <CopyButton value="+919328826939" label="phone number" />
-                </div>
+              <div className="border-t border-border py-5">
+                <dt className="meta font-medium text-forest">Phone</dt>
+                <dd className="prose-sm-x mt-2">
+                  <a href={PHONE_HREF} className="tnum text-ink/75 hover:text-forest">
+                    {PHONE_DISPLAY}
+                  </a>
+                  <span className="mt-2 block">
+                    <CopyButton value="+919328826939" label="phone number" />
+                  </span>
+                </dd>
               </div>
-            </div>
 
-            <div className="flex gap-4">
-              <MessageCircle className="mt-1 shrink-0 text-growth" size={18} aria-hidden />
-              <div>
-                <p className="meta font-medium text-forest">Email</p>
-                <a href={`mailto:${EMAIL}`} className="prose-sm-x mt-1.5 block text-ink/75 hover:text-forest">
-                  {EMAIL}
-                </a>
+              <div className="border-t border-border py-5">
+                <dt className="meta font-medium text-forest">Email</dt>
+                <dd className="prose-sm-x mt-2">
+                  <a href={`mailto:${EMAIL}`} className="text-ink/75 hover:text-forest">
+                    {EMAIL}
+                  </a>
+                </dd>
               </div>
-            </div>
 
-            <div className="flex gap-4">
-              <Clock className="mt-1 shrink-0 text-growth" size={18} aria-hidden />
-              <div>
-                <p className="meta font-medium text-forest">Office hours</p>
-                <p className="prose-sm-x mt-1.5 text-ink/70">
+              <div className="border-y border-border py-5">
+                <dt className="meta font-medium text-forest">Office hours</dt>
+                <dd className="prose-sm-x mt-2 text-ink/70">
                   Monday – Saturday, 10:30 AM – 7:00 PM
-                </p>
-                {open && (
-                  <p className="meta mt-1.5 flex items-center gap-2 text-growth">
-                    <span className="size-1.5 rounded-full bg-growth" aria-hidden />
-                    Open now
-                  </p>
-                )}
+                  {open && (
+                    <span className="meta mt-1.5 flex items-center gap-2 text-growth">
+                      <span className="size-1.5 rounded-full bg-growth" aria-hidden />
+                      Open now
+                    </span>
+                  )}
+                </dd>
               </div>
-            </div>
+            </dl>
 
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="mt-7 flex flex-wrap gap-3">
               <Button variant="cta" asChild>
                 <a href={WA_DEFAULT} target="_blank" rel="noopener noreferrer">
                   <MessageCircle />
@@ -218,6 +217,7 @@ const ContactSection = () => {
                 </a>
               </Button>
             </div>
+
             {/* Map belongs with the address. As a third child of a two-column
                 grid it wrapped into row two, stranded under the form. */}
             <div ref={mapRef} className="!mt-10 h-64 border border-border bg-surface">

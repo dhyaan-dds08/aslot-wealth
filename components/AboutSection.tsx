@@ -1,4 +1,4 @@
-import { Linkedin } from 'lucide-react';
+import { LinkedInIcon } from '@/components/BrandIcons';
 import Reveal from '@/components/motion/Reveal';
 import PragneshImage from '@/assets/teams/Pragnesh Aslot.jpg';
 import SeemaImage from '@/assets/teams/Seema Aslot.jpg';
@@ -50,7 +50,7 @@ const AboutSection = () => (
   <section id="team" className="section-y bg-canvas">
     <div className="container-page">
       <Reveal>
-        <p className="section-label">The people</p>
+        <p className="section-label text-growth">The people</p>
         <h2 className="h2 mt-4 max-w-2xl text-forest">Meet Our Team</h2>
       </Reveal>
 
@@ -64,13 +64,13 @@ const AboutSection = () => (
               className="team-card grid items-center gap-x-14 gap-y-8 border-t border-border py-12 first:border-t-0 first:pt-0 md:grid-cols-12 md:py-16"
             >
               <figure
-                className={`team-frame overflow-hidden bg-surface md:col-span-5 ${flipped ? 'md:col-start-8' : ''
+                className={`team-frame overflow-hidden bg-surface md:col-span-4 ${flipped ? 'md:col-start-9' : ''
                   }`}
               >
                 <img
                   src={m.image.src}
                   alt={`${m.name}, ${m.role ?? 'Aslot Wealth Advisor'}`}
-                  className="team-photo aspect-[4/3] w-full object-cover md:aspect-[4/5]"
+                  className="team-photo aspect-[4/3] w-full object-cover md:aspect-[3/4]"
                   loading="lazy"
                   width={640}
                   height={800}
@@ -78,17 +78,17 @@ const AboutSection = () => (
               </figure>
 
               <div
-                className={`team-meta md:col-span-6 ${flipped ? 'md:col-start-1 md:row-start-1' : 'md:col-start-7'
+                className={`team-meta md:col-span-7 ${flipped ? 'md:col-start-1 md:row-start-1' : 'md:col-start-6'
                   }`}
               >
                 <h3 className="h3 text-forest">{m.name}</h3>
 
                 {m.role && <p className="mt-3 h4 text-growth">{m.role}</p>}
-                <p className={`meta text-ink/50 ${m.role ? 'mt-1' : 'mt-3'}`}>{m.credential}</p>
+                <p className={`meta text-ink/65 ${m.role ? 'mt-1' : 'mt-3'}`}>{m.credential}</p>
 
                 <div className="mt-6 space-y-4">
                   {m.bio.map((para) => (
-                    <p key={para.slice(0, 28)} className="prose-sm-x measure text-ink/70">
+                    <p key={para.slice(0, 28)} className="text-[1.0625rem] leading-[1.75] text-ink/70">
                       {para}
                     </p>
                   ))}
@@ -99,9 +99,9 @@ const AboutSection = () => (
                     href={m.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="meta mt-6 inline-flex items-center gap-2 border-b border-ink/20 pb-1 text-ink/60 transition-colors duration-150 hover:border-growth hover:text-growth"
+                    className="meta mt-6 inline-flex items-center gap-2 border-b border-ink/20 pb-1 text-ink/70 transition-colors duration-150 hover:border-growth hover:text-growth"
                   >
-                    <Linkedin size={14} />
+                    <LinkedInIcon size={14} />
                     Connect on LinkedIn
                   </a>
                 )}

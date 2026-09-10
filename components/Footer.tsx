@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Instagram, Linkedin } from 'lucide-react';
+import { InstagramIcon, LinkedInIcon } from '@/components/BrandIcons';
 import logo from '@/assets/images/footer_logo.png';
 import { DISCLAIMER_MF, EMAIL } from '@/lib/site';
 
@@ -42,7 +42,7 @@ const Footer = () => (
               aria-label="Aslot Wealth Advisor on LinkedIn"
               className="border border-white/25 p-2.5 transition-colors hover:bg-white hover:text-forest"
             >
-              <Linkedin size={17} />
+              <LinkedInIcon size={17} />
             </a>
             <a
               href="https://www.instagram.com/aslotwealth"
@@ -51,13 +51,13 @@ const Footer = () => (
               aria-label="Aslot Wealth Advisor on Instagram"
               className="border border-white/25 p-2.5 transition-colors hover:bg-white hover:text-forest"
             >
-              <Instagram size={17} />
+              <InstagramIcon size={17} />
             </a>
           </div>
         </div>
 
         <nav className="md:col-span-3" aria-label="Quick links">
-          <h2 className="meta font-medium text-white/55">Quick links</h2>
+          <h2 className="meta font-medium text-white/75">Quick links</h2>
           <ul className="mt-4 space-y-2.5">
             {QUICK.map((l) => (
               <li key={l.href}>
@@ -70,7 +70,7 @@ const Footer = () => (
         </nav>
 
         <nav className="md:col-span-4" aria-label="Legal">
-          <h2 className="meta font-medium text-white/55">Legal</h2>
+          <h2 className="meta font-medium text-white/75">Legal</h2>
           <ul className="mt-4 space-y-2.5">
             {LEGAL.map((l) => (
               <li key={l.href}>
@@ -102,7 +102,7 @@ const Footer = () => (
       {/* COMPLIANCE BLOCK — editable, legible, never grey micro-text. */}
       <div className="mt-8 space-y-3">
         <p className="meta measure text-white/70">{DISCLAIMER_MF}</p>
-        <p className="meta pt-3 text-white/45">
+        <p className="meta pt-3 text-white/65">
           © <span className="tnum">2026</span> Aslot Wealth Advisor. All rights reserved.
         </p>
       </div>

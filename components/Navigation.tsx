@@ -225,7 +225,7 @@ const Navigation = () => {
                 Schedule a Call
               </Link>
             </Button>
-            <p className="meta mt-4 text-ink/45">
+            <p className="meta mt-4 text-ink/60">
               Mon–Sat 10:30 AM–7:00 PM ·{' '}
               <a href={PHONE_HREF} className="tnum">
                 {PHONE_DISPLAY}

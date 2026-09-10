@@ -66,7 +66,7 @@ const JourneySection = () => {
   return (
     <section id="about" className="section-y bg-forest text-white">
       <div className="container-page">
-        <p className="section-label text-white/55">Our journey</p>
+        <p className="section-label text-white/85">Our journey</p>
         <h2 className="h2 mt-4 max-w-2xl">Legacy of clarity &amp; long-term vision</h2>
 
         <div className="mt-14 grid gap-x-16 lg:mt-20 lg:grid-cols-12">
@@ -98,7 +98,7 @@ const JourneySection = () => {
 
           <aside className="mt-12 lg:col-span-4 lg:mt-0">
             <div className="border-t border-white/20 pt-6 lg:sticky lg:top-28">
-              <p className="meta text-white/55">Today</p>
+              <p className="meta text-white/70">Today</p>
               <p className="lede mt-4 text-white/85">{TODAY}</p>
             </div>
           </aside>

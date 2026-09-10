@@ -18,7 +18,7 @@ const StatsBar = () => (
   <section id="trust" className="section-y bg-surface">
     <div className="container-page">
       <Reveal>
-        <p className="section-label">Trust, Measured</p>
+        <p className="section-label text-growth">Trust, Measured</p>
         <h2 className="h2 mt-4 max-w-2xl text-forest">
           Numbers that speak volumes about our commitment
         </h2>
@@ -35,12 +35,12 @@ const StatsBar = () => (
                 label={f.a11y}
               />
             </p>
-            <p className="meta mt-3 text-ink/55">{f.label}</p>
+            <p className="meta mt-3 text-ink/70">{f.label}</p>
           </div>
         ))}
       </Reveal>
 
-      <p className="meta mt-12 text-ink/40">{TRUST_FOOTNOTE}</p>
+      <p className="meta mt-12 text-ink/70">{TRUST_FOOTNOTE}</p>
     </div>
   </section>
 );

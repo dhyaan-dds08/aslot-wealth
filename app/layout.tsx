@@ -1,26 +1,35 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+/* Two families, two roles. Limited weights keep the payload small on
+   Indian mobile networks; next/font self-hosts and preloads both. */
+/* Humanist-geometric, warm and confident at text sizes, and it holds up
+   against Garamond's high-contrast strokes. Variable axis so body copy can
+   sit at 450 — 400 read thin, 500 is heavy over a paragraph. */
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-inter",
+  variable: "--font-sans",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+/* Shared with the sister Aslot & Associates site, so the two brands read as
+   family. Garamond proportions need a touch more size and weight than a
+   neutral text serif — the scale in globals.css accounts for that. */
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-playfair",
+  weight: ["400", "500", "600"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Aslot Wealth Advisor - Personalised Investment Management",
+  metadataBase: new URL("https://www.aslotwealth.com"),
+  title: "Aslot Wealth Advisor – Personalised Investment Management",
   description:
-    "Three generations of trusted financial advice. Goal-aligned portfolios built for the long run. ₹50cr+ AUM, 250+ clients, 99% retention.",
+    "A family wealth practice in Surat since 1989. Goal-aligned portfolios built for the long run. ₹75 crore+ AUM, 250+ clients, 99% retention.",
   authors: [{ name: "Aslot Wealth Advisor" }],
+  alternates: { canonical: "/" },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -29,37 +38,67 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
-  appleWebApp: {
-    title: "Aslot",
-  },
+  appleWebApp: { title: "Aslot" },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "Aslot Wealth Advisor - Personalised Investment Management",
+    title: "Aslot Wealth Advisor – Personalised Investment Management",
     description:
-      "Three generations of trusted financial advice. Goal-aligned portfolios built for the long run.",
+      "A family wealth practice in Surat since 1989. Goal-aligned portfolios built for the long run. ₹75 crore+ AUM, 250+ clients, 99% retention.",
     type: "website",
+    locale: "en_IN",
+    url: "/",
+    siteName: "Aslot Wealth Advisor",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aslot Wealth Advisor – Personalised Investment Management",
+    description:
+      "A family wealth practice in Surat since 1989. Goal-aligned portfolios built for the long run.",
   },
 };
 
-// JSON-LD structured data for SEO
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "FinancialService",
   name: "Aslot Wealth Advisor",
   description:
-    "Personalised investment management and wealth advisory services with three generations of expertise",
-  telephone: "+91-XXXXXXXXXX",
+    "Personalised investment management and wealth advisory services in Surat, practising since 1989.",
+  url: "https://www.aslotwealth.com",
+  telephone: "+91-9328826939",
+  email: "info@aslotwealth.in",
   address: {
     "@type": "PostalAddress",
+    streetAddress:
+      "9, Gr. Floor, West Side, Vishwakarma Society, b/h Vishwakarma Temple, Nr. ITC Building, Majura Gate",
+    addressLocality: "Surat",
+    addressRegion: "Gujarat",
+    postalCode: "395002",
     addressCountry: "IN",
   },
+  geo: { "@type": "GeoCoordinates", latitude: 21.1817, longitude: 72.8195 },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      opens: "10:30",
+      closes: "19:00",
+    },
+  ],
   priceRange: "₹₹₹",
   foundingDate: "1989",
-  founder: {
-    "@type": "Person",
-    name: "Pragnesh Aslot",
-  },
-  areaServed: "IN",
+  founder: { "@type": "Person", name: "Pragnesh Aslot" },
+  areaServed: { "@type": "State", name: "Gujarat" },
+  sameAs: [
+    "https://www.linkedin.com/in/ishan-aslot/",
+    "https://www.instagram.com/aslotwealth",
+  ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Wealth Management Services",
@@ -91,36 +130,16 @@ const jsonLd = {
       },
     ],
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "250",
-    bestRating: "5",
-  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <script src="https://platform.linkedin.com/in.js" type="text/javascript" async></script>
-      </head>
-      <body
-        className={`${inter.variable} ${playfair.variable} antialiased`}
-      >
+    <html lang="en-IN">
+      <body className={`${sans.variable} ${cormorant.variable} antialiased`}>
         {children}
 
-        {/* JSON-LD structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -1,165 +1,239 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { Check, Copy, MessageCircle, Navigation2, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
-import { useState } from 'react';
+import Reveal from '@/components/motion/Reveal';
+import { EMAIL, PHONE_DISPLAY, PHONE_HREF, WA_DEFAULT, waLink } from '@/lib/site';
 
-const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    message: '',
-  });
+const ADDRESS =
+  '9, Gr. Floor, West Side, Vishwakarma Society, b/h Vishwakarma Temple, Nr. ITC Building, Majura Gate, Surat, Gujarat – 395002';
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Construct WhatsApp message
-    const whatsappMessage = `Hi, my name is ${formData.name}.\n\n${formData.message}`;
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    
-    // Open WhatsApp with the message
-    window.open(`https://wa.me/919328826939?text=${encodedMessage}`, '_blank');
-    
-    // Clear form
-    setFormData({ name: '', message: '' });
-  };
+const MAP_SRC =
+  'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3720.2642259473105!2d72.81732347526084!3d21.18166008050618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDEwJzU0LjAiTiA3MsKwNDknMTEuNiJF!5e0!3m2!1sen!2sin!4v1762702185037!5m2!1sen!2sin';
 
-  const handleWhatsApp = () => {
-    window.open('https://wa.me/919328826939?text=Hi, I would like to schedule a consultation', '_blank');
-  };
+const DIRECTIONS = 'https://maps.google.com/?q=21.18166,72.81732';
+
+/** Mon–Sat, 10:30–19:00 IST. */
+const isOpenNow = () => {
+  const now = new Date(
+    new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }),
+  );
+  const day = now.getDay();
+  if (day === 0) return false;
+  const mins = now.getHours() * 60 + now.getMinutes();
+  return mins >= 630 && mins < 1140;
+};
+
+const CopyButton = ({ value, label }: { value: string; label: string }) => {
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!done) return;
+    const t = setTimeout(() => setDone(false), 2000);
+    return () => clearTimeout(t);
+  }, [done]);
 
   return (
-    <section id="contact" className="py-0 md:py-0 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary">
-            Let&apos;s Start <span className="bg-gradient-to-r from-yellow-400 via-accent to-yellow-600 bg-clip-text text-transparent">Your Journey</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Schedule a discovery call or reach out to us directly
+    <button
+      type="button"
+      onClick={() => {
+        navigator.clipboard?.writeText(value).then(() => setDone(true));
+      }}
+      className="meta inline-flex items-center gap-1.5 text-ink/60 transition-colors duration-150 hover:text-forest"
+      aria-label={`Copy ${label}`}
+    >
+      {done ? <Check size={13} /> : <Copy size={13} />}
+      {done ? 'Copied' : 'Copy'}
+    </button>
+  );
+};
+
+const ContactSection = () => {
+  const [open, setOpen] = useState<boolean | null>(null);
+  const [mapReady, setMapReady] = useState(false);
+  const mapRef = useRef<HTMLDivElement>(null);
+
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [sending, setSending] = useState(false);
+
+  const sendWhatsApp = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    window.open(waLink(`Hi, my name is ${name}.\n\n${message}`), '_blank');
+    setName('');
+    setMessage('');
+    setTimeout(() => setSending(false), 1200);
+  };
+
+  // Computed after mount — the server has no notion of the visitor's clock.
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setOpen(isOpenNow()));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  // The real map only loads as it approaches the viewport.
+  useEffect(() => {
+    const el = mapRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        setMapReady(true);
+        observer.disconnect();
+      },
+      { rootMargin: '200px' },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section id="contact" className="section-y bg-canvas">
+      <div className="container-page">
+        <Reveal>
+          <p className="section-label text-growth">Contact</p>
+          <h2 className="h2 mt-4 max-w-xl text-forest">Let&apos;s Start Your Journey</h2>
+          <p className="lede mt-6 text-ink/65">
+            Schedule a discovery call or reach out to us directly.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Form */}
-          <div className="glass-card rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-primary mb-6">Send us a message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6" aria-label="Contact form">
+        <div className="mt-14 grid gap-x-16 gap-y-14 lg:grid-cols-2">
+          {/* Message form — writes straight into WhatsApp, no inbox in between. */}
+          <div>
+            <form onSubmit={sendWhatsApp} className="space-y-6">
               <div>
-                <label htmlFor="name" className="sr-only">Your Name</label>
-                <Input
-                  id="name"
+                <label htmlFor="wa-name" className="field-label">
+                  Your name
+                </label>
+                <input
+                  id="wa-name"
                   name="name"
-                  placeholder="Your Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
-                  className="bg-background"
-                  aria-label="Your Name"
+                  autoComplete="name"
+                  placeholder="e.g. Dipak Patel"
+                  className="field h-14"
                 />
               </div>
+
               <div>
-                <label htmlFor="message" className="sr-only">Message</label>
-                <Textarea
-                  id="message"
+                <label htmlFor="wa-msg" className="field-label">
+                  Message
+                </label>
+                <textarea
+                  id="wa-msg"
                   name="message"
-                  placeholder="Tell us about your investment goals..."
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   required
-                  rows={8}
-                  className="bg-background"
-                  aria-label="Message"
+                  rows={5}
+                  placeholder="Tell us about your goals, or what you'd like reviewed…"
+                  className="field resize-y py-4"
                 />
               </div>
-              <Button
-                type="submit"
-                className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-semibold py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <svg
-                  className="mr-2"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                </svg>
-                Send via WhatsApp
+
+              <Button type="submit" variant="cta" size="lg" className="w-full">
+                <MessageCircle />
+                {sending ? 'Opening WhatsApp…' : 'Send via WhatsApp'}
               </Button>
+
+              <p className="meta text-ink/70">
+                Opens WhatsApp with your message ready to send. Nothing is stored on this site.
+              </p>
             </form>
+          </div>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground mb-3">Or start a quick chat:</p>
-              <Button
-                onClick={handleWhatsApp}
-                variant="outline"
-                className="w-full border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all duration-300"
-              >
-                Quick Consultation
+          {/* Hairline rows, no icon gutter. The icons created a third left
+              edge (label at one x, text at another), so nothing in the two
+              columns lined up. Same ledger pattern as the rest of the site. */}
+          <Reveal stagger>
+            <dl>
+              <div className="border-t border-border py-5">
+                <dt className="meta font-medium text-forest">Address</dt>
+                <dd className="prose-sm-x mt-2 text-ink/70">
+                  {ADDRESS}.
+                  <span className="mt-1 block text-growth">Visitor parking available.</span>
+                  <span className="mt-2 block">
+                    <CopyButton value={ADDRESS} label="address" />
+                  </span>
+                </dd>
+              </div>
+
+              <div className="border-t border-border py-5">
+                <dt className="meta font-medium text-forest">Phone</dt>
+                <dd className="prose-sm-x mt-2">
+                  <a href={PHONE_HREF} className="tnum text-ink/75 hover:text-forest">
+                    {PHONE_DISPLAY}
+                  </a>
+                  <span className="mt-2 block">
+                    <CopyButton value="+919328826939" label="phone number" />
+                  </span>
+                </dd>
+              </div>
+
+              <div className="border-t border-border py-5">
+                <dt className="meta font-medium text-forest">Email</dt>
+                <dd className="prose-sm-x mt-2">
+                  <a href={`mailto:${EMAIL}`} className="text-ink/75 hover:text-forest">
+                    {EMAIL}
+                  </a>
+                </dd>
+              </div>
+
+              <div className="border-y border-border py-5">
+                <dt className="meta font-medium text-forest">Office hours</dt>
+                <dd className="prose-sm-x mt-2 text-ink/70">
+                  Monday – Saturday, 10:30 AM – 7:00 PM
+                  {open && (
+                    <span className="meta mt-1.5 flex items-center gap-2 text-growth">
+                      <span className="size-1.5 rounded-full bg-growth" aria-hidden />
+                      Open now
+                    </span>
+                  )}
+                </dd>
+              </div>
+            </dl>
+
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Button variant="cta" asChild>
+                <a href={WA_DEFAULT} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle />
+                  Chat on WhatsApp
+                </a>
+              </Button>
+              <Button variant="outline" asChild>
+                <a href={DIRECTIONS} target="_blank" rel="noopener noreferrer">
+                  <Navigation2 />
+                  Get directions
+                </a>
+              </Button>
+              <Button variant="outline" asChild>
+                <a href={PHONE_HREF}>
+                  <Phone />
+                  Call
+                </a>
               </Button>
             </div>
-          </div>
 
-          {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="glass-card rounded-2xl p-8 space-y-6">
-              <div className="flex items-start space-x-4">
-                <MapPin className="text-accent mt-1" size={24} />
-                <div>
-                  <h4 className="font-semibold text-primary mb-2">Office Address</h4>
-                  <p className="text-muted-foreground">
-                    9, Gr. Floor, West side, Vishwakarma Society<br />
-                    b/h Vishwakarma temple, Nr. ITC Building<br />
-                    Majura Gate, Surat, Gujarat, India - 395002.
-                  </p>
-                  <p className="text-sm text-accent mt-2">Visitor parking available</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <Phone className="text-accent mt-1" size={24} />
-                <div>
-                  <h4 className="font-semibold text-primary mb-2">Phone</h4>
-                  <a href="tel:+919328826939" className="text-muted-foreground hover:text-accent transition-colors">
-                    +91 9328826939
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <Mail className="text-accent mt-1" size={24} />
-                <div>
-                  <h4 className="font-semibold text-primary mb-2">Email</h4>
-                  <a href="mailto:info@aslotwealth.in" className="text-muted-foreground hover:text-accent transition-colors">
-                    info@aslotwealth.in
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <Clock className="text-accent mt-1" size={24} />
-                <div>
-                  <h4 className="font-semibold text-primary mb-2">Office Hours</h4>
-                  <p className="text-muted-foreground">Monday - Saturday: 10:30 AM to 7:00 PM</p>
-                </div>
-              </div>
+            {/* Map belongs with the address. As a third child of a two-column
+                grid it wrapped into row two, stranded under the form. */}
+            <div ref={mapRef} className="!mt-10 h-64 border border-border bg-surface">
+              {mapReady && (
+                <iframe
+                  title="Aslot Wealth Advisor office, Majura Gate, Surat"
+                  src={MAP_SRC}
+                  className="h-full w-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  style={{ border: 0 }}
+                />
+              )}
             </div>
-
-            {/* Map */}
-            <div className="glass-card rounded-2xl p-0 h-64 flex items-center justify-center bg-muted/20 border-2 border-accent/30 overflow-hidden">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3720.2642259473105!2d72.81732347526084!3d21.18166008050618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDEwJzU0LjAiTiA3MsKwNDknMTEuNiJF!5e0!3m2!1sen!2sin!4v1762702185037!5m2!1sen!2sin" 
-                width="100%" 
-                height="100%" 
-                allowFullScreen 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-                className="rounded-2xl"
-                style={{ border: 0 }}
-              />
-            </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

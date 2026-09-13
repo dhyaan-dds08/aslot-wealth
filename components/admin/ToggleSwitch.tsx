@@ -41,7 +41,7 @@ export default function TogglePostButton({ post }: TogglePostButtonProps) {
     <Button
       onClick={handleToggle}
       disabled={loading}
-      variant={post.active ? 'outline' : 'default'}
+      variant={post.active ? 'outline' : 'forest'}
       size="sm"
       className={post.active ? '' : 'bg-green-600 hover:bg-green-700 text-white'}
     >

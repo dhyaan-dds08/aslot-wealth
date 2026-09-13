@@ -2,120 +2,114 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL for compatibility with shadcn/ui.
-*/
-@font-face {
-  font-family: 'bircola';
-  src: url('/fonts/bricola.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
+/* ═══════════════════════════════════════════════════════════════════
+   ASLOT WEALTH ADVISOR — DESIGN SYSTEM
+   Palette sampled from the logo: forest #035127, marigold #F4A608.
+   Type: Cormorant Garamond (headings) + Plus Jakarta Sans (body & UI).
+   All colours HSL for shadcn/ui compatibility.
+   ═══════════════════════════════════════════════════════════════════ */
 
 @layer base {
   :root {
-    /* Navy/Gold/White Professional Palette */
-    --background: 220 15% 97%;
-    --foreground: 220 85% 15%;
+    /* ── The six tokens ──────────────────────────────────────────── */
+    --canvas: 0 0% 100%;
+    /* page background            #FFFFFF */
+    --surface: 96 19% 95%;
+    /* muted alternating surface  #F1F4EF */
+    --ink: 150 23% 10%;
+    /* body text                  #14201A */
+    --forest: 148 93% 16%;
+    /* brand primary              #035127 */
+    --marigold: 40 94% 49%;
+    /* CTA ONLY                   #F4A608 */
+    --growth: 150 59% 30%;
+    /* positive figures           #1F7A4C */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 85% 15%;
+    /* Marigold on white is only 2.0:1 — it can never be text on a light
+       surface. Kept as a fill token so the constraint is structural. */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 85% 15%;
+    /* ── shadcn/ui mapping ───────────────────────────────────────── */
+    --background: var(--canvas);
+    --foreground: var(--ink);
+    --card: var(--canvas);
+    --card-foreground: var(--ink);
+    --popover: var(--canvas);
+    --popover-foreground: var(--ink);
 
-    /* Deep Navy Primary */
-    --primary: 151 21% 26%;
+    --primary: var(--forest);
     --primary-foreground: 0 0% 100%;
+    --secondary: var(--surface);
+    --secondary-foreground: var(--forest);
 
-    /* Rich Gold Accent */
-    --accent: 40 76% 58%;
-    --accent-foreground: 220 85% 15%;
+    --muted: var(--surface);
+    --muted-foreground: 150 12% 38%;
 
-    /* Light Navy Secondary */
-    --secondary: 220 30% 25%;
-    --secondary-foreground: 0 0% 100%;
+    --accent: var(--marigold);
+    --accent-foreground: var(--ink);
 
-    --muted: 220 15% 90%;
-    --muted-foreground: 220 10% 45%;
-
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 45 90% 55%;
+    --border: 150 12% 88%;
+    --input: 150 12% 84%;
+    --ring: var(--forest);
 
-    --radius: 0.75rem;
+    --radius: 2px;
+    /* near-square: the ledger, not the brochure */
 
-    /* Chart colors for recharts compatibility */
-    --chart-1: 220 90% 50%;
-    --chart-2: 45 90% 55%;
-    --chart-3: 180 80% 50%;
-    --chart-4: 280 70% 60%;
-    --chart-5: 340 75% 55%;
+    /* ── Type scale ──────────────────────────────────────────────── */
+    /* Type ramp: 13 · 15 · 16 · 18 · 20 · 24 · 32 · 52 · 80.
+       Non-linear, ~25% apart at the top so sizes are never a coin-toss.
+       Endpoints are whole pixels — no sub-pixel rendering. */
+    --step-display: clamp(3rem, 1.8rem + 5vw, 5rem);
+    /* 48 → 80 */
+    --step-h2: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+    /* 32 → 52 */
+    --step-h3: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
+    /* 24 → 32 */
+    --step-h4: 1.125rem;
+    /* 18       */
+    --step-body-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.125rem);
+    --step-body: 1rem;
+    --step-sm: 0.9375rem;
+    --step-xs: 0.8125rem;
 
-    /* Sidebar (if using sidebar component) */
-    --sidebar: 0 0% 100%;
-    --sidebar-foreground: 220 85% 15%;
-    --sidebar-primary: 151 21% 26%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 90%;
-    --sidebar-accent-foreground: 220 85% 15%;
-    --sidebar-border: 220 15% 88%;
-    --sidebar-ring: 45 90% 55%;
+    /* Spacing ramp, 16px base: 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96. */
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-24: 6rem;
+
+    /* ── Motion tokens ───────────────────────────────────────────────
+       Calm and precise: private bank, not startup launch. Never bounce,
+       elastic or spring overshoot. */
+    --micro: 150ms;
+    /* hover, press, focus, underline      */
+    --short: 250ms;
+    /* menus, toggles, header changes      */
+    --medium: 500ms;
+    /* standard scroll reveals             */
+    --long: 900ms;
+    /* hero intro, line draw, counters     */
+
+    --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    /* entering  */
+    --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+    /* moving    */
+
+    /* Reveals move max 24px desktop / 12px mobile. */
+    --reveal-y: 24px;
   }
 
-  .dark {
-    --background: 220 85% 10%;
-    --foreground: 0 0% 95%;
-
-    --card: 220 80% 12%;
-    --card-foreground: 0 0% 95%;
-
-    --popover: 220 80% 12%;
-    --popover-foreground: 0 0% 95%;
-
-    --primary: 151 21% 40%;
-    --primary-foreground: 0 0% 100%;
-
-    --accent: 40 76% 58%;
-    --accent-foreground: 220 85% 10%;
-
-    --secondary: 220 30% 20%;
-    --secondary-foreground: 0 0% 95%;
-
-    --muted: 220 30% 20%;
-    --muted-foreground: 220 10% 65%;
-
-    --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 0 0% 95%;
-
-    --border: 220 30% 25%;
-    --input: 220 30% 25%;
-    --ring: 45 90% 55%;
-
-    /* Chart colors for dark mode */
-    --chart-1: 220 90% 60%;
-    --chart-2: 45 90% 65%;
-    --chart-3: 180 80% 60%;
-    --chart-4: 280 70% 70%;
-    --chart-5: 340 75% 65%;
-
-    /* Sidebar dark mode */
-    --sidebar: 220 80% 12%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 151 21% 40%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 30% 20%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 220 30% 25%;
-    --sidebar-ring: 45 90% 55%;
+  @media (max-width: 767px) {
+    :root {
+      --reveal-y: 12px;
+    }
   }
-}
-
-.font-bricola {
-  font-family: 'bircola', sans-serif;
 }
 
 @layer base {
@@ -123,267 +117,751 @@ All colors MUST be HSL for compatibility with shadcn/ui.
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'bircola', sans-serif;
-  }
-
   html {
     scroll-behavior: smooth;
+    /* Sticky header + mobile action bar both need scroll clearance. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: var(--step-body);
+    font-weight: 450;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Money and metrics: lining + tabular is the financial-UI standard.
+     Cormorant defaults to OLDSTYLE figures, so without lining-nums the
+     digits in "₹75 crore+" sit at different heights, and its tabular
+     feature keeps the animated counters from jittering.
+     Verified: both Plus Jakarta Sans and Cormorant expose `tnum`, so
+     figures align in either face. (Libre Franklin, tried earlier, does
+     not — worth re-checking if the body font ever changes again.) */
+  .tnum,
+  .figure,
+  time,
+  data {
+    font-variant-numeric: lining-nums tabular-nums;
+    font-feature-settings: "lnum" 1, "tnum" 1;
+  }
+
+  /* Visible keyboard focus everywhere, never removed. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--forest));
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-@layer utilities {
+/* ═══════════════════════════════════════════════════════════════════
+   TYPOGRAPHY ROLES
+   Plain CSS (not @layer components) so nothing is tree-shaken away.
+   ═══════════════════════════════════════════════════════════════════ */
 
-  /* Glassmorphism Effects */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(10, 22, 40, 0.1);
-  }
+.display,
+.h2,
+.h3 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 500;
+  text-wrap: balance;
+}
 
-  /* Gradient Backgrounds */
-  .gradient-hero {
-    background: linear-gradient(135deg, hsl(220 90% 10%) 0%, hsl(220 85% 15%) 50%, hsl(220 80% 20%) 100%);
-  }
+/* h4 is a UI-scale subhead (team names, card titles). Garamond is too
+   delicate down here, so this one stays in the sans. */
+.h4 {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 600;
+  text-wrap: balance;
+}
 
-  .gradient-gold {
-    background: linear-gradient(135deg, hsl(45 95% 65%) 0%, hsl(45 90% 55%) 100%);
-  }
+.display {
+  font-size: var(--step-display);
+  line-height: 1.04;
+  letter-spacing: -0.021em;
+}
 
-  .gradient-mesh {
-    background:
-      radial-gradient(circle at 20% 50%, hsla(220, 90%, 15%, 0.8) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, hsla(45, 90%, 55%, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 40% 20%, hsla(180, 80%, 50%, 0.1) 0%, transparent 50%);
-  }
+.h2 {
+  font-size: var(--step-h2);
+  line-height: 1.12;
+  letter-spacing: -0.016em;
+}
 
-  /* Text Gradient */
-  .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(45 95% 65%) 0%, hsl(45 90% 55%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+.h3 {
+  font-size: var(--step-h3);
+  line-height: 1.25;
+  letter-spacing: -0.011em;
+}
 
-  /* Marker Highlight Animation */
-  @keyframes marker-draw {
-    0% {
-      width: 0%;
-      opacity: 0;
-    }
+.h4 {
+  font-size: var(--step-h4);
+  line-height: 1.45;
+  letter-spacing: -0.006em;
+}
 
-    50% {
-      opacity: 1;
-    }
+/* Serif prose gets slightly generous leading per the brief. */
+.lede {
+  font-size: var(--step-body-lg);
+  line-height: 1.75;
+  font-weight: 450;
+  text-wrap: pretty;
+}
 
-    100% {
-      width: 100%;
-      opacity: 1;
-    }
-  }
+.prose-sm-x {
+  font-size: var(--step-sm);
+  line-height: 1.7;
+  font-weight: 450;
+  text-wrap: pretty;
+}
 
-  .marker-highlight {
-    position: relative;
-    display: inline-block;
-  }
+.meta {
+  font-size: var(--step-xs);
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
 
-  .marker-highlight::after {
-    content: '';
-    position: absolute;
-    left: -4px;
-    right: -4px;
-    bottom: 2px;
-    height: 12px;
-    background: linear-gradient(135deg, hsl(40 76% 58%), hsl(45 100% 70%));
-    opacity: 0.3;
-    z-index: -1;
-    border-radius: 2px;
-    animation: marker-draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
+/* Section label — sentence case, NOT tracked-out all-caps.
+   Deliberately sets NO colour. This rule is unlayered, so a `color` here
+   would outrank every Tailwind text-* utility (unlayered CSS beats
+   @layer utilities) and silently win on dark sections. Colour is set at
+   the call site: text-growth on light, text-white/85 on forest. */
+.section-label {
+  font-size: var(--step-xs);
+  font-weight: 600;
+}
 
-  /* Circle Highlight Animation */
-  @keyframes circle-draw {
-    0% {
-      stroke-dashoffset: 500;
-      opacity: 0;
-    }
+/* Keep every measure under ~75 characters. */
+.measure {
+  max-width: 68ch;
+}
 
-    50% {
-      opacity: 1;
-    }
+.measure-tight {
+  max-width: 54ch;
+}
 
-    100% {
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-  }
+/* ═══════════════════════════════════════════════════════════════════
+   FORM FIELDS
+   The old fields were a faint 1px border on a tinted fill — they read as
+   disabled rather than ready for input. A defined rule, a white well and
+   a real focus state fix the affordance.
+   ═══════════════════════════════════════════════════════════════════ */
 
-  .circle-highlight {
-    position: relative;
-    display: inline-block;
-  }
+.field-label {
+  display: block;
+  font-size: var(--step-xs);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  color: hsl(var(--forest));
+  padding-bottom: 0.5rem;
+}
 
-  .circle-highlight svg {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 110%;
-    height: 130%;
-    pointer-events: none;
-  }
+.field {
+  width: 100%;
+  background: hsl(var(--canvas));
+  border: 1px solid hsl(var(--forest) / 0.22);
+  border-radius: var(--radius);
+  padding-inline: 1rem;
+  font-family: inherit;
+  font-size: var(--step-body);
+  font-weight: 450;
+  color: hsl(var(--ink));
+  outline: none;
+  transition: border-color var(--micro) ease, box-shadow var(--micro) ease;
+}
 
-  .circle-highlight svg circle {
-    fill: none;
-    stroke: hsl(40 76% 58%);
-    stroke-width: 3;
-    stroke-dasharray: 500;
-    stroke-dashoffset: 500;
-    animation: circle-draw 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: 0.3s;
-  }
+.field::placeholder {
+  color: hsl(var(--ink) / 0.38);
+}
 
-  /* Text Reveal Animation */
-  @keyframes text-reveal {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
+.field:hover {
+  border-color: hsl(var(--forest) / 0.4);
+}
 
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+/* Focus reads as a deliberate 2px edge rather than a browser outline. */
+.field:focus {
+  border-color: hsl(var(--forest));
+  box-shadow: inset 0 0 0 1px hsl(var(--forest));
+}
 
-  .animate-text-reveal {
-    animation: text-reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
+/* ═══════════════════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════════════════ */
 
-  /* Staggered Animations */
-  .stagger-1 {
-    animation-delay: 0.1s;
-  }
+.container-page {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 0.75rem + 2.4vw, 3rem);
+}
 
-  .stagger-2 {
-    animation-delay: 0.2s;
-  }
+.section-y {
+  /* 48 → 96, both on the spacing ramp. */
+  padding-block: clamp(var(--space-12), 1.5rem + 5vw, var(--space-24));
+}
 
-  .stagger-3 {
-    animation-delay: 0.3s;
-  }
-
-  .stagger-4 {
-    animation-delay: 0.4s;
-  }
-
-  /* Noise Texture Overlay */
-  .noise-texture {
-    position: relative;
-  }
-
-  .noise-texture::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Footer Glow Animation */
-  @keyframes pulse-glow {
-
-    0%,
-    100% {
-      opacity: 0.5;
-      transform: scale(1);
-    }
-
-    50% {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-  }
-
-  .footer-glow {
-    animation: pulse-glow 4s ease-in-out infinite;
-  }
-
-  /* Parallax Lines Animation */
-  @keyframes flow-lines {
-    0% {
-      transform: translateX(-100%);
-    }
-
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  .parallax-lines {
-    animation: flow-lines 20s linear infinite;
-  }
-
-  /* Fade In Animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
-  }
-
-  .animate-slide-in-right {
-    animation: slideInRight 0.7s ease-out forwards;
+/* Mobile action bar clearance so the footer is never covered. */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 4.25rem;
   }
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-::-webkit-scrollbar {
-  display: none;
+/* ═══════════════════════════════════════════════════════════════════
+   HERO LOAD SEQUENCE — signature moment 1, under 1.6s total.
+   Pure CSS, so it needs no JavaScript and collapses to nothing under
+   reduced motion (the global rule zeroes every duration).
+   ═══════════════════════════════════════════════════════════════════ */
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+  /* Descenders would clip against a tight mask. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-* {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.hero-line-in {
+  display: block;
+  animation: hero-line-up 700ms var(--ease-out-soft) var(--d, 0ms) both;
+}
+
+@keyframes hero-line-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-el {
+  display: block;
+  animation: hero-fade-up var(--medium) var(--ease-out-soft) var(--d, 0ms) both;
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-photo {
+  animation: hero-photo-in 1200ms var(--ease-out-soft) 200ms both;
+}
+
+@keyframes hero-photo-in {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-rule {
+  animation: hero-rule-draw 600ms var(--ease-out-soft) 900ms both;
+}
+
+@keyframes hero-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ARTICLE BODY
+   Written out rather than pulling in @tailwindcss/typography, which is
+   not installed. Comparison tables and worked examples are first-class.
+   No animation here — reading is never interrupted.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.article {
+  font-size: var(--step-body-lg);
+  line-height: 1.75;
+  color: hsl(var(--ink) / 0.82);
+}
+
+.article> :first-child {
+  margin-top: 0;
+}
+
+.article p,
+.article ul,
+.article ol {
+  margin-block: 1.35em;
+  max-width: 68ch;
+}
+
+.article h2,
+.article h3 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 400;
+  color: hsl(var(--forest));
+  letter-spacing: -0.012em;
+}
+
+.article h2 {
+  font-size: var(--step-h3);
+  line-height: 1.25;
+  margin-block: 2em 0.6em;
+}
+
+.article h3 {
+  font-size: var(--step-h4);
+  line-height: 1.35;
+  margin-block: 1.8em 0.5em;
+}
+
+.article ul,
+.article ol {
+  padding-left: 1.3em;
+}
+
+.article ul {
+  list-style: disc;
+}
+
+.article ol {
+  list-style: decimal;
+}
+
+.article li {
+  margin-block: 0.4em;
+}
+
+.article li::marker {
+  color: hsl(var(--growth));
+}
+
+.article a {
+  color: hsl(var(--growth));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article strong {
+  font-weight: 600;
+  color: hsl(var(--ink));
+}
+
+.article blockquote {
+  border-left: 2px solid hsl(var(--growth));
+  padding-left: 1.2em;
+  margin-block: 1.8em;
+  color: hsl(var(--ink) / 0.7);
+}
+
+/* Comparison tables scroll rather than break the layout. */
+.article .table-wrap {
+  overflow-x: auto;
+  margin-block: 2em;
+  border: 1px solid hsl(var(--border));
+}
+
+.article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.article th,
+.article td {
+  padding: 0.85em 1em;
+  text-align: left;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.article th {
+  background: hsl(var(--surface));
+  font-weight: 600;
+  color: hsl(var(--forest));
+  white-space: nowrap;
+}
+
+.article tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Worked example — a figured aside, visually distinct from prose. */
+.article .worked-example {
+  margin-block: 2em;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--surface));
+  padding: 1.5rem;
+  font-size: var(--step-sm);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOTION & HOVER POLICY
+   Derived from Material 3 (easing/duration) and Refactoring UI
+   (hierarchy through weight + colour, not movement).
+
+   DURATION — what gets which token
+     150ms  micro   hover, focus, press, underline, icon colour
+     250ms  short   menus, accordions, header height, sticky bars
+     500ms  medium  scroll reveals (one per section, never per element)
+     700ms+ long    a line drawing, a photo wipe — structural only
+
+   ANIMATE — transform and opacity only. Both are compositor-driven, so
+   they hold 60fps on a mid-range Android. Plus clip-path for the team
+   wipe and stroke-dashoffset for drawn ticks.
+
+   DO NOT ANIMATE
+     · width/height/top/left/margin — these force layout on every frame
+     · box-shadow or filter on scroll — repaints the whole layer
+     · anything on body copy, tables, figures, or disclaimers: reading
+       must never wait, and compliance text must never be hidden by a
+       state a reader can fail to trigger
+     · looping/infinite motion — one pulse on a status dot, nothing more
+     · parallax on mobile
+
+   REVEALS fire once at 20% in view and never replay on scroll-back.
+   Stagger 60–100ms between siblings, capped at 400ms total, so the last
+   item in a group is never more than ~0.4s behind the first.
+
+   HOVER is an enhancement, never a carrier of information. Everything
+   revealed on hover is already visible — team focus areas, testimonial
+   text, "for illustrative purposes" notes. All hover rules sit behind
+   @media (hover: hover) so a touch device never inherits a stuck state.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   SCROLL REVEALS
+   Content ships visible. JS sets data-reveal="armed" to opt in, then
+   "in" to play. No JS or reduced motion → nothing is ever hidden.
+   ═══════════════════════════════════════════════════════════════════ */
+
+[data-reveal='armed'] {
+  opacity: 0;
+  transform: translateY(var(--reveal-y));
+}
+
+[data-reveal='in'] {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft) var(--reveal-delay, 0ms),
+    transform var(--medium) var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+
+/* Stagger direct children, capped so long lists never crawl. */
+.reveal-stagger[data-reveal='armed'] > * {
+  opacity: 0;
+  transform: translateY(var(--reveal-y));
+}
+
+.reveal-stagger[data-reveal='in'] {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-stagger[data-reveal='in'] > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft),
+    transform var(--medium) var(--ease-out-soft);
+}
+
+.reveal-stagger[data-reveal='in'] > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger[data-reveal='in'] > *:nth-child(n + 6) { transition-delay: 400ms; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   LEGACY TIMELINE — the rail fills downward, era by era.
+   Ships visible; JS adds data-anim="on" to opt in.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.legacy[data-anim='on'] .era-fill {
+  transform: scaleY(0);
+}
+
+.legacy[data-anim='on'] .era-dot {
+  transform: scale(0);
+}
+
+.legacy[data-anim='on'] .era-body {
+  opacity: 0;
+  transform: translateY(var(--reveal-y));
+}
+
+.legacy[data-anim='on'] [data-on='true'] .era-fill {
+  transform: scaleY(1);
+  transition: transform 700ms var(--ease-in-out-soft);
+}
+
+.legacy[data-anim='on'] [data-on='true'] .era-dot {
+  transform: scale(1);
+  transition: transform var(--short) var(--ease-out-soft);
+}
+
+.legacy[data-anim='on'] [data-on='true'] .era-body {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft) 80ms,
+    transform var(--medium) var(--ease-out-soft) 80ms;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   COMPARISON ROWS (retained for reuse; no section uses these today)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.cmp-row[data-reveal='armed'] {
+  /* The row itself does not move — only its contents do. */
+  opacity: 1;
+  transform: none;
+}
+
+.cmp-row[data-reveal='armed'] .cmp-aslot {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+.cmp-row[data-reveal='armed'] .cmp-typical {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+.cmp-row[data-reveal='armed'] .cmp-rule {
+  transform: scaleY(0);
+}
+
+.cmp-row[data-reveal='armed'] .cmp-vs,
+.cmp-row[data-reveal='armed'] .check-draw {
+  opacity: 0;
+}
+
+.cmp-row[data-reveal='in'] .cmp-aslot,
+.cmp-row[data-reveal='in'] .cmp-typical {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity var(--medium) var(--ease-out-soft),
+    transform var(--medium) var(--ease-out-soft);
+}
+
+.cmp-row[data-reveal='in'] .cmp-typical {
+  transition-delay: 150ms;
+}
+
+.cmp-row[data-reveal='in'] .cmp-rule {
+  transform: scaleY(1);
+  transition: transform 400ms var(--ease-out-soft) 100ms;
+}
+
+.cmp-row[data-reveal='in'] .cmp-vs {
+  opacity: 1;
+  transition: opacity var(--short) ease 300ms;
+}
+
+/* The tick draws itself rather than fading in. */
+.cmp-row[data-reveal='in'] .check-draw {
+  opacity: 1;
+  transition: opacity 1ms linear 200ms;
+}
+
+.cmp-row[data-reveal='in'] .check-draw path {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 22;
+  animation: check-draw 400ms var(--ease-out-soft) 200ms forwards;
+}
+
+@keyframes check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (hover: hover) {
+  .cmp-row:hover {
+    background-color: hsl(var(--surface) / 0.6);
+    transition: background-color var(--micro) ease;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HOW WE WORK — line draws through the numbered steps.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.steps[data-reveal='armed'] {
+  opacity: 1;
+  transform: none;
+}
+
+.steps[data-reveal='armed'] .steps-line {
+  transform: scaleX(0);
+}
+
+.steps[data-reveal='armed'] .steps-line:last-of-type {
+  transform: scaleY(0);
+}
+
+.steps[data-reveal='armed'] .step-dot,
+.steps[data-reveal='armed'] .step-text {
+  opacity: 0;
+}
+
+.steps[data-reveal='armed'] .step-text {
+  transform: translateY(16px);
+}
+
+.steps[data-reveal='in'] .steps-line {
+  transform: scaleX(1);
+  transition: transform 700ms var(--ease-in-out-soft);
+}
+
+.steps[data-reveal='in'] .steps-line:last-of-type {
+  transform: scaleY(1);
+  transition: transform 700ms var(--ease-in-out-soft);
+}
+
+/* Circles light up as the line reaches them, ~300ms apart. */
+.steps[data-reveal='in'] .step-dot {
+  opacity: 1;
+  border-color: hsl(var(--forest));
+  transition: opacity var(--short) ease calc(var(--i) * 110ms),
+    border-color var(--short) ease calc(var(--i) * 110ms);
+}
+
+.steps[data-reveal='in'] .step:nth-child(1) .step-text { transition-delay: 60ms; }
+.steps[data-reveal='in'] .step:nth-child(2) .step-text { transition-delay: 170ms; }
+.steps[data-reveal='in'] .step:nth-child(3) .step-text { transition-delay: 280ms; }
+.steps[data-reveal='in'] .step:nth-child(4) .step-text { transition-delay: 390ms; }
+
+.steps[data-reveal='in'] .step-text {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft),
+    transform var(--medium) var(--ease-out-soft);
+}
+
+/* One rotation only — monitoring is ongoing, the icon is not. */
+.steps[data-reveal='in'] .step-loop {
+  animation: spin-once 700ms var(--ease-in-out-soft) 620ms 1 both;
+}
+
+@keyframes spin-once {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (hover: hover) {
+  .step:hover .step-dot {
+    transform: scale(1.05);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TEAM — photo uncovered by a bottom-to-top wipe.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.team-card[data-reveal='armed'] {
+  opacity: 1;
+  transform: none;
+}
+
+.team-card[data-reveal='armed'] .team-frame {
+  clip-path: inset(100% 0 0 0);
+}
+
+.team-card[data-reveal='armed'] .team-photo {
+  transform: scale(1.1);
+}
+
+.team-card[data-reveal='armed'] .team-meta {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.team-card[data-reveal='in'] .team-frame {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 700ms var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+
+.team-card[data-reveal='in'] .team-photo {
+  transform: scale(1);
+  transition: transform 700ms var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+
+/* Text starts once the wipe is ~50% through. */
+.team-card[data-reveal='in'] .team-meta {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--medium) var(--ease-out-soft)
+      calc(var(--reveal-delay, 0ms) + 260ms),
+    transform var(--medium) var(--ease-out-soft) calc(var(--reveal-delay, 0ms) + 260ms);
+}
+
+@media (hover: hover) {
+  .team-card:hover .team-photo {
+    transform: scale(1.03);
+    transition: transform 400ms var(--ease-out-soft);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   THE ONE MOTION: generational layers accumulating.
+   Everything else on the page is still.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Default state is VISIBLE. JavaScript opts the list into animating by
+   setting data-anim="on", so with no JS (or reduced motion) the whole story
+   is simply readable. */
+.journey[data-anim='on'] .era-body {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 520ms ease 120ms,
+    transform 520ms var(--ease-out-soft) 120ms;
+}
+
+.journey[data-anim='on'] .era-layer.is-active {
+  transform: scaleY(0.12);
+  transition: transform 620ms var(--ease-out-soft);
+}
+
+.journey[data-anim='on'] .era-layer.is-active:nth-child(2) {
+  transition-delay: 110ms;
+}
+
+.journey[data-anim='on'] .era-layer.is-active:nth-child(3) {
+  transition-delay: 220ms;
+}
+
+.journey[data-anim='on'] [data-on='true'] .era-body {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.journey[data-anim='on'] [data-on='true'] .era-layer.is-active {
+  transform: scaleY(1);
 }
